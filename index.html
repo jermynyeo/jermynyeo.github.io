@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jermyn Yeo — Data & Platform Engineer</title>
+  <meta name="description" content="Portfolio of Jermyn Yeo — data & platform engineer. Building data pipelines, ETL, data governance, and cloud-native backend services." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Jermyn Yeo — Data & Platform Engineer" />
+  <meta property="og:description" content="Building data pipelines, ETL, data governance, and cloud-native backend services." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Paper grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav">
+    <a href="#top" class="nav__brand">JY</a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <p class="hero__eyebrow">Hello, I'm</p>
+      <h1 class="hero__name">Jermyn&nbsp;Yeo</h1>
+      <p class="hero__tagline">
+        <span class="ul-draw">Data &amp; Platform Engineer</span>
+      </p>
+      <p class="hero__intro" id="hero-intro">
+        I build the data platforms and pipelines that turn high-volume, messy
+        data into something teams can trust. For the past four years I've
+        engineered ETL, data-quality, and governance systems across compliance
+        technology at a global bank — and I care just as much about the
+        backend services and cloud infrastructure underneath. Comfortable across
+        Java and Python, with a soft spot for clean, well-governed data.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#projects">See my work</a>
+        <a class="btn btn--ghost" href="mailto:jermyn1999@gmail.com">Get in touch</a>
+      </div>
+      <div class="hero__socials">
+        <a href="https://github.com/jermynyeo" target="_blank" rel="noopener">GitHub</a>
+        <span class="dot">·</span>
+        <a href="https://www.linkedin.com/in/jywh/" target="_blank" rel="noopener">LinkedIn</a>
+        <span class="dot">·</span>
+        <a href="mailto:jermyn1999@gmail.com">Email</a>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="section">
+      <h2 class="section__title"><span class="ul-draw">About</span></h2>
+      <div class="about">
+        <div class="about__text">
+          <p>
+            I'm a data and platform engineer who likes owning the whole journey
+            of data — from ingestion and ETL through the quality, governance, and
+            reporting layers that teams actually depend on. At JPMorgan I've spent
+            four years building exactly that across compliance technology, alongside
+            the backend microservices and cloud migrations that keep it running.
+          </p>
+          <p>
+            I work mostly in Java and Python, and I'm steadily deepening the
+            platform side — Kubernetes (CKAD), Terraform, and AWS (Solutions
+            Architect, in progress). I'm happiest with problems that are equal
+            parts systems design and data craft, and I care about building things
+            that are reliable — not just clever.
+          </p>
+        </div>
+        <aside class="about__card">
+          <h3>Currently</h3>
+          <ul>
+            <li>💼 Engineering @ <strong>JPMorganChase</strong></li>
+            <li>🗣️ English &amp; Mandarin (native) · Cantonese</li>
+            <li>📍 Singapore</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section id="experience" class="section">
+      <h2 class="section__title"><span class="ul-draw">Experience</span></h2>
+      <ol class="timeline">
+        <!-- JPMorganChase: progression within one company -->
+        <li class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__body">
+            <div class="timeline__head">
+              <h3>JPMorganChase</h3>
+              <span class="timeline__date">Aug 2022 — Present · ~4 yrs</span>
+            </div>
+            <p class="timeline__org">Compliance Technology · Singapore</p>
+
+            <div class="role">
+              <div class="role__head">
+                <h4>Senior Associate Software Engineer</h4>
+                <span class="role__date">Jan 2026 — Present</span>
+              </div>
+              <p class="role__team">Data Governance &amp; Controls</p>
+              <ul>
+                <li>Led the development of automated <strong>reconciliation jobs</strong>
+                    for datasets onboarded to the data platform, systematically detecting
+                    and surfacing discrepancies across sources.</li>
+                <li>As a key contributor, built <strong>data-quality validations</strong>
+                    for cloud-onboarded datasets, enforcing business-quality standards that
+                    strengthened confidence in the data downstream teams rely on.</li>
+                <li>Spearheaded a <strong>reconciliation-metrics dashboard</strong> on an
+                    internal, business-facing visualization platform — pulling metrics
+                    asynchronously via <strong>Kafka</strong> into <strong>Java Spring
+                    Boot</strong> services — giving business teams real-time monitoring and
+                    the ability to act on recurring exceptions.</li>
+              </ul>
+            </div>
+
+            <div class="role">
+              <div class="role__head">
+                <h4>Associate Software Engineer</h4>
+                <span class="role__date">Feb 2024 — Jan 2026</span>
+              </div>
+              <p class="role__team">Data Governance &amp; Controls</p>
+              <ul>
+                <li>Designed and built a self-service platform in <strong>Java Spring
+                    Boot</strong>, used by multiple teams to register, manage, and govern a
+                    large inventory of data feeds — replacing manual, spreadsheet-based
+                    tracking.</li>
+                <li>Engineered <strong>Spark / Databricks</strong> ETL pipelines processing
+                    terabyte-scale datasets into enterprise reporting, with automated
+                    reconciliation enforcing data quality across sources.</li>
+                <li>Led the migration of data products to <strong>AWS (S3, Glue, Athena,
+                    Lambda)</strong>, modernizing legacy systems for scale and resilience.</li>
+              </ul>
+            </div>
+
+            <div class="role">
+              <div class="role__head">
+                <h4>Software Engineer</h4>
+                <span class="role__date">Aug 2022 — Jan 2024</span>
+              </div>
+              <p class="role__team">Trade Surveillance · Software Engineer Program (SEP), Class of 2022</p>
+              <ul>
+                <li>Owned high-volume <strong>batch</strong> data ingestion and ETL
+                    (SQL stored procedures) for market surveillance.</li>
+                <li>Built backend microservices in <strong>Java Spring Boot</strong>
+                    supporting mission-critical surveillance workflows.</li>
+                <li>Drove cloud adoption on <strong>AWS</strong> — re-engineering legacy
+                    stored-procedure batch jobs into <strong>Apache Spark</strong>
+                    pipelines.</li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <!-- Internships -->
+        <li class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__body">
+            <div class="timeline__head">
+              <h3>Compliance Intern</h3>
+              <span class="timeline__date">Jan — Apr 2022</span>
+            </div>
+            <p class="timeline__org">Ernst &amp; Young · Singapore</p>
+            <ul>
+              <li>Executed regulatory compliance testing for enterprise clients and
+                  co-authored project proposals in cross-functional teams of 3–4.</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__body">
+            <div class="timeline__head">
+              <h3>Software Engineer Intern</h3>
+              <span class="timeline__date">Dec 2021</span>
+            </div>
+            <p class="timeline__org">YouTrip · Singapore</p>
+            <ul>
+              <li>Built backend APIs in Go for core business functions and integrated
+                  third-party APIs, validating them with Postman collections.</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__body">
+            <div class="timeline__head">
+              <h3>Software Engineer Intern</h3>
+              <span class="timeline__date">Dec 2020 — Jul 2021</span>
+            </div>
+            <p class="timeline__org">GovTech Singapore</p>
+            <ul>
+              <li>Built in-house dashboards in Python, Power BI, and Tableau, giving
+                  management real-time visibility into key decision-making metrics.</li>
+              <li>Developed visualizations and Kanban tooling for manpower and task
+                  tracking, streamlining workflows and improving team productivity.</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__body">
+            <div class="timeline__head">
+              <h3>Undergraduate Research Assistant</h3>
+              <span class="timeline__date">May — Aug 2020</span>
+            </div>
+            <p class="timeline__org">Singapore Management University · Game Analytics</p>
+            <ul>
+              <li>Led game-analytics research (Mobile Legends: Bang Bang) in a team of 3,
+                  building the data collection, cleaning, and analysis pipeline.</li>
+              <li>Designed and built a Vue + Laravel web application to surface the
+                  statistics and analysis to stakeholders.</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ PROJECTS (dynamic) ============ -->
+    <section id="projects" class="section">
+      <h2 class="section__title"><span class="ul-draw">Projects</span></h2>
+      <p class="section__note">
+        Pulled live from GitHub. Tag a repo with the topic
+        <code>portfolio</code> to feature it here.
+      </p>
+      <div id="projects-grid" class="projects" aria-live="polite">
+        <!-- Cards injected by js/main.js -->
+        <div class="projects__loading">Fetching projects from GitHub…</div>
+      </div>
+      <p class="projects__more">
+        <a href="https://github.com/jermynyeo?tab=repositories" target="_blank" rel="noopener">
+          See all repositories on GitHub →
+        </a>
+      </p>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section id="skills" class="section">
+      <h2 class="section__title"><span class="ul-draw">Skills</span></h2>
+      <div class="skills">
+        <div class="skills__group">
+          <h3>Languages</h3>
+          <ul class="chips">
+            <li>Python</li><li>Java</li><li>Go</li><li>JavaScript</li>
+            <li>SQL</li><li>HTML/CSS</li>
+          </ul>
+        </div>
+        <div class="skills__group">
+          <h3>Frameworks &amp; Tools</h3>
+          <ul class="chips">
+            <li>Spring Boot</li><li>Flask</li><li>React</li><li>Vue</li>
+            <li>Laravel</li><li>Docker</li><li>Git</li>
+          </ul>
+        </div>
+        <div class="skills__group">
+          <h3>Data Engineering</h3>
+          <ul class="chips">
+            <li>Apache Spark</li><li>Kafka</li><li>Databricks</li>
+            <li>ETL &amp; Pipelines</li><li>Data Governance</li><li>Data Quality</li>
+            <li>pandas</li><li>scikit-learn</li><li>Tableau</li><li>Power BI</li>
+          </ul>
+        </div>
+        <div class="skills__group">
+          <h3>Cloud &amp; Infra</h3>
+          <ul class="chips">
+            <li>AWS S3</li><li>Glue</li><li>Athena</li><li>EMR</li><li>Lambda</li>
+            <li>Kubernetes</li><li>Terraform</li><li>Linux / RHEL</li><li>Microservices</li>
+          </ul>
+        </div>
+        <div class="skills__group">
+          <h3>Certifications</h3>
+          <ul class="chips chips--cert">
+            <li>CKAD — Kubernetes App Developer <span class="chips__yr">2024</span></li>
+            <li>HashiCorp Terraform Associate <span class="chips__yr">2023</span></li>
+            <li>Databricks Lakehouse Fundamentals <span class="chips__yr">2023</span></li>
+            <li>AWS Certified Cloud Practitioner <span class="chips__yr">2020</span></li>
+            <li>AI Tooling — Anthropic Claude 101 / Code 101 <span class="chips__yr">2026</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EDUCATION ============ -->
+    <section id="education" class="section">
+      <h2 class="section__title"><span class="ul-draw">Education</span></h2>
+      <ol class="timeline">
+        <li class="timeline__item">
+          <div class="timeline__dot"></div>
+          <div class="timeline__body">
+            <div class="timeline__head">
+              <h3>Bachelor of Science, Information Systems</h3>
+              <span class="timeline__date">Aug 2018 — Jul 2022</span>
+            </div>
+            <p class="timeline__org">Singapore Management University · <strong>Summa Cum Laude</strong></p>
+
+            <div class="edu">
+              <div class="edu__block">
+                <h4>Honors &amp; Awards</h4>
+                <ul>
+                  <li>🏆 SIS Aspirations Scholarship</li>
+                  <li>🏆 Dean's List (AY 2019, 2022)</li>
+                </ul>
+              </div>
+              <div class="edu__block">
+                <h4>Final-Year Project</h4>
+                <p>Research on online discussion forums — Natural Language Processing
+                   &amp; learning analytics, with Dr. Swapna Gottipati.</p>
+              </div>
+              <div class="edu__block">
+                <h4>Focus Modules</h4>
+                <ul>
+                  <li>Machine Learning · Artificial Intelligence</li>
+                  <li>Text Mining &amp; Analytics</li>
+                  <li>Social Analytics · Visual Analytics for BI</li>
+                </ul>
+              </div>
+              <div class="edu__block">
+                <h4>Teaching Assistant</h4>
+                <p>Web Application Development · Enterprise Solution Development ·
+                   Business Process Analytics · Computational Thinking · Social
+                   Analytics · Text Mining.</p>
+              </div>
+            </div>
+
+            <p class="edu__cca">
+              <strong>CCAs:</strong> SMUX Trekking · SMU Strategica · SCIS Ellipsis
+            </p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="section section--contact">
+      <h2 class="section__title"><span class="ul-draw">Let's talk</span></h2>
+      <p class="contact__lead">
+        Open to interesting problems and good conversations.
+      </p>
+      <div class="contact__links">
+        <a class="btn btn--primary" href="mailto:jermyn1999@gmail.com">jermyn1999@gmail.com</a>
+        <a class="btn btn--ghost" href="https://www.linkedin.com/in/jywh/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn--ghost" href="https://github.com/jermynyeo" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Handmade by Jermyn Yeo · <span id="year"></span></p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
