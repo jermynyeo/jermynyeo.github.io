@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jermyn Yeo — The Atelier (an explorable portfolio)</title>
+  <meta name="description" content="Step into Jermyn Yeo's atelier — an explorable universe of craft & code. Pick a tool, roam the world, and enter each space. Prefer the classic résumé? It's one click away." />
+
+  <meta property="og:title" content="Jermyn Yeo — The Atelier" />
+  <meta property="og:description" content="An explorable universe of craft & code. Pick a tool and roam." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/universe.css" />
+</head>
+<body>
+  <noscript>
+    <div class="noscript">
+      This experience needs JavaScript. You can view the
+      <a href="index.html">classic résumé here</a>.
+    </div>
+  </noscript>
+
+  <!-- ============ INTRO / TOOL PICKER ============ -->
+  <section id="intro" class="intro">
+    <div class="grain" aria-hidden="true"></div>
+    <div class="intro__inner">
+      <p class="intro__eyebrow">Welcome to</p>
+      <h1 class="intro__title">Jermyn's&nbsp;Atelier</h1>
+      <p class="intro__sub">A little universe of <em>craft &amp; code</em>. Pick a tool,
+        roam the world, and step into each space.</p>
+
+      <p class="intro__prompt">Choose your tool</p>
+      <div class="tools" role="radiogroup" aria-label="Choose your tool">
+        <button class="tool" data-tool="brush" role="radio" aria-checked="false">
+          <span class="tool__art" data-art="brush"></span>
+          <span class="tool__name">Paintbrush</span>
+        </button>
+        <button class="tool" data-tool="pencil" role="radio" aria-checked="false">
+          <span class="tool__art" data-art="pencil"></span>
+          <span class="tool__name">Pencil</span>
+        </button>
+        <button class="tool" data-tool="scissors" role="radio" aria-checked="false">
+          <span class="tool__art" data-art="scissors"></span>
+          <span class="tool__name">Scissors</span>
+        </button>
+        <button class="tool" data-tool="thread" role="radio" aria-checked="false">
+          <span class="tool__art" data-art="thread"></span>
+          <span class="tool__name">Needle &amp; Thread</span>
+        </button>
+      </div>
+
+      <button id="enter-btn" class="enter-btn" disabled>Enter the universe →</button>
+
+      <p class="intro__hint">
+        Move with <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / arrows,
+        or click where you want to go. Walk up to a space and click it to enter.
+      </p>
+      <a class="intro__skip" href="index.html">Just want the facts? Skip to the résumé →</a>
+    </div>
+  </section>
+
+  <!-- ============ THE WORLD ============ -->
+  <div id="stage" class="stage" hidden>
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- HUD -->
+    <div class="hud">
+      <div class="hud__brand">✦ Jermyn's Atelier</div>
+      <div class="hud__right">
+        <button id="help-btn" class="hud__btn" title="How to move">?</button>
+        <a class="hud__btn hud__resume" href="index.html">Résumé view</a>
+      </div>
+    </div>
+
+    <!-- Fast-travel legend -->
+    <nav id="legend" class="legend" aria-label="Spaces">
+      <p class="legend__title">Spaces</p>
+      <ul></ul>
+    </nav>
+
+    <!-- "Enter" hint that floats near a room -->
+    <div id="enter-hint" class="enter-hint" hidden>Click to enter <strong></strong></div>
+
+    <!-- The movable world plane -->
+    <div id="viewport" class="viewport">
+      <div id="world" class="world">
+        <canvas id="trail" class="trail"></canvas>
+        <!-- rooms injected by JS -->
+        <div id="avatar" class="avatar" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ROOM CONTENT PANEL ============ -->
+  <div id="panel" class="panel" hidden role="dialog" aria-modal="true" aria-labelledby="panel-title">
+    <div class="panel__card">
+      <button id="panel-close" class="panel__close" aria-label="Close">×</button>
+      <div id="panel-body"></div>
+    </div>
+  </div>
+
+  <!-- ============ IMMERSIVE SCENE · Experience timeline ============ -->
+  <div id="scene" class="scene" hidden>
+    <canvas id="sky" class="sky"></canvas>
+    <div id="timeline" class="timeline"></div>
+
+    <div class="scene__hud">
+      <button id="scene-back" class="scene__back">← Back to the world</button>
+      <div id="scene-year" class="scene__year">2018</div>
+    </div>
+    <p class="scene__hint">scroll · drag · ← → to travel through time</p>
+    <nav id="scene-nav" class="scene__nav" aria-label="Timeline"></nav>
+  </div>
+
+  <!-- ============================================================
+       ROOM CONTENT (kept in the DOM for accessibility + SEO).
+       Hidden visually; JS clones each into the panel on entry.
+       ============================================================ -->
+  <div class="rooms-content" hidden>
+
+    <!-- THE SKETCHBOOK · About -->
+    <article id="room-about" data-room>
+      <h2>The Sketchbook</h2>
+      <p class="room__kicker">About me</p>
+      <p>I'm a data and platform engineer who likes owning the whole journey of
+        data — from ingestion and ETL through the quality, governance, and reporting
+        layers that teams actually depend on. At JPMorgan I've spent four years
+        building exactly that across compliance technology, alongside the backend
+        microservices and cloud migrations that keep it running.</p>
+      <p>I work mostly in Java and Python, and I'm steadily deepening the platform
+        side — Kubernetes (CKAD), Terraform, and AWS. I'm happiest with problems
+        that are equal parts systems design and data craft, and I care about
+        building things that are reliable — not just clever.</p>
+      <ul class="room__facts">
+        <li>💼 Engineering @ JPMorganChase</li>
+        <li>🗣️ English &amp; Mandarin (native) · Cantonese</li>
+        <li>📍 Singapore</li>
+      </ul>
+    </article>
+
+    <!-- THE WORKBENCH · Experience -->
+    <article id="room-experience" data-room>
+      <h2>The Workbench</h2>
+      <p class="room__kicker">Experience</p>
+
+      <div class="xp">
+        <h3>JPMorganChase <span>· Compliance Technology · Singapore</span></h3>
+        <p class="xp__date">Aug 2022 — Present · ~4 yrs</p>
+
+        <h4>Senior Associate Software Engineer <span>· Jan 2026 — Present</span></h4>
+        <ul>
+          <li>Led the development of automated reconciliation jobs for datasets
+            onboarded to the data platform, surfacing discrepancies across sources.</li>
+          <li>As a key contributor, built data-quality validations for cloud-onboarded
+            datasets, strengthening confidence in the data downstream teams rely on.</li>
+          <li>Spearheaded a reconciliation-metrics dashboard on an internal,
+            business-facing visualization platform — pulling metrics asynchronously via
+            Kafka into Java Spring Boot services — for real-time monitoring of recurring
+            exceptions.</li>
+        </ul>
+
+        <h4>Associate Software Engineer <span>· Feb 2024 — Jan 2026</span></h4>
+        <ul>
+          <li>Designed and built a self-service platform in Java Spring Boot, used by
+            multiple teams to govern a large inventory of data feeds — replacing manual,
+            spreadsheet-based tracking.</li>
+          <li>Engineered Spark / Databricks ETL pipelines processing terabyte-scale
+            datasets into enterprise reporting, with automated reconciliation enforcing
+            data quality.</li>
+          <li>Led the migration of data products to AWS (S3, Glue, Athena, Lambda),
+            modernizing legacy systems for scale and resilience.</li>
+        </ul>
+
+        <h4>Software Engineer <span>· Aug 2022 — Jan 2024</span></h4>
+        <ul>
+          <li>Owned high-volume batch data ingestion and ETL (SQL stored procedures)
+            for market surveillance.</li>
+          <li>Built backend microservices in Java Spring Boot supporting
+            mission-critical surveillance workflows.</li>
+          <li>Drove cloud adoption on AWS — re-engineering legacy stored-procedure
+            batch jobs into Apache Spark pipelines.</li>
+        </ul>
+      </div>
+
+      <div class="xp">
+        <h3>Earlier <span>· Internships</span></h3>
+        <ul>
+          <li><strong>Ernst &amp; Young</strong> — Compliance Intern (2022): regulatory
+            compliance testing &amp; project proposals.</li>
+          <li><strong>YouTrip</strong> — Software Engineer Intern (2021): backend APIs in Go.</li>
+          <li><strong>GovTech Singapore</strong> — Software Engineer Intern (2020–21):
+            dashboards in Python, Power BI &amp; Tableau.</li>
+          <li><strong>SMU</strong> — Undergraduate Research Assistant (2020): game-analytics
+            data pipeline + a Vue/Laravel web app.</li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- THE GALLERY · Projects (dynamic) -->
+    <article id="room-projects" data-room>
+      <h2>The Gallery</h2>
+      <p class="room__kicker">Projects · pulled live from GitHub</p>
+      <div id="gallery-grid" class="gallery-grid">
+        <p class="muted">Fetching projects from GitHub…</p>
+      </div>
+      <p><a href="https://github.com/jermynyeo?tab=repositories" target="_blank" rel="noopener">See all repositories →</a></p>
+    </article>
+
+    <!-- THE TOOLBOX · Skills -->
+    <article id="room-skills" data-room>
+      <h2>The Toolbox</h2>
+      <p class="room__kicker">Skills</p>
+      <div class="toolbox">
+        <div><h4>Languages</h4><p>Python · Java · Go · JavaScript · SQL</p></div>
+        <div><h4>Frameworks &amp; Tools</h4><p>Spring Boot · Flask · React · Vue · Docker · Git</p></div>
+        <div><h4>Data Engineering</h4><p>Apache Spark · Kafka · Databricks · ETL &amp; Pipelines · Data Governance · Data Quality · Tableau · Power BI</p></div>
+        <div><h4>Cloud &amp; Infra</h4><p>AWS (S3, Glue, Athena, EMR, Lambda) · Kubernetes · Terraform · Linux/RHEL · Microservices</p></div>
+        <div><h4>Certifications</h4><p>CKAD (2024) · HashiCorp Terraform Associate (2023) · Databricks Lakehouse (2023) · AWS Cloud Practitioner (2020) · Anthropic Claude 101 / Code 101 (2026)</p></div>
+      </div>
+    </article>
+
+    <!-- THE ARCHIVE · Education -->
+    <article id="room-education" data-room>
+      <h2>The Archive</h2>
+      <p class="room__kicker">Education</p>
+      <h3>Bachelor of Science, Information Systems <span>· Summa Cum Laude</span></h3>
+      <p class="xp__date">Singapore Management University · Aug 2018 — Jul 2022</p>
+      <ul>
+        <li>🏆 SIS Aspirations Scholarship · Dean's List (AY 2019, 2022)</li>
+        <li>🧐 Final-year project on online discussion forums — NLP &amp; learning
+          analytics, with Dr. Swapna Gottipati.</li>
+        <li>📚 Focus: Machine Learning · AI · Text Mining · Social &amp; Visual Analytics.</li>
+        <li>💼 Teaching Assistant across 6 courses (Web App Dev, Enterprise Solution Dev,
+          Business Process Analytics, Computational Thinking, Social Analytics, Text Mining).</li>
+      </ul>
+      <p class="muted">CCAs: SMUX Trekking · SMU Strategica · SCIS Ellipsis</p>
+    </article>
+
+    <!-- THE POSTBOX · Contact -->
+    <article id="room-contact" data-room>
+      <h2>The Postbox</h2>
+      <p class="room__kicker">Let's talk</p>
+      <p>Open to interesting problems and good conversations.</p>
+      <p class="contact-links">
+        <a href="mailto:jermyn1999@gmail.com">jermyn1999@gmail.com</a><br>
+        <a href="https://www.linkedin.com/in/jywh/" target="_blank" rel="noopener">LinkedIn</a> ·
+        <a href="https://github.com/jermynyeo" target="_blank" rel="noopener">GitHub</a>
+      </p>
+    </article>
+
+  </div>
+
+  <script src="js/universe.js"></script>
+</body>
+</html>
