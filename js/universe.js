@@ -257,7 +257,7 @@ function updateProximity() {
 
 /* ===================== ROOM PANEL ===================== */
 function enterRoom(key) {
-  if (key === "experience") { openScene(); return; }
+  if (SCENES[key]) { openScene(key); return; }
   const src = document.getElementById("room-" + key);
   if (!src) return;
   panelBody.innerHTML = "";
@@ -359,7 +359,134 @@ const MILESTONES = [
 ];
 MILESTONES.reverse(); // present day first, then journey back in time
 
-const SPACING = 760;
+/* ---- room content for the scenes ---- */
+const SKILL_GROUPS = [
+  { h: "Languages", items: "Python · Java · Go · JavaScript · SQL" },
+  { h: "Frameworks & Tools", items: "Spring Boot · Flask · React · Vue · Docker · Git" },
+  { h: "Data Engineering", items: "Apache Spark · Kafka · Databricks · ETL & Pipelines · Data Governance · Data Quality · Tableau · Power BI" },
+  { h: "Cloud & Infra", items: "AWS (S3 · Glue · Athena · EMR · Lambda) · Kubernetes · Terraform · Linux / RHEL · Microservices" },
+  { h: "Certifications", items: "CKAD · Terraform Associate · Databricks Lakehouse · AWS Cloud Practitioner · Claude 101 / Code 101" },
+];
+const ABOUT = {
+  paras: [
+    "I'm a data and platform engineer who likes owning the whole journey of data — from ingestion and ETL through the quality, governance, and reporting layers teams depend on. At JPMorgan I've spent four years building exactly that across compliance technology.",
+    "I work mostly in Java and Python, steadily deepening the platform side — Kubernetes (CKAD), Terraform, and AWS. I'm happiest with problems that are equal parts systems design and data craft.",
+  ],
+  facts: ["💼 Engineering @ JPMorganChase", "🗣️ English & Mandarin (native) · Cantonese", "📍 Singapore"],
+};
+const EDU = {
+  degree: "BSc, Information Systems",
+  org: "Singapore Management University · Summa Cum Laude · 2018–2022",
+  lines: [
+    "🏆 SIS Aspirations Scholarship · Dean's List (AY 2019, 2022)",
+    "🧐 Final-year project on online discussion forums — NLP & learning analytics.",
+    "📚 Focus: Machine Learning · AI · Text Mining · Social & Visual Analytics.",
+    "💼 Teaching Assistant across six courses.",
+  ],
+  cca: "CCAs: SMUX Trekking · SMU Strategica · SCIS Ellipsis",
+};
+
+/* ---- exhibit renderers ---- */
+function milestoneHTML(m) {
+  return `
+    <div class="milestone__node"></div>
+    <div class="milestone__card">
+      <div class="milestone__year">${m.year}</div>
+      <div class="milestone__badge">${m.badge}</div>
+      <div class="milestone__title">${esc(m.title)}</div>
+      <div class="milestone__org">${esc(m.org)}</div>
+      <ul class="milestone__lines">${m.lines.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>
+      ${m.present ? '<span class="milestone__present">Present day</span>' : ""}
+    </div>`;
+}
+function frameHTML(r) {
+  return `
+    <div class="frame">
+      <div class="frame__hook"></div>
+      <div class="frame__mat">
+        <div class="frame__canvas">
+          <span class="frame__tag">${esc(r.language || "project")}</span>
+          <h3 class="frame__title">${pretty(r.name)}</h3>
+          <p class="frame__desc">${esc(r.description || "A little experiment.")}</p>
+        </div>
+      </div>
+      <div class="frame__plate">
+        <a href="${esc(r.html_url)}" target="_blank" rel="noopener">View on GitHub ↗</a>
+        ${r.stargazers_count ? `<span>★ ${r.stargazers_count}</span>` : ""}
+      </div>
+    </div>`;
+}
+function boardHTML(groups) {
+  return `<div class="board">${groups.map((g, i) => `
+    <div class="postit postit--${i % 4}">
+      <h4>${esc(g.h)}</h4>
+      <p>${esc(g.items)}</p>
+    </div>`).join("")}</div>`;
+}
+function diplomaHTML(e) {
+  return `
+    <div class="diploma">
+      <div class="diploma__seal">🎓</div>
+      <h2 class="diploma__degree">${esc(e.degree)}</h2>
+      <p class="diploma__org">${esc(e.org)}</p>
+      <ul class="diploma__lines">${e.lines.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>
+      <p class="diploma__cca">${esc(e.cca)}</p>
+    </div>`;
+}
+function bookHTML(a) {
+  return `
+    <div class="book">
+      <div class="book__page">
+        <h2>The Sketchbook</h2>
+        ${a.paras.map((p) => `<p>${esc(p)}</p>`).join("")}
+      </div>
+      <div class="book__page book__page--right">
+        <h3>A few facts</h3>
+        <ul>${a.facts.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>
+      </div>
+    </div>`;
+}
+function postHTML() {
+  return `
+    <div class="postbox">
+      <div class="postbox__flag"></div>
+      <div class="postbox__icon">✉️</div>
+      <h2>The Postbox</h2>
+      <p>Open to interesting problems and good conversations.</p>
+      <p class="postbox__links">
+        <a href="mailto:jermyn1999@gmail.com">jermyn1999@gmail.com</a><br>
+        <a href="https://www.linkedin.com/in/jywh/" target="_blank" rel="noopener">LinkedIn</a> ·
+        <a href="https://github.com/jermynyeo" target="_blank" rel="noopener">GitHub</a>
+      </p>
+    </div>`;
+}
+async function fetchProjects() {
+  try {
+    const res = await fetch("https://api.github.com/users/jermynyeo/repos?per_page=100&sort=updated",
+      { headers: { Accept: "application/vnd.github+json" } });
+    if (!res.ok) throw new Error(res.status);
+    const repos = await res.json();
+    return repos
+      .filter((r) => !r.fork && !r.archived && r.name !== "jermynyeo")
+      .sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.updated_at) - new Date(a.updated_at))
+      .slice(0, 8);
+  } catch (e) {
+    return [{ name: "my-github", language: "", stargazers_count: 0,
+      description: "Couldn't load live projects right now — visit my GitHub to browse them.",
+      html_url: "https://github.com/jermynyeo" }];
+  }
+}
+
+/* ---- scene registry: every room is its own craft place ---- */
+const SCENES = {
+  experience: { theme: "milestone", spacing: 760, render: milestoneHTML, label: (m) => m.year,         items: () => MILESTONES },
+  projects:   { theme: "frame",     spacing: 560, render: frameHTML,      label: (r) => pretty(r.name),  items: fetchProjects },
+  skills:     { theme: "board",     spacing: 0, single: true, render: boardHTML, label: () => "Skills",   items: () => [SKILL_GROUPS] },
+  education:  { theme: "diploma",   spacing: 0, single: true, render: diplomaHTML, label: () => "Education", items: () => [EDU] },
+  about:      { theme: "book",      spacing: 0, single: true, render: bookHTML,    label: () => "About",     items: () => [ABOUT] },
+  contact:    { theme: "post",      spacing: 0, single: true, render: postHTML,    label: () => "Contact",   items: () => [0] },
+};
+let scene = null, items = [], exhibitEls = [];
 const sceneEl = $("#scene");
 const sky = $("#sky");
 const sctx = sky.getContext("2d");
@@ -368,26 +495,30 @@ const yearEl = $("#scene-year");
 
 let camS = 0, camTargetS = 0;
 let stars = [];
-let sceneBuilt = false;
 let dragS = null;
-let milestoneEls = [];
 
-function camMax() { return (MILESTONES.length - 1) * SPACING; }
+function camMax() { return scene ? Math.max(0, (items.length - 1) * scene.spacing) : 0; }
 
-function openScene() {
+async function openScene(key) {
+  const cfg = SCENES[key];
+  if (!cfg) return;
+  scene = cfg;
   sceneOpen = true;
   sceneEl.hidden = false;
   for (const k in keys) keys[k] = false;
   sizeSky();
-  initStars();
-  if (!sceneBuilt) buildScene();
+  const data = await Promise.resolve(cfg.items());
+  items = Array.isArray(data) ? data : [];
+  buildExhibits();
   camS = camTargetS = 0;
+  document.querySelector(".scene__hint").style.display = items.length > 1 ? "" : "none";
   sceneEl.addEventListener("wheel", onSceneWheel, { passive: false });
   sceneEl.addEventListener("pointerdown", onSceneDown);
   window.addEventListener("pointermove", onSceneMove);
   window.addEventListener("pointerup", onSceneUp);
   window.addEventListener("keydown", onSceneKey);
   window.addEventListener("resize", sizeSky);
+  $("#scene-back").addEventListener("click", closeScene); // dedup-safe (same fn ref)
   requestAnimationFrame(sceneLoop);
 }
 
@@ -400,36 +531,27 @@ function closeScene() {
   window.removeEventListener("pointerup", onSceneUp);
   window.removeEventListener("keydown", onSceneKey);
   window.removeEventListener("resize", sizeSky);
+  scene = null;
 }
 
-function buildScene() {
-  MILESTONES.forEach((m, i) => {
-    const el = document.createElement("div");
-    el.className = "milestone";
-    el.innerHTML = `
-      <div class="milestone__node"></div>
-      <div class="milestone__card">
-        <div class="milestone__year">${m.year}</div>
-        <div class="milestone__badge">${m.badge}</div>
-        <div class="milestone__title">${m.title}</div>
-        <div class="milestone__org">${esc(m.org)}</div>
-        <ul class="milestone__lines">${m.lines.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>
-        ${m.present ? '<span class="milestone__present">Present day</span>' : ""}
-      </div>`;
-    timelineEl.appendChild(el);
-    milestoneEls.push(el);
-  });
-
+function buildExhibits() {
+  timelineEl.innerHTML = "";
+  exhibitEls = [];
   const nav = $("#scene-nav");
-  MILESTONES.forEach((m, i) => {
-    const b = document.createElement("button");
-    b.title = m.year;
-    b.addEventListener("click", () => { camTargetS = i * SPACING; });
-    nav.appendChild(b);
+  nav.innerHTML = "";
+  items.forEach((d, i) => {
+    const el = document.createElement("div");
+    el.className = "exhibit exhibit--" + scene.theme;
+    el.innerHTML = scene.render(d);
+    timelineEl.appendChild(el);
+    exhibitEls.push(el);
+    if (items.length > 1) {
+      const b = document.createElement("button");
+      b.title = scene.label(d);
+      b.addEventListener("click", () => { camTargetS = i * scene.spacing; });
+      nav.appendChild(b);
+    }
   });
-
-  $("#scene-back").addEventListener("click", closeScene);
-  sceneBuilt = true;
 }
 
 function sizeSky() {
@@ -471,9 +593,11 @@ function onSceneMove(e) {
 function onSceneUp() { dragS = null; sceneEl.classList.remove("dragging"); }
 function onSceneKey(e) {
   if (e.key === "Escape") return closeScene();
-  const idx = Math.round(camTargetS / SPACING);
-  if (e.key === "ArrowRight" || e.key === "d") { e.preventDefault(); camTargetS = clamp((idx + 1) * SPACING, 0, camMax()); }
-  if (e.key === "ArrowLeft"  || e.key === "a") { e.preventDefault(); camTargetS = clamp((idx - 1) * SPACING, 0, camMax()); }
+  if (!scene || scene.single) return;
+  const sp = scene.spacing;
+  const idx = Math.round(camTargetS / sp);
+  if (e.key === "ArrowRight" || e.key === "d") { e.preventDefault(); camTargetS = clamp((idx + 1) * sp, 0, camMax()); }
+  if (e.key === "ArrowLeft"  || e.key === "a") { e.preventDefault(); camTargetS = clamp((idx - 1) * sp, 0, camMax()); }
 }
 
 function sceneLoop() {
@@ -482,7 +606,7 @@ function sceneLoop() {
   camS += (camTargetS - camS) * 0.12;
   const vel = camS - prev;
   drawSky(vel);
-  layoutMilestones();
+  layoutExhibits();
   requestAnimationFrame(sceneLoop);
 }
 
@@ -539,16 +663,19 @@ function drawSky(vel) {
   }
 }
 
-function layoutMilestones() {
+function layoutExhibits() {
+  if (!scene || !exhibitEls.length) return;
   const vw = window.innerWidth;
-  let activeIdx = Math.round(camS / SPACING);
-  activeIdx = Math.max(0, Math.min(MILESTONES.length - 1, activeIdx));
-  milestoneEls.forEach((el, i) => {
-    const x = vw / 2 + (i * SPACING - camS);
+  const sp = scene.spacing || 1;
+  const activeIdx = scene.single
+    ? 0
+    : Math.max(0, Math.min(items.length - 1, Math.round(camS / sp)));
+  exhibitEls.forEach((el, i) => {
+    const x = vw / 2 + (i * scene.spacing - camS);
     el.style.left = x + "px";
-    el.classList.toggle("active", i === activeIdx);
+    el.classList.toggle("active", scene.single || i === activeIdx);
   });
-  yearEl.textContent = MILESTONES[activeIdx].year;
+  yearEl.textContent = scene.label(items[activeIdx]);
   document.querySelectorAll("#scene-nav button").forEach((b, i) =>
     b.classList.toggle("on", i === activeIdx));
 }
