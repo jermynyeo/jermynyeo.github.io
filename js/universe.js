@@ -13,6 +13,7 @@ const ROOMS = [
   { key: "skills",     icon: "🧰", label: "The Toolbox",    sub: "Skills",     x: 2040, y: 1200 },
   { key: "education",  icon: "📚", label: "The Archive",    sub: "Education",  x: 1300, y: 1400 },
   { key: "contact",    icon: "✉️", label: "The Postbox",    sub: "Contact",    x: 600,  y: 1220 },
+  { key: "learnings",  icon: "🪶", label: "The Reading Nook", sub: "Learnings", x: 430,  y: 880  },
 ];
 
 const DOODLES = [
@@ -385,6 +386,15 @@ const EDU = {
   ],
   cca: "CCAs: SMUX Trekking · SMU Strategica · SCIS Ellipsis",
 };
+// DRAFT reflections — replace each `text` with your own 感想 / thoughts.
+const REFLECTIONS = [
+  { topic: "CKAD — Kubernetes", kind: "Certificate · 2024",
+    text: "DRAFT — your thoughts after CKAD: what finally clicked about Kubernetes, what surprised you, and how it changed the way you think about shipping services." },
+  { topic: "This Portfolio", kind: "Project · 2026",
+    text: "DRAFT — building my own site as an explorable craft world taught me… (scoping a playful idea, the design vs. engineering trade-offs, what you'd reuse next time)." },
+  { topic: "Fake News Detection", kind: "Project · University",
+    text: "DRAFT — reflecting on the NLP project: what worked, what was hard about the data, and what you'd do differently now with more experience." },
+];
 
 /* ---- exhibit renderers ---- */
 function milestoneHTML(m) {
@@ -460,6 +470,25 @@ function postHTML() {
       </p>
     </div>`;
 }
+function journalHTML(r) {
+  return `
+    <div class="journal">
+      <div class="journal__pin"></div>
+      <span class="journal__kind">${esc(r.kind)}</span>
+      <h3 class="journal__topic">${esc(r.topic)}</h3>
+      <p class="journal__text">${esc(r.text)}</p>
+    </div>`;
+}
+async function fetchReflections() {
+  try {
+    const res = await fetch("learnings/reflections.json", { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length) return data;
+    }
+  } catch (e) { /* fall through to drafts */ }
+  return REFLECTIONS; // draft fallback until you publish your own
+}
 async function fetchProjects() {
   try {
     const res = await fetch("https://api.github.com/users/jermynyeo/repos?per_page=100&sort=updated",
@@ -485,6 +514,7 @@ const SCENES = {
   education:  { theme: "diploma",   spacing: 0, single: true, render: diplomaHTML, label: () => "Education", items: () => [EDU] },
   about:      { theme: "book",      spacing: 0, single: true, render: bookHTML,    label: () => "About",     items: () => [ABOUT] },
   contact:    { theme: "post",      spacing: 0, single: true, render: postHTML,    label: () => "Contact",   items: () => [0] },
+  learnings:  { theme: "journal",   spacing: 620, render: journalHTML, label: (r) => r.topic, items: fetchReflections },
 };
 let scene = null, items = [], exhibitEls = [];
 const sceneEl = $("#scene");

@@ -17,6 +17,21 @@ no build step, with a **live GitHub project feed**.
 Config lives at the top of `js/main.js` (`CONFIG` object): username, feature
 topic, fallback count, and a list of repos to always hide.
 
+## Learnings drop-box (auto-refined via Claude)
+
+Drop a raw note in `learnings/drafts/*.md` (even from github.com on your phone)
+and a GitHub Action refines it with the Claude API and publishes it to both the
+résumé's **Learnings** section and the universe's **Reading Nook** — no terminal.
+
+- Each note's frontmatter takes `topic`, `kind`, and `refine` (`true` by default;
+  set `refine: false` to publish your exact words untouched).
+- The Action (`.github/workflows/refine-learnings.yml`) runs
+  `scripts/refine-learnings.mjs`, writes `learnings/reflections.json`, and commits it.
+- The site fetches that JSON live; if it's empty, it falls back to built-in drafts.
+- **Setup:** add a repo secret `ANTHROPIC_API_KEY` (Settings → Secrets and
+  variables → Actions). Model is set at the top of the script (`claude-opus-4-8`;
+  switch to `claude-haiku-4-5` to cut cost). See `learnings/drafts/README.md`.
+
 ## Editing content
 
 All static content (bio, experience, skills, education, contact) is plain HTML

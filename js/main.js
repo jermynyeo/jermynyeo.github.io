@@ -159,3 +159,25 @@ function escapeHTML(str) {
 function escapeAttr(str) {
   return String(str).replace(/"/g, "&quot;");
 }
+
+/* ---------- learnings (refined reflections, auto-published via CI) ---------- */
+renderLearnings();
+async function renderLearnings() {
+  const section = document.getElementById("learnings");
+  if (!section) return;
+  const grid = section.querySelector(".learnings");
+  try {
+    const res = await fetch("learnings/reflections.json", { cache: "no-store" });
+    if (!res.ok) return;
+    const items = await res.json();
+    if (!Array.isArray(items) || !items.length) return; // keep static draft cards
+    grid.innerHTML = items.map((r) => `
+      <article class="learn-card">
+        <span class="learn-card__kind">${escapeHTML(r.kind || "")}</span>
+        <h3>${escapeHTML(r.topic || "")}</h3>
+        <p>${escapeHTML(r.text || "")}</p>
+      </article>`).join("");
+    const note = section.querySelector(".section__note");
+    if (note) note.remove();
+  } catch (e) { /* keep static draft cards */ }
+}

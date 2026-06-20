@@ -401,6 +401,28 @@ a:hover { text-decoration: underline; }
 }
 .contact__links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
+/* ============ LEARNINGS ============ */
+.learnings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+.learn-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 22px 24px;
+  box-shadow: 0 8px 24px var(--shadow);
+}
+.learn-card:nth-child(odd)  { transform: rotate(-0.6deg); }
+.learn-card:nth-child(even) { transform: rotate(0.6deg); }
+.learn-card__kind {
+  font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--accent-2); font-weight: 600;
+}
+.learn-card h3 { font-family: var(--serif); margin: 6px 0 8px; font-size: 1.15rem; }
+.learn-card p { color: var(--ink-soft); font-size: 0.94rem; line-height: 1.6; margin: 0; }
+
 /* ============ FOOTER ============ */
 .footer {
   text-align: center;
