@@ -7,3 +7,11 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# Node / Next.js
+node_modules
+.next
+out
+.env*.local
+next-env.d.ts
+*.tsbuildinfo
