@@ -73,6 +73,8 @@ const useBreakableCard = (onBreak?: () => void) => {
   const velocityRef = useRef({ x: 0, y: 0 })
   const crackLevelRef = useRef(0)
   const isBrokenRef = useRef(false)
+  const debrisIdRef = useRef(0)
+  const spawnedCountRef = useRef(0)
 
   const triggerBreak = useCallback(() => {
     if (isBrokenRef.current) return
@@ -90,28 +92,26 @@ const useBreakableCard = (onBreak?: () => void) => {
     onBreak?.()
   }, [onBreak])
 
-  const spawnDebris = useCallback(
-    (level: number) => {
-      const newChunks: DebrisData[] = []
-      DEBRIS_THRESHOLDS.forEach((threshold, i) => {
-        if (level >= threshold && debrisChunks.length <= i) {
-          newChunks.push({
-            id: Date.now() + i,
-            x: Math.random() * 80 + 10,
-            y: Math.random() * 80 + 10,
-            rot: Math.random() * 360,
-            delay: 0,
-            path:
-              CHUNK_PATHS[Math.floor(Math.random() * CHUNK_PATHS.length)],
-          })
-        }
-      })
-      if (newChunks.length > 0) {
-        setDebrisChunks((prev) => [...prev, ...newChunks])
+  const spawnDebris = useCallback((level: number) => {
+    const newChunks: DebrisData[] = []
+    DEBRIS_THRESHOLDS.forEach((threshold, i) => {
+      if (level >= threshold && spawnedCountRef.current <= i) {
+        spawnedCountRef.current = i + 1
+        debrisIdRef.current += 1
+        newChunks.push({
+          id: debrisIdRef.current,
+          x: Math.random() * 80 + 10,
+          y: Math.random() * 80 + 10,
+          rot: Math.random() * 360,
+          delay: 0,
+          path: CHUNK_PATHS[Math.floor(Math.random() * CHUNK_PATHS.length)],
+        })
       }
-    },
-    [debrisChunks.length]
-  )
+    })
+    if (newChunks.length > 0) {
+      setDebrisChunks((prev) => [...prev, ...newChunks])
+    }
+  }, [])
 
   const handleDragStart = useCallback(
     (e: React.MouseEvent | React.TouchEvent) => {
@@ -214,6 +214,7 @@ const useBreakableCard = (onBreak?: () => void) => {
           crackLevelRef.current = newLevel
           if (newLevel <= 0) {
             setDebrisChunks([])
+            spawnedCountRef.current = 0
           }
           return newLevel
         })
@@ -249,6 +250,7 @@ const useBreakableCard = (onBreak?: () => void) => {
           })
           shakeIntensity.current = 0
           velocityRef.current = { x: 0, y: 0 }
+          spawnedCountRef.current = 0
           setRespawnProgress(0)
         }
       }, 50)
