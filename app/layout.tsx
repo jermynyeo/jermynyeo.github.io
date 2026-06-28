@@ -1,11 +1,12 @@
 import type { Metadata } from "next"
 import "./globals.css"
 import { ScrollProgress } from "@/components/ui/scroll-progress"
+import { site } from "@/content/site"
+import { theme } from "@/content/theme"
 
 export const metadata: Metadata = {
-  title: "Jermyn Yeo — Data & Platform Engineer",
-  description:
-    "Portfolio of Jermyn Yeo — data & platform engineer. Building data pipelines, ETL, data governance, and cloud-native backend services.",
+  title: site.title,
+  description: site.description,
 }
 
 export default function RootLayout({
@@ -14,9 +15,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang={site.lang}>
       <body>
-        <ScrollProgress />
+        {theme.scrollProgress.enabled && <ScrollProgress />}
         {children}
       </body>
     </html>

@@ -1,6 +1,7 @@
 "use client"
 
 import { HyperText } from "@/components/ui/hyper-text"
+import { theme } from "@/content/theme"
 
 interface SectionTitleProps {
   children: string
@@ -14,7 +15,7 @@ export function SectionTitle({ children }: SectionTitleProps) {
         className="ul-draw"
         startOnView
         animateOnHover
-        duration={650}
+        duration={theme.hyperText.duration}
       >
         {children}
       </HyperText>

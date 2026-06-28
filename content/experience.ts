@@ -1,0 +1,106 @@
+/**
+ * Experience timeline.
+ *
+ * An item can either:
+ *   (a) have `roles[]` — multiple roles at the same company (renders nested),
+ *   (b) have `bullets[]` only — a single-role item (e.g. an internship).
+ *
+ * Every bullet supports inline markdown: **bold**, *italic*, `code`.
+ *
+ * To reorder, just move items in the array. Newest at the top by convention.
+ */
+
+export interface ExperienceRole {
+  title: string
+  team?: string
+  dates: string
+  bullets: string[]
+}
+
+export interface ExperienceItem {
+  /** Big heading: usually the company, but can be a role title for single-role items */
+  title: string
+  dates: string
+  /** Sub-line under the title (e.g. "Compliance Technology · Singapore") */
+  org?: string
+  roles?: ExperienceRole[]
+  bullets?: string[]
+}
+
+export const experience = {
+  id: "experience",
+  heading: "Experience",
+  items: [
+    {
+      title: "JPMorganChase",
+      dates: "Aug 2022 — Present · ~4 yrs",
+      org: "Compliance Technology · Singapore",
+      roles: [
+        {
+          title: "Senior Associate Software Engineer",
+          team: "Data Governance & Controls",
+          dates: "Jan 2026 — Present",
+          bullets: [
+            "Led the development of automated **reconciliation jobs** for datasets onboarded to the data platform, systematically detecting and surfacing discrepancies across sources.",
+            "As a key contributor, built **data-quality validations** for cloud-onboarded datasets, enforcing business-quality standards that strengthened confidence in the data downstream teams rely on.",
+            "Spearheaded a **reconciliation-metrics dashboard** on an internal, business-facing visualization platform — pulling metrics asynchronously via **Kafka** into **Java Spring Boot** services — giving business teams real-time monitoring and the ability to act on recurring exceptions.",
+          ],
+        },
+        {
+          title: "Associate Software Engineer",
+          team: "Data Governance & Controls",
+          dates: "Feb 2024 — Jan 2026",
+          bullets: [
+            "Designed and built a self-service platform in **Java Spring Boot**, used by multiple teams to register, manage, and govern a large inventory of data feeds — replacing manual, spreadsheet-based tracking.",
+            "Engineered **Spark / Databricks** ETL pipelines processing terabyte-scale datasets into enterprise reporting, with automated reconciliation enforcing data quality across sources.",
+            "Led the migration of data products to **AWS (S3, Glue, Athena, Lambda)**, modernizing legacy systems for scale and resilience.",
+          ],
+        },
+        {
+          title: "Software Engineer",
+          team: "Trade Surveillance · Software Engineer Program (SEP), Class of 2022",
+          dates: "Aug 2022 — Jan 2024",
+          bullets: [
+            "Owned high-volume **batch** data ingestion and ETL (SQL stored procedures) for market surveillance.",
+            "Built backend microservices in **Java Spring Boot** supporting mission-critical surveillance workflows.",
+            "Drove cloud adoption on **AWS** — re-engineering legacy stored-procedure batch jobs into **Apache Spark** pipelines.",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Compliance Intern",
+      dates: "Jan — Apr 2022",
+      org: "Ernst & Young · Singapore",
+      bullets: [
+        "Executed regulatory compliance testing for enterprise clients and co-authored project proposals in cross-functional teams of 3–4.",
+      ],
+    },
+    {
+      title: "Software Engineer Intern",
+      dates: "Dec 2021",
+      org: "YouTrip · Singapore",
+      bullets: [
+        "Built backend APIs in Go for core business functions and integrated third-party APIs, validating them with Postman collections.",
+      ],
+    },
+    {
+      title: "Software Engineer Intern",
+      dates: "Dec 2020 — Jul 2021",
+      org: "GovTech Singapore",
+      bullets: [
+        "Built in-house dashboards in Python, Power BI, and Tableau, giving management real-time visibility into key decision-making metrics.",
+        "Developed visualizations and Kanban tooling for manpower and task tracking, streamlining workflows and improving team productivity.",
+      ],
+    },
+    {
+      title: "Undergraduate Research Assistant",
+      dates: "May — Aug 2020",
+      org: "Singapore Management University · Game Analytics",
+      bullets: [
+        "Led game-analytics research (Mobile Legends: Bang Bang) in a team of 3, building the data collection, cleaning, and analysis pipeline.",
+        "Designed and built a Vue + Laravel web application to surface the statistics and analysis to stakeholders.",
+      ],
+    },
+  ] satisfies ExperienceItem[],
+}

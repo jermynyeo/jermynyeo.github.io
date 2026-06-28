@@ -3,6 +3,8 @@
 import type React from "react"
 import { useState, useEffect, useCallback, useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
+import { hero } from "@/content/hero"
+import { theme } from "@/content/theme"
 
 interface Character {
   char: string
@@ -102,14 +104,7 @@ export const ScrambledTitle: React.FC = () => {
 
   useEffect(() => {
     if (mounted && scramblerRef.current) {
-      const phrases = [
-        "Hello, I'm Jermyn",
-        "Data & Platform Engineer",
-        "I build data pipelines",
-        "ETL · Governance · Cloud",
-        "Java · Python · Spark · AWS",
-        "Scroll for the full story",
-      ]
+      const phrases = hero.phrases
 
       let counter = 0
       const next = () => {
@@ -131,7 +126,7 @@ export const ScrambledTitle: React.FC = () => {
       className="text-white text-4xl sm:text-5xl md:text-6xl font-bold tracking-wider text-center px-4 whitespace-nowrap"
       style={{ fontFamily: "monospace" }}
     >
-      JERMYN YEO
+      {hero.heading}
     </h1>
   )
 }
@@ -247,12 +242,14 @@ function RainingChars({
  * scrolls down. Mount once near the top of the page.
  */
 export const RainingLettersBg: React.FC = () => {
-  const { characters, activeIndices } = useRainingCharacters(300)
+  const { characters, activeIndices } = useRainingCharacters(
+    theme.rain.charCount
+  )
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(
     scrollYProgress,
-    [0, 0.05, 0.22, 1],
-    [1, 0.55, 0.18, 0.06]
+    [...theme.rain.opacityCurve.progress],
+    [...theme.rain.opacityCurve.opacity]
   )
 
   return (

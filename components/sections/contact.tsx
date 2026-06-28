@@ -1,47 +1,45 @@
 import Reveal from "@/components/reveal"
 import { SectionTitle } from "@/components/section-title"
 import { BorderBeam } from "@/components/ui/border-beam"
+import { contact } from "@/content/contact"
+import { theme } from "@/content/theme"
 
 export default function ContactSection() {
+  const beam = theme.borderBeam
   return (
     <Reveal
       as="section"
-      id="contact"
+      id={contact.id}
       className="section section--contact"
     >
-      <SectionTitle>Let&apos;s talk</SectionTitle>
-      <p className="contact__lead">
-        Open to interesting problems and good conversations.
-      </p>
+      <SectionTitle>{contact.heading}</SectionTitle>
+      <p className="contact__lead">{contact.lead}</p>
       <div className="contact__links">
-        <a className="btn btn--primary" href="mailto:jermyn1999@gmail.com">
-          Email
-          <BorderBeam
-            duration={5}
-            size={40}
-            pathRadius={4}
-            colorFrom="#ffffff"
-            colorTo="rgba(255,255,255,0)"
-          />
-        </a>
-        <a
-          className="btn btn--ghost"
-          href="https://www.linkedin.com/in/jywh/"
-          target="_blank"
-          rel="noopener"
-        >
-          LinkedIn
-          <BorderBeam duration={6} size={40} pathRadius={4} delay={2} />
-        </a>
-        <a
-          className="btn btn--ghost"
-          href="https://github.com/jermynyeo"
-          target="_blank"
-          rel="noopener"
-        >
-          GitHub
-          <BorderBeam duration={6} size={40} pathRadius={4} delay={4} />
-        </a>
+        {contact.links.map((link, i) => {
+          const isPrimary = link.kind === "primary"
+          return (
+            <a
+              key={i}
+              className={`btn ${isPrimary ? "btn--primary" : "btn--ghost"}`}
+              href={link.href}
+              {...(link.external
+                ? { target: "_blank", rel: "noopener" }
+                : {})}
+            >
+              {link.label}
+              <BorderBeam
+                duration={beam.duration + i}
+                size={beam.size}
+                pathRadius={beam.pathRadius}
+                delay={i * 2}
+                colorFrom={
+                  isPrimary ? beam.primaryColorFrom : beam.ghostColorFrom
+                }
+                colorTo={isPrimary ? beam.primaryColorTo : beam.ghostColorTo}
+              />
+            </a>
+          )
+        })}
       </div>
     </Reveal>
   )

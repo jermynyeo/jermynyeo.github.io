@@ -2,25 +2,11 @@
 
 import { useEffect, useState } from "react"
 import { BreakableCard } from "@/components/ui/kinetic-shatter-box-section"
+import { richText } from "@/components/rich-text"
+import { projects } from "@/content/projects"
 
-const CONFIG = {
-  USERNAME: "jermynyeo",
-  FEATURE_TOPIC: "portfolio",
-  FALLBACK_COUNT: 6,
-  EXCLUDE: ["jermynyeo"],
-}
-
-const LANG_COLORS: Record<string, string> = {
-  Python: "#3572A5",
-  JavaScript: "#f1e05a",
-  TypeScript: "#3178c6",
-  "Jupyter Notebook": "#DA5B0B",
-  HTML: "#e34c26",
-  CSS: "#563d7c",
-  Vue: "#41b883",
-  Shell: "#89e051",
-  Java: "#b07219",
-}
+const GITHUB = projects.github
+const LANG_COLORS = projects.langColors
 
 interface Repo {
   name: string
@@ -42,10 +28,10 @@ type State =
 
 function curate(repos: Repo[]): Repo[] {
   const usable = repos.filter(
-    (r) => !r.fork && !r.archived && !CONFIG.EXCLUDE.includes(r.name)
+    (r) => !r.fork && !r.archived && !GITHUB.exclude.includes(r.name)
   )
   const tagged = usable.filter(
-    (r) => Array.isArray(r.topics) && r.topics.includes(CONFIG.FEATURE_TOPIC)
+    (r) => Array.isArray(r.topics) && r.topics.includes(GITHUB.featureTopic)
   )
   const sorted = (list: Repo[]) =>
     [...list].sort((a, b) => {
@@ -56,7 +42,7 @@ function curate(repos: Repo[]): Repo[] {
     })
   return tagged.length > 0
     ? sorted(tagged)
-    : sorted(usable).slice(0, CONFIG.FALLBACK_COUNT)
+    : sorted(usable).slice(0, GITHUB.fallbackCount)
 }
 
 function prettifyName(name: string) {
@@ -72,7 +58,7 @@ function formatDate(iso: string) {
 
 function RepoBody({ repo }: { repo: Repo }) {
   const topics = (repo.topics ?? [])
-    .filter((t) => t !== CONFIG.FEATURE_TOPIC)
+    .filter((t) => t !== GITHUB.featureTopic)
     .slice(0, 4)
   return (
     <div className="flex flex-col gap-3">
@@ -136,7 +122,7 @@ export default function ProjectsGrid() {
   const [state, setState] = useState<State>({ kind: "loading" })
 
   useEffect(() => {
-    const url = `https://api.github.com/users/${CONFIG.USERNAME}/repos?per_page=100&sort=updated`
+    const url = `https://api.github.com/users/${GITHUB.username}/repos?per_page=100&sort=updated`
     fetch(url, { headers: { Accept: "application/vnd.github+json" } })
       .then((r) => {
         if (!r.ok) throw new Error(`GitHub API ${r.status}`)
@@ -149,7 +135,7 @@ export default function ProjectsGrid() {
   if (state.kind === "loading") {
     return (
       <div id="projects-grid" className="projects" aria-live="polite">
-        <div className="projects__loading">Fetching projects from GitHub…</div>
+        <div className="projects__loading">{projects.loadingText}</div>
       </div>
     )
   }
@@ -158,14 +144,13 @@ export default function ProjectsGrid() {
     return (
       <div id="projects-grid" className="projects" aria-live="polite">
         <p className="projects__error">
-          Couldn&apos;t reach GitHub right now (the public API allows ~60
-          requests/hour). Meanwhile, you can browse everything on{" "}
+          {projects.errorFallback.text}{" "}
           <a
-            href={`https://github.com/${CONFIG.USERNAME}?tab=repositories`}
+            href={projects.errorFallback.linkHref}
             target="_blank"
             rel="noopener"
           >
-            my GitHub →
+            {projects.errorFallback.linkLabel}
           </a>
         </p>
       </div>
@@ -175,9 +160,7 @@ export default function ProjectsGrid() {
   if (state.repos.length === 0) {
     return (
       <div id="projects-grid" className="projects" aria-live="polite">
-        <p className="projects__error">
-          No public projects to show yet — check back soon.
-        </p>
+        <p className="projects__error">{projects.emptyText}</p>
       </div>
     )
   }
@@ -185,8 +168,7 @@ export default function ProjectsGrid() {
   return (
     <>
       <p className="section__note" style={{ marginTop: "-12px" }}>
-        <span className="text-[#00ff00]">tip:</span> grab a card and shake it
-        — see what happens.
+        {richText(projects.tip)}
       </p>
       <div id="projects-grid" className="projects" aria-live="polite">
         {state.repos.map((repo) => (

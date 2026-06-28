@@ -9,22 +9,15 @@ import SkillsSection from "@/components/sections/skills"
 import EducationSection from "@/components/sections/education"
 import LearningsSection from "@/components/sections/learnings"
 import ContactSection from "@/components/sections/contact"
-
-const SECTIONS = [
-  { href: "#about", label: "about" },
-  { href: "#experience", label: "experience" },
-  { href: "#projects", label: "projects" },
-  { href: "#stack", label: "stack" },
-  { href: "#education", label: "education" },
-  { href: "#learnings", label: "learnings" },
-  { href: "#contact", label: "contact" },
-]
+import { nav } from "@/content/nav"
+import { hero } from "@/content/hero"
+import { site } from "@/content/site"
 
 export default function Page() {
   return (
     <>
       <nav aria-label="Primary" className="hero-nav">
-        {SECTIONS.map((s) => (
+        {nav.map((s) => (
           <a key={s.href} href={s.href}>
             {s.label}
           </a>
@@ -37,8 +30,12 @@ export default function Page() {
         <div className="hero-scene__title">
           <ScrambledTitle />
         </div>
-        <a href="#about" className="scroll-hint" aria-label="Scroll to content">
-          scroll
+        <a
+          href={hero.scrollHintHref}
+          className="scroll-hint"
+          aria-label={hero.scrollHintAriaLabel}
+        >
+          {hero.scrollHintLabel}
         </a>
       </section>
 
@@ -53,7 +50,9 @@ export default function Page() {
       </main>
 
       <footer className="footer">
-        <p>Handmade by Jermyn Yeo · {new Date().getFullYear()}</p>
+        <p>
+          {site.footerByline} · {new Date().getFullYear()}
+        </p>
       </footer>
     </>
   )
