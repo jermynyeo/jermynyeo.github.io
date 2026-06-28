@@ -1,0 +1,23 @@
+"use client"
+
+import { HyperText } from "@/components/ui/hyper-text"
+
+interface SectionTitleProps {
+  children: string
+}
+
+export function SectionTitle({ children }: SectionTitleProps) {
+  return (
+    <h2 className="section__title">
+      <HyperText
+        as="span"
+        className="ul-draw"
+        startOnView
+        animateOnHover
+        duration={650}
+      >
+        {children}
+      </HyperText>
+    </h2>
+  )
+}

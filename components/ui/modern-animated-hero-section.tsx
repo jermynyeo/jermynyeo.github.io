@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useState, useEffect, useCallback, useRef } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
 
 interface Character {
   char: string
@@ -9,6 +10,9 @@ interface Character {
   y: number
   speed: number
 }
+
+const ALL_CHARS =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?"
 
 class TextScramble {
   el: HTMLElement
@@ -26,7 +30,7 @@ class TextScramble {
 
   constructor(el: HTMLElement) {
     this.el = el
-    this.chars = '!<>-_\\/[]{}—=+*^?#'
+    this.chars = "!<>-_\\/[]{}—=+*^?#"
     this.queue = []
     this.frame = 0
     this.frameRequest = 0
@@ -41,8 +45,8 @@ class TextScramble {
     this.queue = []
 
     for (let i = 0; i < length; i++) {
-      const from = oldText[i] || ''
-      const to = newText[i] || ''
+      const from = oldText[i] || ""
+      const to = newText[i] || ""
       const start = Math.floor(Math.random() * 40)
       const end = start + Math.floor(Math.random() * 40)
       this.queue.push({ from, to, start, end })
@@ -55,7 +59,7 @@ class TextScramble {
   }
 
   update() {
-    let output = ''
+    let output = ""
     let complete = 0
 
     for (let i = 0, n = this.queue.length; i < n; i++) {
@@ -84,7 +88,7 @@ class TextScramble {
   }
 }
 
-const ScrambledTitle: React.FC = () => {
+export const ScrambledTitle: React.FC = () => {
   const elementRef = useRef<HTMLHeadingElement>(null)
   const scramblerRef = useRef<TextScramble | null>(null)
   const [mounted, setMounted] = useState(false)
@@ -100,11 +104,11 @@ const ScrambledTitle: React.FC = () => {
     if (mounted && scramblerRef.current) {
       const phrases = [
         "Hello, I'm Jermyn",
-        'Data & Platform Engineer',
-        'I build data pipelines',
-        'ETL · Governance · Cloud',
-        'Java · Python · Spark · AWS',
-        'Scroll for the full story',
+        "Data & Platform Engineer",
+        "I build data pipelines",
+        "ETL · Governance · Cloud",
+        "Java · Python · Spark · AWS",
+        "Scroll for the full story",
       ]
 
       let counter = 0
@@ -125,114 +129,108 @@ const ScrambledTitle: React.FC = () => {
     <h1
       ref={elementRef}
       className="text-white text-4xl sm:text-5xl md:text-6xl font-bold tracking-wider text-center px-4 whitespace-nowrap"
-      style={{ fontFamily: 'monospace' }}
+      style={{ fontFamily: "monospace" }}
     >
       JERMYN YEO
     </h1>
   )
 }
 
-const RainingLetters: React.FC = () => {
+function useRainingCharacters(count: number) {
   const [characters, setCharacters] = useState<Character[]>([])
   const [activeIndices, setActiveIndices] = useState<Set<number>>(new Set())
 
   const createCharacters = useCallback(() => {
-    const allChars =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'
-    const charCount = 300
     const newCharacters: Character[] = []
-
-    for (let i = 0; i < charCount; i++) {
+    for (let i = 0; i < count; i++) {
       newCharacters.push({
-        char: allChars[Math.floor(Math.random() * allChars.length)],
+        char: ALL_CHARS[Math.floor(Math.random() * ALL_CHARS.length)],
         x: Math.random() * 100,
         y: Math.random() * 100,
         speed: 0.1 + Math.random() * 0.3,
       })
     }
-
     return newCharacters
-  }, [])
+  }, [count])
 
   useEffect(() => {
     setCharacters(createCharacters())
   }, [createCharacters])
 
   useEffect(() => {
-    const updateActiveIndices = () => {
-      const newActiveIndices = new Set<number>()
+    if (!characters.length) return
+    const flicker = setInterval(() => {
+      const newActive = new Set<number>()
       const numActive = Math.floor(Math.random() * 3) + 3
       for (let i = 0; i < numActive; i++) {
-        newActiveIndices.add(Math.floor(Math.random() * characters.length))
+        newActive.add(Math.floor(Math.random() * characters.length))
       }
-      setActiveIndices(newActiveIndices)
-    }
-
-    const flickerInterval = setInterval(updateActiveIndices, 50)
-    return () => clearInterval(flickerInterval)
+      setActiveIndices(newActive)
+    }, 50)
+    return () => clearInterval(flicker)
   }, [characters.length])
 
   useEffect(() => {
-    let animationFrameId: number
-
-    const updatePositions = () => {
-      setCharacters((prevChars) =>
-        prevChars.map((char) => ({
-          ...char,
-          y: char.y + char.speed,
-          ...(char.y >= 100 && {
+    let raf: number
+    const tick = () => {
+      setCharacters((prev) =>
+        prev.map((c) => ({
+          ...c,
+          y: c.y + c.speed,
+          ...(c.y >= 100 && {
             y: -5,
             x: Math.random() * 100,
-            char: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'[
-              Math.floor(
-                Math.random() *
-                  'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?'.length
-              )
-            ],
+            char: ALL_CHARS[Math.floor(Math.random() * ALL_CHARS.length)],
           }),
         }))
       )
-      animationFrameId = requestAnimationFrame(updatePositions)
+      raf = requestAnimationFrame(tick)
     }
-
-    animationFrameId = requestAnimationFrame(updatePositions)
-    return () => cancelAnimationFrame(animationFrameId)
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
   }, [])
 
-  return (
-    <div className="relative w-full h-screen bg-black overflow-hidden">
-      {/* Title */}
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
-        <ScrambledTitle />
-      </div>
+  return { characters, activeIndices }
+}
 
-      {/* Raining Characters */}
-      {characters.map((char, index) => (
-        <span
-          key={index}
-          className={`absolute text-xs transition-colors duration-100 ${
-            activeIndices.has(index)
-              ? 'text-[#00ff00] text-base scale-125 z-10 font-bold animate-pulse'
-              : 'text-slate-600 font-light'
-          }`}
-          style={{
-            left: `${char.x}%`,
-            top: `${char.y}%`,
-            transform: `translate(-50%, -50%) ${
-              activeIndices.has(index) ? 'scale(1.25)' : 'scale(1)'
-            }`,
-            textShadow: activeIndices.has(index)
-              ? '0 0 8px rgba(255,255,255,0.8), 0 0 12px rgba(255,255,255,0.4)'
-              : 'none',
-            opacity: activeIndices.has(index) ? 1 : 0.4,
-            transition: 'color 0.1s, transform 0.1s, text-shadow 0.1s',
-            willChange: 'transform, top',
-            fontSize: '1.8rem',
-          }}
-        >
-          {char.char}
-        </span>
-      ))}
+function RainingChars({
+  characters,
+  activeIndices,
+}: {
+  characters: Character[]
+  activeIndices: Set<number>
+}) {
+  return (
+    <>
+      {characters.map((char, index) => {
+        const isActive = activeIndices.has(index)
+        return (
+          <span
+            key={index}
+            className={`absolute text-xs transition-colors duration-100 ${
+              isActive
+                ? "text-[#00ff00] text-base scale-125 z-10 font-bold animate-pulse"
+                : "text-slate-600 font-light"
+            }`}
+            style={{
+              left: `${char.x}%`,
+              top: `${char.y}%`,
+              transform: `translate(-50%, -50%) ${
+                isActive ? "scale(1.25)" : "scale(1)"
+              }`,
+              textShadow: isActive
+                ? "0 0 8px rgba(255,255,255,0.8), 0 0 12px rgba(255,255,255,0.4)"
+                : "none",
+              opacity: isActive ? 1 : 0.4,
+              transition: "color 0.1s, transform 0.1s, text-shadow 0.1s",
+              willChange: "transform, top",
+              fontSize: "1.8rem",
+            }}
+          >
+            {char.char}
+          </span>
+        )
+      })}
 
       <style jsx global>{`
         .dud {
@@ -240,6 +238,47 @@ const RainingLetters: React.FC = () => {
           opacity: 0.7;
         }
       `}</style>
+    </>
+  )
+}
+
+/**
+ * Fixed full-viewport raining-letters background that fades as the user
+ * scrolls down. Mount once near the top of the page.
+ */
+export const RainingLettersBg: React.FC = () => {
+  const { characters, activeIndices } = useRainingCharacters(300)
+  const { scrollYProgress } = useScroll()
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.05, 0.22, 1],
+    [1, 0.55, 0.18, 0.06]
+  )
+
+  return (
+    <motion.div
+      aria-hidden
+      className="fixed inset-0 z-0 pointer-events-none overflow-hidden"
+      style={{ opacity }}
+    >
+      <RainingChars characters={characters} activeIndices={activeIndices} />
+    </motion.div>
+  )
+}
+
+/**
+ * Legacy combined export (rain + centered title) kept for back-compat.
+ * Prefer `<RainingLettersBg />` + `<ScrambledTitle />` for new layouts.
+ */
+const RainingLetters: React.FC = () => {
+  const { characters, activeIndices } = useRainingCharacters(300)
+
+  return (
+    <div className="relative w-full h-screen bg-black overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+        <ScrambledTitle />
+      </div>
+      <RainingChars characters={characters} activeIndices={activeIndices} />
     </div>
   )
 }

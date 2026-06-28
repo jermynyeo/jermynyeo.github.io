@@ -1,12 +1,11 @@
 import Reveal from "@/components/reveal"
 import ProjectsGrid from "@/components/sections/projects-grid"
+import { SectionTitle } from "@/components/section-title"
 
 export default function ProjectsSection() {
   return (
     <Reveal as="section" id="projects" className="section">
-      <h2 className="section__title">
-        <span className="ul-draw">Projects</span>
-      </h2>
+      <SectionTitle>Projects</SectionTitle>
       <p className="section__note">
         Pulled live from GitHub. Tag a repo with the topic{" "}
         <code>portfolio</code> to feature it here.

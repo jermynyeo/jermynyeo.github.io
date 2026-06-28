@@ -1,4 +1,6 @@
 import Reveal from "@/components/reveal"
+import { SectionTitle } from "@/components/section-title"
+import { BorderBeam } from "@/components/ui/border-beam"
 
 export default function ContactSection() {
   return (
@@ -7,15 +9,20 @@ export default function ContactSection() {
       id="contact"
       className="section section--contact"
     >
-      <h2 className="section__title">
-        <span className="ul-draw">Let&apos;s talk</span>
-      </h2>
+      <SectionTitle>Let&apos;s talk</SectionTitle>
       <p className="contact__lead">
         Open to interesting problems and good conversations.
       </p>
       <div className="contact__links">
         <a className="btn btn--primary" href="mailto:jermyn1999@gmail.com">
           Email
+          <BorderBeam
+            duration={5}
+            size={40}
+            pathRadius={4}
+            colorFrom="#ffffff"
+            colorTo="rgba(255,255,255,0)"
+          />
         </a>
         <a
           className="btn btn--ghost"
@@ -24,6 +31,7 @@ export default function ContactSection() {
           rel="noopener"
         >
           LinkedIn
+          <BorderBeam duration={6} size={40} pathRadius={4} delay={2} />
         </a>
         <a
           className="btn btn--ghost"
@@ -32,6 +40,7 @@ export default function ContactSection() {
           rel="noopener"
         >
           GitHub
+          <BorderBeam duration={6} size={40} pathRadius={4} delay={4} />
         </a>
       </div>
     </Reveal>

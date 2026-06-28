@@ -1,11 +1,11 @@
 import Reveal from "@/components/reveal"
+import { SectionTitle } from "@/components/section-title"
+import { MagicCard } from "@/components/ui/magic-card"
 
 export default function AboutSection() {
   return (
     <Reveal as="section" id="about" className="section">
-      <h2 className="section__title">
-        <span className="ul-draw">About</span>
-      </h2>
+      <SectionTitle>About</SectionTitle>
       <div className="about">
         <div className="about__text">
           <p>
@@ -24,16 +24,18 @@ export default function AboutSection() {
             about building things that are reliable — not just clever.
           </p>
         </div>
-        <aside className="about__card">
-          <h3>Currently</h3>
-          <ul>
-            <li>
-              💼 Engineering @ <strong>JPMorganChase</strong>
-            </li>
-            <li>🗣️ English &amp; Mandarin (native) · Cantonese</li>
-            <li>📍 Singapore</li>
-          </ul>
-        </aside>
+        <MagicCard className="about__card-wrap">
+          <aside className="about__card">
+            <h3>Currently</h3>
+            <ul>
+              <li>
+                💼 Engineering @ <strong>JPMorganChase</strong>
+              </li>
+              <li>🗣️ English &amp; Mandarin (native) · Cantonese</li>
+              <li>📍 Singapore</li>
+            </ul>
+          </aside>
+        </MagicCard>
       </div>
     </Reveal>
   )

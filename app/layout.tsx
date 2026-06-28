@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import "./globals.css"
+import { ScrollProgress } from "@/components/ui/scroll-progress"
 
 export const metadata: Metadata = {
   title: "Jermyn Yeo — Data & Platform Engineer",
@@ -14,7 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ScrollProgress />
+        {children}
+      </body>
     </html>
   )
 }

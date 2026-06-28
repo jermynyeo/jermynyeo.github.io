@@ -1,11 +1,10 @@
 import Reveal from "@/components/reveal"
+import { SectionTitle } from "@/components/section-title"
 
 export default function EducationSection() {
   return (
     <Reveal as="section" id="education" className="section">
-      <h2 className="section__title">
-        <span className="ul-draw">Education</span>
-      </h2>
+      <SectionTitle>Education</SectionTitle>
       <ol className="timeline">
         <li className="timeline__item">
           <div className="timeline__dot" />

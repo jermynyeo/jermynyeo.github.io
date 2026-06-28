@@ -1,11 +1,13 @@
 import Reveal from "@/components/reveal"
+import { SectionTitle } from "@/components/section-title"
+import { SectionBackdrop } from "@/components/ui/section-backdrop"
 
 export default function ExperienceSection() {
   return (
-    <Reveal as="section" id="experience" className="section">
-      <h2 className="section__title">
-        <span className="ul-draw">Experience</span>
-      </h2>
+    <Reveal as="section" id="experience" className="section section--with-bg">
+      <SectionBackdrop />
+      <div className="section__inner">
+      <SectionTitle>Experience</SectionTitle>
       <ol className="timeline">
         <li className="timeline__item">
           <div className="timeline__dot" />
@@ -185,6 +187,7 @@ export default function ExperienceSection() {
           </div>
         </li>
       </ol>
+      </div>
     </Reveal>
   )
 }

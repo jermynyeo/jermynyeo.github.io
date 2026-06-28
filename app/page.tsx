@@ -1,4 +1,7 @@
-import RainingLetters from "@/components/ui/modern-animated-hero-section"
+import {
+  RainingLettersBg,
+  ScrambledTitle,
+} from "@/components/ui/modern-animated-hero-section"
 import AboutSection from "@/components/sections/about"
 import ExperienceSection from "@/components/sections/experience"
 import ProjectsSection from "@/components/sections/projects"
@@ -11,7 +14,7 @@ const SECTIONS = [
   { href: "#about", label: "about" },
   { href: "#experience", label: "experience" },
   { href: "#projects", label: "projects" },
-  { href: "#skills", label: "skills" },
+  { href: "#stack", label: "stack" },
   { href: "#education", label: "education" },
   { href: "#learnings", label: "learnings" },
   { href: "#contact", label: "contact" },
@@ -28,8 +31,12 @@ export default function Page() {
         ))}
       </nav>
 
-      <section className="relative">
-        <RainingLetters />
+      <RainingLettersBg />
+
+      <section className="hero-scene">
+        <div className="hero-scene__title">
+          <ScrambledTitle />
+        </div>
         <a href="#about" className="scroll-hint" aria-label="Scroll to content">
           scroll
         </a>
