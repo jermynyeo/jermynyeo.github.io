@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { BreakableCard } from "@/components/ui/kinetic-shatter-box-section"
 
 const CONFIG = {
   USERNAME: "jermynyeo",
@@ -69,6 +70,68 @@ function formatDate(iso: string) {
   })
 }
 
+function RepoBody({ repo }: { repo: Repo }) {
+  const topics = (repo.topics ?? [])
+    .filter((t) => t !== CONFIG.FEATURE_TOPIC)
+    .slice(0, 4)
+  return (
+    <div className="flex flex-col gap-3">
+      <p className="line-clamp-3 m-0">
+        {repo.description ?? (
+          <em className="text-[#64748b]">No description yet.</em>
+        )}
+      </p>
+      <div className="flex items-center gap-3 text-[11px] text-[#64748b] flex-wrap tabular-nums">
+        {repo.language && (
+          <span className="inline-flex items-center gap-1.5 text-[#94a3b8]">
+            <span
+              className="inline-block w-2 h-2 rounded-full"
+              style={{ background: LANG_COLORS[repo.language] ?? "#00ff00" }}
+            />
+            {repo.language}
+          </span>
+        )}
+        {repo.stargazers_count > 0 && <span>★ {repo.stargazers_count}</span>}
+        <span>upd {formatDate(repo.updated_at)}</span>
+      </div>
+      {topics.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {topics.map((t) => (
+            <span
+              key={t}
+              className="text-[10px] px-1.5 py-0.5 border border-[rgba(0,255,0,0.18)] text-[#94a3b8] rounded-sm"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+      )}
+      <div className="flex gap-4 text-[12px] font-bold text-[#00ff00] mt-auto">
+        <a
+          href={repo.html_url}
+          target="_blank"
+          rel="noopener"
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+        >
+          code ↗
+        </a>
+        {repo.homepage && repo.homepage.startsWith("http") && (
+          <a
+            href={repo.homepage}
+            target="_blank"
+            rel="noopener"
+            onMouseDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
+          >
+            live ↗
+          </a>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export default function ProjectsGrid() {
   const [state, setState] = useState<State>({ kind: "loading" })
 
@@ -120,58 +183,21 @@ export default function ProjectsGrid() {
   }
 
   return (
-    <div id="projects-grid" className="projects" aria-live="polite">
-      {state.repos.map((repo) => {
-        const topics = (repo.topics ?? [])
-          .filter((t) => t !== CONFIG.FEATURE_TOPIC)
-          .slice(0, 4)
-        return (
-          <article key={repo.name} className="card">
-            <h3 className="card__title">{prettifyName(repo.name)}</h3>
-            <p className="card__desc">
-              {repo.description ?? (
-                <em>No description yet — add one on GitHub and it&apos;ll show here.</em>
-              )}
-            </p>
-            <div className="card__meta">
-              {repo.language && (
-                <span className="card__lang">
-                  <span
-                    className="card__lang-dot"
-                    style={{
-                      background: LANG_COLORS[repo.language] ?? "#3a6b66",
-                    }}
-                  />
-                  {repo.language}
-                </span>
-              )}
-              {repo.stargazers_count > 0 && (
-                <span>★ {repo.stargazers_count}</span>
-              )}
-              <span>Updated {formatDate(repo.updated_at)}</span>
-            </div>
-            {topics.length > 0 && (
-              <div className="card__topics">
-                {topics.map((t) => (
-                  <span key={t} className="card__topic">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            )}
-            <div className="card__links">
-              <a href={repo.html_url} target="_blank" rel="noopener">
-                Code ↗
-              </a>
-              {repo.homepage && repo.homepage.startsWith("http") && (
-                <a href={repo.homepage} target="_blank" rel="noopener">
-                  Live ↗
-                </a>
-              )}
-            </div>
-          </article>
-        )
-      })}
-    </div>
+    <>
+      <p className="section__note" style={{ marginTop: "-12px" }}>
+        <span className="text-[#00ff00]">tip:</span> grab a card and shake it
+        — see what happens.
+      </p>
+      <div id="projects-grid" className="projects" aria-live="polite">
+        {state.repos.map((repo) => (
+          <div key={repo.name} className="min-h-[18rem]">
+            <BreakableCard
+              title={prettifyName(repo.name)}
+              description={<RepoBody repo={repo} />}
+            />
+          </div>
+        ))}
+      </div>
+    </>
   )
 }

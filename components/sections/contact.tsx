@@ -15,7 +15,7 @@ export default function ContactSection() {
       </p>
       <div className="contact__links">
         <a className="btn btn--primary" href="mailto:jermyn1999@gmail.com">
-          jermyn1999@gmail.com
+          Email
         </a>
         <a
           className="btn btn--ghost"
