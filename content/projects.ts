@@ -1,5 +1,6 @@
 /**
- * Projects section — pulls live from GitHub on page load.
+ * Projects section — fetched from GitHub at build time (see lib/github.ts),
+ * with a committed snapshot in data/github-repos.json as offline fallback.
  *
  * To feature a repo: tag it with the GitHub topic listed in `github.featureTopic`.
  * If no repo carries the tag, the section shows the top `fallbackCount` repos
@@ -10,7 +11,7 @@
 export const projects = {
   id: "projects",
   heading: "Projects",
-  note: "Pulled live from GitHub. Tag a repo with the topic `portfolio` to feature it here.",
+  note: "Synced from GitHub on every deploy. Tag a repo with the topic `portfolio` to feature it here.",
   tip: "**tip:** grab a card and shake it — see what happens.",
   moreLink: {
     label: "See all repositories on GitHub →",
@@ -34,12 +35,5 @@ export const projects = {
     Shell: "#89e051",
     Java: "#b07219",
   } as Record<string, string>,
-  /** Fallback when GitHub API can't be reached (rate-limited etc.) */
-  errorFallback: {
-    text: "Couldn't reach GitHub right now (the public API allows ~60 requests/hour). Meanwhile, you can browse everything on",
-    linkLabel: "my GitHub →",
-    linkHref: "https://github.com/jermynyeo?tab=repositories",
-  },
   emptyText: "No public projects to show yet — check back soon.",
-  loadingText: "Fetching projects from GitHub…",
 }

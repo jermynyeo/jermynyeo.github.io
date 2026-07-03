@@ -27,7 +27,7 @@ export function MagicCard({
   children,
   className,
   gradientSize = 240,
-  gradientColor = "rgba(0, 255, 0, 0.18)",
+  gradientColor = "rgba(74, 222, 128, 0.14)",
   gradientOpacity = 1,
 }: MagicCardProps) {
   const reduce = useReducedMotion()

@@ -17,12 +17,12 @@ export function ScrollProgress({ className }: ScrollProgressProps) {
     <motion.div
       aria-hidden
       className={cn(
-        "fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-[#00ff00] via-[#7CFC8A] to-[#00ff00]",
+        "scroll-progress fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-[#4ade80] via-[#bbf7d0] to-[#4ade80]",
         className
       )}
       style={{
         scaleX: scrollYProgress,
-        boxShadow: "0 0 10px rgba(0, 255, 0, 0.55)",
+        boxShadow: "0 0 10px rgba(74, 222, 128, 0.45)",
       }}
     />
   )

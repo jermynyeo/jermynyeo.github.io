@@ -14,6 +14,11 @@ export interface ExperienceRole {
   title: string
   team?: string
   dates: string
+  /**
+   * One-line skim shown when the role is collapsed. Roles with a summary
+   * render as click-to-expand; roles without one show bullets directly.
+   */
+  summary?: string
   bullets: string[]
 }
 
@@ -40,6 +45,8 @@ export const experience = {
           title: "Senior Associate Software Engineer",
           team: "Data Governance & Controls",
           dates: "Jan 2026 — Present",
+          summary:
+            "Reconciliation automation, data-quality controls, and a **Kafka**-fed metrics dashboard for business teams.",
           bullets: [
             "Led the development of automated **reconciliation jobs** for datasets onboarded to the data platform, systematically detecting and surfacing discrepancies across sources.",
             "As a key contributor, built **data-quality validations** for cloud-onboarded datasets, enforcing business-quality standards that strengthened confidence in the data downstream teams rely on.",
@@ -50,6 +57,8 @@ export const experience = {
           title: "Associate Software Engineer",
           team: "Data Governance & Controls",
           dates: "Feb 2024 — Jan 2026",
+          summary:
+            "Self-service governance platform, terabyte-scale **Spark** ETL, and an **AWS** data-product migration.",
           bullets: [
             "Designed and built a self-service platform in **Java Spring Boot**, used by multiple teams to register, manage, and govern a large inventory of data feeds — replacing manual, spreadsheet-based tracking.",
             "Engineered **Spark / Databricks** ETL pipelines processing terabyte-scale datasets into enterprise reporting, with automated reconciliation enforcing data quality across sources.",
@@ -60,6 +69,8 @@ export const experience = {
           title: "Software Engineer",
           team: "Trade Surveillance · Software Engineer Program (SEP), Class of 2022",
           dates: "Aug 2022 — Jan 2024",
+          summary:
+            "High-volume batch ETL for market surveillance, **Spring Boot** microservices, and **Spark** cloud re-engineering.",
           bullets: [
             "Owned high-volume **batch** data ingestion and ETL (SQL stored procedures) for market surveillance.",
             "Built backend microservices in **Java Spring Boot** supporting mission-critical surveillance workflows.",

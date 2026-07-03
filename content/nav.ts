@@ -1,9 +1,17 @@
 /**
- * Top-right anchor navigation. The `href` must match a section `id`
- * defined inside the section's own content file (or `app/page.tsx`).
+ * Top-right anchor navigation. Hash `href`s must match a section `id`
+ * defined inside the section's own content file (or `app/page.tsx`);
+ * plain paths (e.g. `/resume`) link to other pages.
+ * `kind: "cta"` renders as an accent-bordered button.
  * Reorder this array to reorder the nav.
  */
-export const nav = [
+export interface NavEntry {
+  href: string
+  label: string
+  kind?: "link" | "cta"
+}
+
+export const nav: NavEntry[] = [
   { href: "#about", label: "about" },
   { href: "#experience", label: "experience" },
   { href: "#projects", label: "projects" },
@@ -11,4 +19,5 @@ export const nav = [
   { href: "#education", label: "education" },
   { href: "#learnings", label: "learnings" },
   { href: "#contact", label: "contact" },
-] as const
+  { href: "/resume", label: "resume", kind: "cta" },
+]

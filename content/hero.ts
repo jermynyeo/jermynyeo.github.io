@@ -1,19 +1,19 @@
 /**
- * Hero section — the centered scrambled headline that cycles through phrases.
- * `phrases` are scrambled in order then loop. Add/remove freely.
+ * Hero section — a typed terminal session that settles into the headline.
+ * Each line types in sequence; `command` lines get a `$ ` prompt.
+ * The line marked `isHeading` renders as the page's <h1>.
  */
 export const hero = {
-  // The static word the cycle starts/ends from
   heading: "JERMYN YEO",
-  // Cycled in order, then loops
-  phrases: [
-    "Hello, I'm Jermyn",
-    "Data & Platform Engineer",
-    "I build data pipelines",
-    "ETL · Governance · Cloud",
-    "Java · Python · Spark · AWS",
-    "Scroll for the full story",
-  ],
+  terminal: {
+    lines: [
+      { kind: "command", text: "whoami" },
+      { kind: "heading", text: "Jermyn Yeo" },
+      { kind: "output", text: "Data & Platform Engineer" },
+      { kind: "output", text: "Singapore · JPMorganChase" },
+      { kind: "command", text: "ls ./portfolio", caret: true },
+    ],
+  },
   // Caption under the title
   scrollHintLabel: "scroll",
   scrollHintAriaLabel: "Scroll to content",

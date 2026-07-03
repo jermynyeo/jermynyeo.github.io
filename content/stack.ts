@@ -17,6 +17,8 @@ export interface FlowNode {
   id: string
   name: string
   hint?: string
+  /** Tooltip shown on hover/focus — where the tool has actually been used. */
+  description?: string
 }
 export interface FlowColumn {
   title: string
@@ -42,32 +44,96 @@ export const stack = {
       {
         title: "Sources",
         nodes: [
-          { id: "kafka", name: "Kafka", hint: "streams" },
-          { id: "postgres", name: "Postgres", hint: "OLTP" },
-          { id: "files", name: "Files", hint: "batch" },
+          {
+            id: "kafka",
+            name: "Kafka",
+            hint: "streams",
+            description:
+              "Async reconciliation-metrics feed into Spring Boot services at JPMC.",
+          },
+          {
+            id: "postgres",
+            name: "Postgres",
+            hint: "OLTP",
+            description:
+              "Relational backend for the self-service data-governance platform.",
+          },
+          {
+            id: "files",
+            name: "Files",
+            hint: "batch",
+            description:
+              "High-volume batch ingestion for trade-surveillance ETL.",
+          },
         ],
       },
       {
         title: "Processing",
         nodes: [
-          { id: "spark", name: "Apache Spark", hint: "ETL" },
-          { id: "databricks", name: "Databricks", hint: "notebooks" },
-          { id: "glue", name: "AWS Glue", hint: "managed ETL" },
+          {
+            id: "spark",
+            name: "Apache Spark",
+            hint: "ETL",
+            description:
+              "Terabyte-scale ETL pipelines feeding enterprise reporting at JPMC.",
+          },
+          {
+            id: "databricks",
+            name: "Databricks",
+            hint: "notebooks",
+            description:
+              "Pipeline development & Lakehouse Fundamentals certified.",
+          },
+          {
+            id: "glue",
+            name: "AWS Glue",
+            hint: "managed ETL",
+            description:
+              "Managed ETL in the AWS data-product migration I led.",
+          },
         ],
       },
       {
         title: "Lakehouse",
         nodes: [
-          { id: "s3", name: "S3", hint: "object store" },
-          { id: "delta", name: "Delta Lake", hint: "table format" },
+          {
+            id: "s3",
+            name: "S3",
+            hint: "object store",
+            description:
+              "Lake storage for cloud-onboarded datasets and data products.",
+          },
+          {
+            id: "delta",
+            name: "Delta Lake",
+            hint: "table format",
+            description: "Lakehouse table format on Databricks pipelines.",
+          },
         ],
       },
       {
         title: "Serving",
         nodes: [
-          { id: "athena", name: "Athena", hint: "SQL" },
-          { id: "tableau", name: "Tableau", hint: "BI" },
-          { id: "powerbi", name: "Power BI", hint: "dashboards" },
+          {
+            id: "athena",
+            name: "Athena",
+            hint: "SQL",
+            description:
+              "Serverless SQL over S3 for modernized legacy data products.",
+          },
+          {
+            id: "tableau",
+            name: "Tableau",
+            hint: "BI",
+            description: "Management dashboards built at GovTech Singapore.",
+          },
+          {
+            id: "powerbi",
+            name: "Power BI",
+            hint: "dashboards",
+            description:
+              "Real-time decision-making metrics dashboards at GovTech.",
+          },
         ],
       },
     ] satisfies FlowColumn[],

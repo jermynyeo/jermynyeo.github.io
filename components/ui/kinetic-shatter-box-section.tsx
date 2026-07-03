@@ -319,7 +319,7 @@ const DebrisChunk = ({ x, y, rot, path }: DebrisChunkProps) => {
         animation: `debris-fall 0.8s cubic-bezier(0.55, 0, 1, 0.45) 0s forwards`,
       }}
     >
-      <path d={path} fill="#00ff00" stroke="#000" strokeWidth="2" />
+      <path d={path} fill="#4ade80" stroke="#0a0f0d" strokeWidth="2" />
     </svg>
   )
 }
@@ -336,7 +336,7 @@ const CrackLines = ({ level }: { level: number }) => {
         <path
           d="M0 20 L15 25 L8 40 L20 50"
           fill="none"
-          stroke="rgba(0,255,0,0.85)"
+          stroke="rgba(74,222,128,0.85)"
           strokeWidth="1.5"
           vectorEffect="non-scaling-stroke"
           style={{ opacity: Math.min(1, level * 2) }}
@@ -346,7 +346,7 @@ const CrackLines = ({ level }: { level: number }) => {
         <path
           d="M50 100 L55 80 L45 70 L60 55"
           fill="none"
-          stroke="rgba(0,255,0,0.85)"
+          stroke="rgba(74,222,128,0.85)"
           strokeWidth="1.5"
           vectorEffect="non-scaling-stroke"
           style={{ opacity: Math.min(1, (level - 0.4) * 2) }}
@@ -384,11 +384,17 @@ export const BreakableCard = ({
     isFlashing,
   } = useBreakableCard(onBreak)
 
+  // Derived from the title (not Math.random) so server-rendered HTML
+  // matches the client on hydration.
   const cardId = useMemo(
-    () => `card-${Math.random().toString(36).substring(2, 11)}`,
-    []
+    () => `card-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
+    [title]
   )
-  const figNum = useMemo(() => Math.floor(Math.random() * 99) + 1, [])
+  const figNum = useMemo(() => {
+    let h = 0
+    for (let i = 0; i < title.length; i++) h = (h * 31 + title.charCodeAt(i)) | 0
+    return (Math.abs(h) % 99) + 1
+  }, [title])
 
   const fallTransform = useMemo(() => {
     if (!fallState.active) return ""
@@ -401,17 +407,17 @@ export const BreakableCard = ({
   return (
     <div className={cn("relative w-full h-full", className)}>
       {/* LAYER 1: 'Gone' remnant */}
-      <div className="absolute inset-0 bg-black border border-dashed border-[rgba(0,255,0,0.3)] rounded-md flex flex-col items-center justify-center z-0">
-        <span className="text-[#00ff00]/70 font-mono text-[10px] uppercase tracking-[0.2em] mb-2">
+      <div className="absolute inset-0 bg-[var(--bg)] border border-dashed border-[rgba(74,222,128,0.3)] rounded-md flex flex-col items-center justify-center z-0">
+        <span className="text-[rgba(74,222,128,0.7)] font-mono text-[10px] uppercase tracking-[0.2em] mb-2">
           // shattered
         </span>
         {isBroken && (
-          <div className="w-24 h-1.5 border border-[rgba(0,255,0,0.3)] bg-black relative overflow-hidden mt-1 rounded-sm">
+          <div className="w-24 h-1.5 border border-[rgba(74,222,128,0.3)] bg-[var(--bg)] relative overflow-hidden mt-1 rounded-sm">
             <div
-              className="absolute inset-0 bg-[#00ff00] transition-all duration-75 ease-linear"
+              className="absolute inset-0 bg-[var(--accent-mx)] transition-all duration-75 ease-linear"
               style={{
                 width: `${respawnProgress}%`,
-                boxShadow: "0 0 8px rgba(0,255,0,0.6)",
+                boxShadow: "0 0 8px rgba(74,222,128,0.6)",
               }}
             />
           </div>
@@ -450,11 +456,11 @@ export const BreakableCard = ({
         onMouseDown={handleDragStart}
         onTouchStart={handleDragStart}
         className={cn(
-          "relative z-10 bg-[#0a0a0a] border border-[rgba(0,255,0,0.2)] rounded-md p-5 cursor-grab active:cursor-grabbing select-none h-full flex flex-col justify-between overflow-hidden transition-[background-color,border-color,box-shadow]",
+          "relative z-10 bg-[var(--card-bg)] border border-[rgba(74,222,128,0.2)] rounded-md p-5 cursor-grab active:cursor-grabbing select-none h-full flex flex-col justify-between overflow-hidden transition-[background-color,border-color,box-shadow]",
           !isDragging && !isBroken &&
-            "hover:border-[#00ff00] hover:shadow-[0_0_12px_rgba(0,255,0,0.25)] hover:animate-[hover-wiggle_0.8s_ease-in-out_infinite]",
+            "hover:border-[var(--accent-mx)] hover:shadow-[0_0_12px_rgba(74,222,128,0.22)] hover:animate-[hover-wiggle_0.8s_ease-in-out_infinite]",
           isBroken && "pointer-events-none",
-          isFlashing && "bg-[rgba(0,255,0,0.08)]"
+          isFlashing && "bg-[rgba(74,222,128,0.08)]"
         )}
         style={{
           transform: isBroken
@@ -482,14 +488,14 @@ export const BreakableCard = ({
           {/* Header */}
           <div className="flex justify-between items-start mb-3">
             <h3 className="font-mono text-base font-bold uppercase tracking-wider text-white leading-tight break-words pr-2">
-              <span className="text-[#00ff00]">▸ </span>
+              <span className="text-[var(--accent-mx)]">▸ </span>
               {title}
             </h3>
             <div
               className="w-2 h-2 rounded-full flex-shrink-0 mt-1.5"
               style={{
-                background: "#00ff00",
-                boxShadow: "0 0 8px rgba(0,255,0,0.6)",
+                background: "var(--accent-mx)",
+                boxShadow: "0 0 8px rgba(74,222,128,0.6)",
               }}
             />
           </div>
@@ -501,7 +507,7 @@ export const BreakableCard = ({
           )}
         </div>
         {/* Footer */}
-        <div className="mt-4 pt-2 border-t border-[rgba(0,255,0,0.15)] flex justify-between text-[10px] font-mono uppercase tracking-wider text-[#64748b]">
+        <div className="mt-4 pt-2 border-t border-[rgba(74,222,128,0.15)] flex justify-between text-[10px] font-mono uppercase tracking-wider text-[#64748b]">
           <span>Fig. {figNum.toString().padStart(2, "0")}</span>
           <span
             className={cn(

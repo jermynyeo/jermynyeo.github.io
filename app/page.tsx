@@ -1,7 +1,6 @@
-import {
-  RainingLettersBg,
-  ScrambledTitle,
-} from "@/components/ui/modern-animated-hero-section"
+import { RainingLettersBg } from "@/components/ui/modern-animated-hero-section"
+import { PaletteTrigger } from "@/components/ui/palette-trigger"
+import { TerminalIntro } from "@/components/ui/terminal-intro"
 import AboutSection from "@/components/sections/about"
 import ExperienceSection from "@/components/sections/experience"
 import ProjectsSection from "@/components/sections/projects"
@@ -18,17 +17,22 @@ export default function Page() {
     <>
       <nav aria-label="Primary" className="hero-nav">
         {nav.map((s) => (
-          <a key={s.href} href={s.href}>
+          <a
+            key={s.href}
+            href={s.href}
+            className={s.kind === "cta" ? "hero-nav__cta" : undefined}
+          >
             {s.label}
           </a>
         ))}
+        <PaletteTrigger />
       </nav>
 
       <RainingLettersBg />
 
       <section className="hero-scene">
         <div className="hero-scene__title">
-          <ScrambledTitle />
+          <TerminalIntro />
         </div>
         <a
           href={hero.scrollHintHref}

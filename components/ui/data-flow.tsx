@@ -1,23 +1,77 @@
 "use client"
 
-import { forwardRef, useMemo, useRef, type RefObject } from "react"
+import {
+  forwardRef,
+  useMemo,
+  useRef,
+  useState,
+  type RefObject,
+} from "react"
 import { AnimatedBeam } from "@/components/ui/animated-beam"
 import { cn } from "@/lib/utils"
 import { stack } from "@/content/stack"
 import { theme } from "@/content/theme"
 
 interface NodeProps {
+  id: string
   name: string
   hint?: string
-  className?: string
+  description?: string
+  active: boolean
+  dimmed: boolean
+  onActivate: (id: string) => void
+  onDeactivate: () => void
+  onToggle: (id: string) => void
 }
 
 const DataNode = forwardRef<HTMLDivElement, NodeProps>(
-  ({ name, hint, className }, ref) => {
+  (
+    {
+      id,
+      name,
+      hint,
+      description,
+      active,
+      dimmed,
+      onActivate,
+      onDeactivate,
+      onToggle,
+    },
+    ref
+  ) => {
+    const isTouch = useRef(false)
     return (
-      <div ref={ref} className={cn("data-node", className)}>
+      <div
+        ref={ref}
+        className={cn(
+          "data-node",
+          active && "data-node--hot",
+          dimmed && "data-node--dim"
+        )}
+        tabIndex={0}
+        aria-describedby={active && description ? `tip-${id}` : undefined}
+        onMouseEnter={() => {
+          if (!isTouch.current) onActivate(id)
+        }}
+        onMouseLeave={() => {
+          if (!isTouch.current) onDeactivate()
+        }}
+        onFocus={() => onActivate(id)}
+        onBlur={onDeactivate}
+        onTouchStart={() => {
+          isTouch.current = true
+        }}
+        onClick={() => {
+          if (isTouch.current) onToggle(id)
+        }}
+      >
         <span className="data-node__name">{name}</span>
         {hint && <span className="data-node__hint">{hint}</span>}
+        {active && description && (
+          <span role="tooltip" id={`tip-${id}`} className="data-node__tip">
+            {description}
+          </span>
+        )}
       </div>
     )
   }
@@ -46,6 +100,24 @@ export function DataFlow() {
   const containerRef = useRef<HTMLDivElement>(null)
   const nodeRefs = useNodeRefs()
   const beam = theme.beam
+  const [active, setActive] = useState<string | null>(null)
+
+  // Adjacency from the beam list: hovering a node keeps itself + direct
+  // neighbors bright and dims the rest of the diagram.
+  const connected = useMemo(() => {
+    const map = new Map<string, Set<string>>()
+    for (const col of stack.flow.columns) {
+      for (const node of col.nodes) map.set(node.id, new Set())
+    }
+    for (const b of stack.flow.beams) {
+      map.get(b.from)?.add(b.to)
+      map.get(b.to)?.add(b.from)
+    }
+    return map
+  }, [])
+
+  const isNodeDimmed = (id: string) =>
+    active !== null && id !== active && !connected.get(active)?.has(id)
 
   return (
     <div className="data-flow-wrap">
@@ -57,8 +129,17 @@ export function DataFlow() {
               <DataNode
                 key={node.id}
                 ref={nodeRefs.get(node.id)!}
+                id={node.id}
                 name={node.name}
                 hint={node.hint}
+                description={node.description}
+                active={active === node.id}
+                dimmed={isNodeDimmed(node.id)}
+                onActivate={setActive}
+                onDeactivate={() => setActive(null)}
+                onToggle={(id) =>
+                  setActive((prev) => (prev === id ? null : id))
+                }
               />
             ))}
           </div>
@@ -68,9 +149,13 @@ export function DataFlow() {
           const fromRef = nodeRefs.get(b.from)
           const toRef = nodeRefs.get(b.to)
           if (!fromRef || !toRef) return null
+          const isHot =
+            active !== null && (b.from === active || b.to === active)
+          const isDim = active !== null && !isHot
           return (
             <AnimatedBeam
               key={`${b.from}->${b.to}-${i}`}
+              className={cn("beam", isHot && "beam--hot", isDim && "beam--dim")}
               containerRef={containerRef}
               fromRef={fromRef}
               toRef={toRef}

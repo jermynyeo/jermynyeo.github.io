@@ -3,13 +3,16 @@ import ProjectsGrid from "@/components/sections/projects-grid"
 import { SectionTitle } from "@/components/section-title"
 import { richText } from "@/components/rich-text"
 import { projects } from "@/content/projects"
+import { getRepos } from "@/lib/github"
 
-export default function ProjectsSection() {
+export default async function ProjectsSection() {
+  const { repos } = await getRepos()
+
   return (
     <Reveal as="section" id={projects.id} className="section">
       <SectionTitle>{projects.heading}</SectionTitle>
       <p className="section__note">{richText(projects.note)}</p>
-      <ProjectsGrid />
+      <ProjectsGrid repos={repos} />
       <p className="projects__more">
         <a
           href={projects.moreLink.href}

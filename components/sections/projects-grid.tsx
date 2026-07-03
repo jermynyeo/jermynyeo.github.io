@@ -1,49 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { BreakableCard } from "@/components/ui/kinetic-shatter-box-section"
 import { richText } from "@/components/rich-text"
 import { projects } from "@/content/projects"
+import type { Repo } from "@/lib/github"
 
 const GITHUB = projects.github
 const LANG_COLORS = projects.langColors
-
-interface Repo {
-  name: string
-  description: string | null
-  html_url: string
-  homepage: string | null
-  language: string | null
-  topics?: string[]
-  stargazers_count: number
-  updated_at: string
-  fork: boolean
-  archived: boolean
-}
-
-type State =
-  | { kind: "loading" }
-  | { kind: "ok"; repos: Repo[] }
-  | { kind: "error" }
-
-function curate(repos: Repo[]): Repo[] {
-  const usable = repos.filter(
-    (r) => !r.fork && !r.archived && !GITHUB.exclude.includes(r.name)
-  )
-  const tagged = usable.filter(
-    (r) => Array.isArray(r.topics) && r.topics.includes(GITHUB.featureTopic)
-  )
-  const sorted = (list: Repo[]) =>
-    [...list].sort((a, b) => {
-      if (b.stargazers_count !== a.stargazers_count) {
-        return b.stargazers_count - a.stargazers_count
-      }
-      return +new Date(b.updated_at) - +new Date(a.updated_at)
-    })
-  return tagged.length > 0
-    ? sorted(tagged)
-    : sorted(usable).slice(0, GITHUB.fallbackCount)
-}
 
 function prettifyName(name: string) {
   return name.replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
@@ -72,7 +35,9 @@ function RepoBody({ repo }: { repo: Repo }) {
           <span className="inline-flex items-center gap-1.5 text-[#94a3b8]">
             <span
               className="inline-block w-2 h-2 rounded-full"
-              style={{ background: LANG_COLORS[repo.language] ?? "#00ff00" }}
+              style={{
+                background: LANG_COLORS[repo.language] ?? "var(--accent-mx)",
+              }}
             />
             {repo.language}
           </span>
@@ -85,14 +50,14 @@ function RepoBody({ repo }: { repo: Repo }) {
           {topics.map((t) => (
             <span
               key={t}
-              className="text-[10px] px-1.5 py-0.5 border border-[rgba(0,255,0,0.18)] text-[#94a3b8] rounded-sm"
+              className="text-[10px] px-1.5 py-0.5 border border-[rgba(74,222,128,0.18)] text-[#94a3b8] rounded-sm"
             >
               {t}
             </span>
           ))}
         </div>
       )}
-      <div className="flex gap-4 text-[12px] font-bold text-[#00ff00] mt-auto">
+      <div className="flex gap-4 text-[12px] font-bold text-[var(--accent-mx)] mt-auto">
         <a
           href={repo.html_url}
           target="_blank"
@@ -118,48 +83,10 @@ function RepoBody({ repo }: { repo: Repo }) {
   )
 }
 
-export default function ProjectsGrid() {
-  const [state, setState] = useState<State>({ kind: "loading" })
-
-  useEffect(() => {
-    const url = `https://api.github.com/users/${GITHUB.username}/repos?per_page=100&sort=updated`
-    fetch(url, { headers: { Accept: "application/vnd.github+json" } })
-      .then((r) => {
-        if (!r.ok) throw new Error(`GitHub API ${r.status}`)
-        return r.json() as Promise<Repo[]>
-      })
-      .then((repos) => setState({ kind: "ok", repos: curate(repos) }))
-      .catch(() => setState({ kind: "error" }))
-  }, [])
-
-  if (state.kind === "loading") {
+export default function ProjectsGrid({ repos }: { repos: Repo[] }) {
+  if (repos.length === 0) {
     return (
-      <div id="projects-grid" className="projects" aria-live="polite">
-        <div className="projects__loading">{projects.loadingText}</div>
-      </div>
-    )
-  }
-
-  if (state.kind === "error") {
-    return (
-      <div id="projects-grid" className="projects" aria-live="polite">
-        <p className="projects__error">
-          {projects.errorFallback.text}{" "}
-          <a
-            href={projects.errorFallback.linkHref}
-            target="_blank"
-            rel="noopener"
-          >
-            {projects.errorFallback.linkLabel}
-          </a>
-        </p>
-      </div>
-    )
-  }
-
-  if (state.repos.length === 0) {
-    return (
-      <div id="projects-grid" className="projects" aria-live="polite">
+      <div id="projects-grid" className="projects">
         <p className="projects__error">{projects.emptyText}</p>
       </div>
     )
@@ -170,8 +97,8 @@ export default function ProjectsGrid() {
       <p className="section__note" style={{ marginTop: "-12px" }}>
         {richText(projects.tip)}
       </p>
-      <div id="projects-grid" className="projects" aria-live="polite">
-        {state.repos.map((repo) => (
+      <div id="projects-grid" className="projects">
+        {repos.map((repo) => (
           <div key={repo.name} className="min-h-[18rem]">
             <BreakableCard
               title={prettifyName(repo.name)}
