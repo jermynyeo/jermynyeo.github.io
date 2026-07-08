@@ -36,8 +36,9 @@ export const education = {
         {
           title: "Honors & Awards",
           bullets: [
-            "🏆 SIS Aspirations Scholarship",
+            "🏆 SIS Aspiration Scholarship",
             "🏆 Dean's List (AY 2019, 2022)",
+            "🏆 SMU ACE (Top 5% of cohort)",
           ],
         },
         {

@@ -38,19 +38,20 @@ export const experience = {
   items: [
     {
       title: "JPMorganChase",
-      dates: "Aug 2022 — Present · ~4 yrs",
-      org: "Compliance Technology · Singapore",
+      dates: "Aug 2022 — Present · 4+ yrs",
+      org: "Compliance Technology · Singapore · *Promoted twice in 3.5 years*",
       roles: [
         {
           title: "Senior Associate Software Engineer",
           team: "Data Governance & Controls",
           dates: "Jan 2026 — Present",
           summary:
-            "Reconciliation automation, data-quality controls, and a **Kafka**-fed metrics dashboard for business teams.",
+            "Reconciliation automation, data-quality controls, a **Kafka**-fed metrics dashboard, and AI-assisted tooling.",
           bullets: [
-            "Led the development of automated **reconciliation jobs** for datasets onboarded to the data platform, systematically detecting and surfacing discrepancies across sources.",
-            "As a key contributor, built **data-quality validations** for cloud-onboarded datasets, enforcing business-quality standards that strengthened confidence in the data downstream teams rely on.",
-            "Spearheaded a **reconciliation-metrics dashboard** on an internal, business-facing visualization platform — pulling metrics asynchronously via **Kafka** into **Java Spring Boot** services — giving business teams real-time monitoring and the ability to act on recurring exceptions.",
+            "Built automated **reconciliation jobs** across **60+ onboarded datasets**, surfacing discrepancies that were previously not caught and reducing audit risks.",
+            "Designed **data-quality validations** for cloud-onboarded datasets that enforce business-quality standards across **10 downstream teams**, reducing data-quality incidents reported downstream.",
+            "Led a team to deliver a real-time **reconciliation-metrics dashboard**, streaming metrics asynchronously via **Kafka** into **Java Spring Boot** services — giving **3 business teams** live monitoring and self-service resolution of recurring exceptions in a quarter.",
+            "Built **AI-assisted tools** to improve users' experience, reducing **225 hours (28 business days)** of effort a year.",
           ],
         },
         {
@@ -60,9 +61,9 @@ export const experience = {
           summary:
             "Self-service governance platform, terabyte-scale **Spark** ETL, and an **AWS** data-product migration.",
           bullets: [
-            "Designed and built a self-service platform in **Java Spring Boot**, used by multiple teams to register, manage, and govern a large inventory of data feeds — replacing manual, spreadsheet-based tracking.",
-            "Engineered **Spark / Databricks** ETL pipelines processing terabyte-scale datasets into enterprise reporting, with automated reconciliation enforcing data quality across sources.",
-            "Led the migration of data products to **AWS (S3, Glue, Athena, Lambda)**, modernizing legacy systems for scale and resilience.",
+            "Designed and shipped a **Java Spring Boot** self-service platform adopted by **4 teams** to register and govern **800+ data feeds**, replacing manual spreadsheet tracking and eliminating hours of recurring manual effort per week.",
+            "Engineered **Spark / Databricks** ETL pipelines processing **10+ TB** of data into enterprise reporting, with automated reconciliation enforcing data quality across **145+ data sources**.",
+            "Led migration of **4 data products** to **AWS (S3, Glue, Athena, Lambda)**, modernizing legacy systems to improve pipeline reliability and reduce infrastructure cost.",
           ],
         },
         {
@@ -72,9 +73,9 @@ export const experience = {
           summary:
             "High-volume batch ETL for market surveillance, **Spring Boot** microservices, and **Spark** cloud re-engineering.",
           bullets: [
-            "Owned high-volume **batch** data ingestion and ETL (SQL stored procedures) for market surveillance.",
-            "Built backend microservices in **Java Spring Boot** supporting mission-critical surveillance workflows.",
-            "Drove cloud adoption on **AWS** — re-engineering legacy stored-procedure batch jobs into **Apache Spark** pipelines.",
+            "Owned high-volume **batch** ingestion and ETL processing **500+ datasets daily** for market surveillance.",
+            "Built **Java Spring Boot** backend microservices powering mission-critical surveillance workflows relied on by compliance teams.",
+            "Drove **AWS** adoption by re-engineering legacy stored-procedure batch jobs into **Apache Spark** pipelines, cutting run time by **25%**.",
           ],
         },
       ],

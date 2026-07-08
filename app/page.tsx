@@ -6,7 +6,7 @@ import ExperienceSection from "@/components/sections/experience"
 import ProjectsSection from "@/components/sections/projects"
 import SkillsSection from "@/components/sections/skills"
 import EducationSection from "@/components/sections/education"
-import LearningsSection from "@/components/sections/learnings"
+// Hidden for now: import LearningsSection from "@/components/sections/learnings"
 import ContactSection from "@/components/sections/contact"
 import { nav } from "@/content/nav"
 import { hero } from "@/content/hero"
@@ -49,7 +49,7 @@ export default function Page() {
         <ProjectsSection />
         <SkillsSection />
         <EducationSection />
-        <LearningsSection />
+        {/* Hidden for now: <LearningsSection /> */}
         <ContactSection />
       </main>
 

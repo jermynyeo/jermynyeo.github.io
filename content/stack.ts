@@ -162,13 +162,15 @@ export const stack = {
     "Kubernetes (CKAD)",
     "Terraform",
     "Docker",
+    "Claude",
+    "Copilot",
   ],
   certificationsTitle: "Certifications",
   certifications: [
+    { name: "AI Tooling — Anthropic Claude 101 / Code 101", year: "2026" },
     { name: "CKAD — Kubernetes App Developer", year: "2024" },
     { name: "HashiCorp Terraform Associate", year: "2023" },
     { name: "Databricks Lakehouse Fundamentals", year: "2023" },
     { name: "AWS Certified Cloud Practitioner", year: "2020" },
-    { name: "AI Tooling — Anthropic Claude 101 / Code 101", year: "2026" },
   ] satisfies Certification[],
 }

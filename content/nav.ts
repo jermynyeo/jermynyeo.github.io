@@ -17,7 +17,7 @@ export const nav: NavEntry[] = [
   { href: "#projects", label: "projects" },
   { href: "#stack", label: "stack" },
   { href: "#education", label: "education" },
-  { href: "#learnings", label: "learnings" },
+  // Hidden for now: { href: "#learnings", label: "learnings" },
   { href: "#contact", label: "contact" },
   { href: "/resume", label: "resume", kind: "cta" },
 ]

@@ -12,11 +12,11 @@ export interface SkillGroup {
 
 export const resume = {
   summary:
-    "Data & platform engineer with 4+ years at JPMorganChase building data pipelines, governance tooling, and cloud-native backend services. Experienced in terabyte-scale Spark/Databricks ETL, AWS data platform migrations, and Java Spring Boot microservices. Summa Cum Laude Information Systems graduate from Singapore Management University.",
+    "Software Engineer with 4+ years at JPMorganChase building data pipelines, governance tooling, and cloud-native backend services. Experienced in terabyte-scale Spark/Databricks ETL, AWS data platform migrations, and Java Spring Boot microservices, with hands-on proficiency in Claude and AI-assisted development.",
   skillGroups: [
     {
       title: "Languages",
-      items: ["Java", "Python", "SQL", "Go", "TypeScript"],
+      items: ["Java", "Spring Boot", "Python", "SQL"],
     },
     {
       title: "Data & Processing",
@@ -36,12 +36,11 @@ export const resume = {
         "Kubernetes (CKAD)",
         "Terraform",
         "Docker",
-        "Spring Boot",
       ],
     },
     {
-      title: "Analytics & BI",
-      items: ["Tableau", "Power BI", "NLP / text mining"],
+      title: "AI & ML",
+      items: ["Claude", "Copilot", "Context & Harness Engineering", "Tableau"],
     },
   ] satisfies SkillGroup[],
   labels: {
