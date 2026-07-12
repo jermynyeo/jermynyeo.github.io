@@ -4,7 +4,7 @@ kind: Project · 2026
 question: How much faster can I deliver with AI-assisted Development?
 tags: AI, CI/CD, Product Delivery, Python, Agent Loops
 related: agent-harness
-order: 2
+order: 10
 ---
 
 I recently started working on a project with a group of 3 developers to convert a local minimum viable product (MVP) into a deliverable product in 5 months. We started breaking down tasks, creating JIRA boards, and estimated a 4-month delivery, given a 15-hour-per-week commitment per developer. It was high-commitment work with little buffer for all of our busy schedules, and we weren't certain we could deliver by then. Then something hit me: if I was using AI-assisted development at work, why couldn't I do the same here?
