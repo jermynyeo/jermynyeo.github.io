@@ -33,7 +33,17 @@ function SlideBody({ item }: { item: Item }) {
       <div className="learn-card__lead">
         <span className="learn-card__kind">{item.kind}</span>
         <h3>{item.title}</h3>
-        <p className="learn-card__reflection">{richText(item.reflection)}</p>
+        <span className="reflection-q-label">{learnings.questionLabel}</span>
+        <p className="learn-card__reflection">{richText(item.question)}</p>
+        {item.tags.length > 0 && (
+          <ul className="reflection-tags">
+            {item.tags.map((t) => (
+              <li key={t} className="reflection-tag">
+                {t}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <div className="learn-card__detail">
         <p className="learn-card__body">

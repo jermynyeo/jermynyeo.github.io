@@ -1,7 +1,8 @@
 ---
-title: This Portfolio
+title: Agent Assisted Development - Building Projects I Can't
 kind: Personal Site · 2026
-reflection: The start of a new Era.
+question: How can I leverage on agentic development to realise my visions? 
+tags: AI, Frontend
 order: 2
 ---
 

@@ -1,7 +1,8 @@
 ---
 title: CKAD · Kubernetes
 kind: Certificate · 2024
-reflection: One can never fully understand a system without understanding the Theories behind it.
+question: Do I truly understand how deployment works if I don't understand why and how it's built? 
+tags: Kubernetes, DevOps
 order: 3
 ---
 

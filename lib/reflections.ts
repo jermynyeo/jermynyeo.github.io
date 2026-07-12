@@ -11,8 +11,13 @@ export interface Reflection {
   slug: string
   kind: string
   title: string
-  reflection: string
+  /** The driving question that led to this reflection (`question:` frontmatter). */
+  question: string
   body: string
+  /** Topic labels from the `tags:` frontmatter (comma-separated). */
+  tags: string[]
+  /** Slugs of related reflections from `related:` (comma-separated). */
+  related: string[]
   order: number
 }
 
@@ -41,8 +46,16 @@ export function getReflections(): Reflection[] {
         slug: f.replace(/\.md$/, ""),
         kind: data.kind ?? "",
         title: data.title ?? "",
-        reflection: data.reflection ?? "",
+        question: data.question ?? data.reflection ?? "",
         body,
+        tags: (data.tags ?? "")
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
+        related: (data.related ?? "")
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
         order: Number(data.order ?? 999),
       }
     })
