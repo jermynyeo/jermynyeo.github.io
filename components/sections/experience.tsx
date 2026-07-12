@@ -13,6 +13,10 @@ export default function ExperienceSection() {
             <ExperienceItemView key={i} item={item} />
           ))}
         </ol>
+        <p className="experience__resume">
+          {experience.resumeNote}{" "}
+          <a href={experience.resumeHref}>{experience.resumeLabel}</a>.
+        </p>
       </div>
     </Reveal>
   )

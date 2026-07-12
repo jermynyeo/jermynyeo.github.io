@@ -147,6 +147,9 @@ export const stack = {
     "Docker",
     "Claude",
     "Copilot",
+    "MCP",
+    "Context Engineering",
+    "Agent Evaluation",
   ],
   certificationsTitle: "Certifications",
   certifications: [

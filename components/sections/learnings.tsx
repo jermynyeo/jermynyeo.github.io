@@ -4,14 +4,16 @@ import { useEffect, useRef, useState } from "react"
 import {
   AnimatePresence,
   motion,
-  useMotionValueEvent,
+  useInView,
   useReducedMotion,
-  useScroll,
 } from "framer-motion"
 import Reveal from "@/components/reveal"
 import { SectionTitle } from "@/components/section-title"
 import { richText } from "@/components/rich-text"
 import { learnings } from "@/content/learnings"
+
+/** Reading time per reflection before it auto-advances. */
+const AUTO_MS = 90_000
 
 /** Normalize a body into paragraphs: split strings on newlines, keep arrays as-is. */
 function toParagraphs(body: string | string[]): string[] {
@@ -31,11 +33,12 @@ function SlideBody({ item }: { item: Item }) {
         <p className="learn-card__reflection">{richText(item.reflection)}</p>
       </div>
       <div className="learn-card__detail">
-        {toParagraphs(item.body).map((para, j) => (
-          <p key={j} className="learn-card__body">
-            {richText(para)}
-          </p>
-        ))}
+        <p className="learn-card__body">
+          {richText(toParagraphs(item.body)[0] ?? "")}
+        </p>
+        <a className="learn-card__more" href={`/reflections/${item.slug}`}>
+          read the full story →
+        </a>
       </div>
     </>
   )
@@ -45,20 +48,12 @@ export default function LearningsSection() {
   const items = learnings.items
   const count = items.length
   const reduce = useReducedMotion()
-  const sectionRef = useRef<HTMLElement>(null)
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const inView = useInView(wrapRef, { amount: 0.4 })
   const [index, setIndex] = useState(0)
+  const [dir, setDir] = useState(1)
+  const [paused, setPaused] = useState(false)
   const [compact, setCompact] = useState(false)
-
-  // The bit "turns the page" as you scroll past: map the section's transit
-  // through the viewport to the active reflection. No pinning, normal scroll.
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start 0.85", "end 0.15"],
-  })
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const i = Math.min(count - 1, Math.max(0, Math.floor(v * count)))
-    setIndex((prev) => (prev === i ? prev : i))
-  })
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 720px)")
@@ -67,6 +62,22 @@ export default function LearningsSection() {
     mq.addEventListener("change", sync)
     return () => mq.removeEventListener("change", sync)
   }, [])
+
+  // Auto-advance ~90s per reflection — only while it's on screen and not
+  // paused (hover/focus). Depends on `index`, so manual nav resets the timer.
+  useEffect(() => {
+    if (reduce || compact || count <= 1 || paused || !inView) return
+    const id = window.setTimeout(() => {
+      setDir(1)
+      setIndex((i) => (i + 1) % count)
+    }, AUTO_MS)
+    return () => window.clearTimeout(id)
+  }, [reduce, compact, count, paused, inView, index])
+
+  const go = (next: number, d: number) => {
+    setDir(d)
+    setIndex(((next % count) + count) % count)
+  }
 
   // Static fallback: reduced motion, small screens, or a single reflection.
   if (reduce || compact || count <= 1) {
@@ -85,34 +96,30 @@ export default function LearningsSection() {
     )
   }
 
-  // Dot click: scroll so the section transit lands mid-page `i`.
-  const goTo = (i: number) => {
-    const el = sectionRef.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    const top = rect.top + window.scrollY
-    const vh = window.innerHeight
-    // Matches the useScroll offset window ["start 0.85", "end 0.15"].
-    const startY = top - 0.85 * vh
-    const endY = top + rect.height - 0.15 * vh
-    const p = (i + 0.5) / count
-    window.scrollTo({ top: startY + p * (endY - startY), behavior: "smooth" })
-  }
+  const slide = 28
 
   return (
-    <section ref={sectionRef} id={learnings.id} className="section">
+    <Reveal as="section" x={-24} id={learnings.id} className="section">
       <SectionTitle>{learnings.heading}</SectionTitle>
       <p className="section__note">{richText(learnings.intro)}</p>
 
-      <div className="reflections">
+      <div
+        ref={wrapRef}
+        className="reflections"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onFocusCapture={() => setPaused(true)}
+        onBlurCapture={() => setPaused(false)}
+      >
         <div className="reflections__viewport">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" custom={dir}>
             <motion.article
               key={index}
               className="learn-card"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
+              custom={dir}
+              initial={{ opacity: 0, x: dir * slide }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: dir * -slide }}
               transition={{ duration: 0.4, ease: [0.22, 0.61, 0.36, 1] }}
               aria-roledescription="slide"
               aria-label={`${index + 1} of ${count}`}
@@ -123,9 +130,14 @@ export default function LearningsSection() {
         </div>
 
         <div className="reflections__controls">
-          <span className="reflections__progress">
-            {index + 1} / {count}
-          </span>
+          <button
+            type="button"
+            className="reflections__arrow"
+            aria-label="Previous reflection"
+            onClick={() => go(index - 1, -1)}
+          >
+            ‹
+          </button>
           <div
             className="reflections__dots"
             role="tablist"
@@ -139,12 +151,20 @@ export default function LearningsSection() {
                 aria-selected={i === index}
                 aria-label={it.title}
                 className={`reflections__dot${i === index ? " is-active" : ""}`}
-                onClick={() => goTo(i)}
+                onClick={() => go(i, i > index ? 1 : -1)}
               />
             ))}
           </div>
+          <button
+            type="button"
+            className="reflections__arrow"
+            aria-label="Next reflection"
+            onClick={() => go(index + 1, 1)}
+          >
+            ›
+          </button>
         </div>
       </div>
-    </section>
+    </Reveal>
   )
 }

@@ -26,6 +26,14 @@ export default function AboutSection() {
           </aside>
         </MagicCard>
       </div>
+      <dl className="about__stats">
+        {about.stats.map((s) => (
+          <div key={s.label} className="about__stat">
+            <dt className="about__stat-value">{s.value}</dt>
+            <dd className="about__stat-label">{s.label}</dd>
+          </div>
+        ))}
+      </dl>
     </Reveal>
   )
 }

@@ -1,6 +1,5 @@
 "use client"
 
-import { useId, useState } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import { richText } from "@/components/rich-text"
 import {
@@ -10,72 +9,18 @@ import {
 } from "@/content/experience"
 
 /**
- * Bullets stay mounted (they ship in the exported HTML for crawlers) —
- * only their height/opacity animates.
+ * Career-arc view: each role is one first-person line about what was owned
+ * and how the scope grew. The full bullet record lives on `/resume` (the
+ * bullets stay in the data for that page), so the main page is a story, not
+ * a duplicate of the résumé.
  */
-function Bullets({
-  bullets,
-  open,
-  panelId,
-}: {
-  bullets: string[]
-  open: boolean
-  panelId: string
-}) {
-  const reduce = useReducedMotion()
-  return (
-    <motion.div
-      id={panelId}
-      initial={false}
-      animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
-      transition={
-        reduce
-          ? { duration: 0 }
-          : { duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }
-      }
-      style={{ overflow: "hidden" }}
-      aria-hidden={!open}
-    >
-      <ul>
-        {bullets.map((b, i) => (
-          <li key={i}>{richText(b)}</li>
-        ))}
-      </ul>
-    </motion.div>
-  )
-}
-
 function Role({ role }: { role: ExperienceRole }) {
-  const [open, setOpen] = useState(false)
-  const panelId = useId()
-
-  if (!role.summary) {
-    return (
-      <div className="role">
-        <RoleHead role={role} />
-        <ul>
-          {role.bullets.map((b, i) => (
-            <li key={i}>{richText(b)}</li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
-
   return (
     <div className="role">
       <RoleHead role={role} />
-      <p className="role__summary">{richText(role.summary)}</p>
-      <button
-        type="button"
-        className="disclosure__btn"
-        aria-expanded={open}
-        aria-controls={panelId}
-        onClick={() => setOpen((v) => !v)}
-      >
-        {open ? "[-] collapse" : "[+] details"}
-      </button>
-      <Bullets bullets={role.bullets} open={open} panelId={panelId} />
+      <p className="role__summary">
+        {richText(role.summary ?? role.bullets[0])}
+      </p>
     </div>
   )
 }

@@ -395,6 +395,29 @@ code {
 }
 .about__pullquote strong { color: var(--accent-mx); font-weight: 600; }
 
+/* Headline stats band — hard proof, skimmable without a click */
+.about__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px 28px;
+  margin: 48px 0 0;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+.about__stat { display: flex; flex-direction: column; gap: 6px; }
+.about__stat-value {
+  font-family: var(--mono);
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-mx);
+  font-variant-numeric: tabular-nums;
+}
+.about__stat-label { margin: 0; font-size: 0.78rem; line-height: 1.35; color: var(--text-dim); }
+@media (max-width: 640px) {
+  .about__stats { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+}
+
 /* ============ EXPERIENCE / TIMELINE ============ */
 .timeline { list-style: none; padding: 0; margin: 0; }
 
@@ -433,7 +456,18 @@ code {
 .role__team { color: var(--text-soft); font-size: 0.82rem; margin: 2px 0 8px; }
 .role ul { margin: 6px 0 4px; padding-left: 18px; color: var(--text-soft); }
 .role ul li { margin: 3px 0; font-size: 0.9rem; }
-.role__summary { margin: 0 0 4px; color: var(--text-soft); font-size: 0.9rem; }
+.role__summary { margin: 0 0 4px; color: var(--text-soft); font-size: 0.92rem; line-height: 1.55; }
+
+/* Pointer to the full record on /resume (career-arc view keeps the main page a story) */
+.experience__resume {
+  margin: 30px 0 0;
+  padding-left: 30px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+.experience__resume a { color: var(--accent-mx); }
+.experience__resume::before { content: "→ "; color: var(--accent-mx); }
 
 .disclosure__btn {
   background: transparent;
@@ -909,6 +943,59 @@ code {
 .learn-card__reflection { color: #fff; font-style: italic; font-size: 1rem; line-height: 1.5; border-left: 2px solid var(--accent-mx); padding-left: 14px; }
 .learn-card__detail { align-self: center; }
 .learn-card__body + .learn-card__body { margin-top: 1.1em; }
+.learn-card__more {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--accent-mx);
+}
+.learn-card__more:hover { text-shadow: var(--glow); }
+
+/* ---- Reflection article page (/reflections/[slug]) ---- */
+.reflection-page {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 40px 24px 100px;
+}
+.reflection-page__bar {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  margin-bottom: 48px;
+}
+.reflection-page__kind {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-mx);
+  font-weight: 600;
+}
+.reflection-page__title {
+  font-family: var(--mono);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #fff;
+  margin: 12px 0 20px;
+}
+.reflection-page__lead {
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: #fff;
+  border-left: 2px solid var(--accent-mx);
+  padding-left: 16px;
+  margin: 0 0 36px;
+}
+.reflection-page__body p {
+  color: var(--text-soft);
+  font-size: 1rem;
+  line-height: 1.75;
+  margin: 0 0 20px;
+}
 
 @media (max-width: 720px) {
   .learn-card { grid-template-columns: 1fr; gap: 18px; padding: 22px 22px; }

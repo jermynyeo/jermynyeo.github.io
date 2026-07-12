@@ -39,6 +39,10 @@ export const experience = {
   heading: "Experience",
   /** Tooltip for the ▲ marker on roles with `promoted: true`. */
   promotedHint: "Promoted into this role",
+  /** Pointer to the formal record, shown under the timeline. */
+  resumeNote: "The full record lives in my",
+  resumeLabel: "resume",
+  resumeHref: "/resume",
   items: [
     {
       title: "JPMorganChase",
@@ -51,7 +55,7 @@ export const experience = {
           dates: "Jan 2026 – Present",
           promoted: true,
           summary:
-            "Automating reconciliation & data-quality controls, a **Kafka**-fed metrics dashboard, and AI-assisted tooling that saves **~225 hrs/yr**.",
+            "Now I **lead** the data-quality and reconciliation controls across the platform, and build the **AI-assisted tooling** that hands **3 teams** back **~225 hours a year**.",
           bullets: [
             "Built automated **reconciliation jobs** across **60+ onboarded datasets**, surfacing discrepancies that were previously not caught and reducing audit risks.",
             "Designed **data-quality validations** for cloud-onboarded datasets that enforce business-quality standards across **10 downstream teams**, reducing data-quality incidents reported downstream.",
@@ -65,7 +69,7 @@ export const experience = {
           dates: "Feb 2024 – Jan 2026",
           promoted: true,
           summary:
-            "Shipped a self-service governance platform for **800+ data feeds**, **10+ TB Spark** ETL, and an **AWS** data-product migration.",
+            "**Owned and shipped** the self-service governance platform **4 teams** now run **800+ data feeds** on, plus **10+ TB** of **Spark** ETL and an **AWS** data-product migration.",
           bullets: [
             "Designed and shipped a **Java Spring Boot** self-service platform adopted by **4 teams** to register and govern **800+ data feeds**, replacing manual spreadsheet tracking and eliminating hours of recurring manual effort per week.",
             "Engineered **Spark / Databricks** ETL pipelines processing **10+ TB** of data into enterprise reporting, with automated reconciliation enforcing data quality across **145+ data sources**.",
@@ -77,7 +81,7 @@ export const experience = {
           team: "Trade Surveillance · Software Engineer Program (SEP), Class of 2022",
           dates: "Aug 2022 – Jan 2024",
           summary:
-            "High-volume batch ETL over **500+ datasets/day** for market surveillance; **Spring Boot** services and a **Spark** re-engineering that cut runtime **25%**.",
+            "**Started** here on trade surveillance, owning batch ETL over **500+ datasets a day** and re-engineering legacy jobs to **Spark** (**25%** faster).",
           bullets: [
             "Owned high-volume **batch** ingestion and ETL processing **500+ datasets daily** for market surveillance.",
             "Built **Java Spring Boot** backend microservices powering mission-critical surveillance workflows relied on by compliance teams.",

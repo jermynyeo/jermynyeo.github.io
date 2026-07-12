@@ -6,6 +6,8 @@
  */
 
 export interface LearningItem {
+  /** URL slug for the full write-up at /reflections/[slug] */
+  slug: string
   /** Small uppercase pill at the top of the card */
   kind: string
   title: string
@@ -26,6 +28,19 @@ export const learnings = {
     "The honest bits behind the scenes: what I got wrong, what finally clicked, and what I'd do differently. Short reads, no fluff.",
   items: [
     {
+      slug: "agent-harness",
+      kind: "Project · 2026",
+      title: "Agent Harness · Consistency at Scale",
+      reflection:
+        "AI agents drift between sessions, devices, and teammates. I built the harness that keeps them consistent.",
+      body: [
+        "As my team leaned harder on AI-assisted development, I kept hitting the same wall: every session started from zero. An agent that nailed something one day forgot it the next, and three of us could run the same tool and get different results. Given that it was a huge project deliverable, it was causing major merge conflicts, duplicated work and inefficient agent use.",
+        "So I built a harness around the agent: a shared working-style contract, persistent memory, and reusable skills that travel with it across sessions and machines. I created an agile team of 13 agents to manage new requirements and project timelines. I also added 10 skills to ensure key context prompts are not missed when a new session starts.",
+        "The instinct turned out to be the same one I bring to data: a system is only as good as its consistency. Reliable AI isn't a smarter model, it's a harness that makes good output repeatable. Nonetheless, one thing that surprised me was the exponential growth of the context window. This is something I will definitely be looking at, to understand how to optimize the context window, compressing it without loosing too much information",
+      ],
+    },
+    {
+      slug: "this-portfolio",
       kind: "Personal Site · 2026",
       title: "This Portfolio",
       reflection:
@@ -35,6 +50,7 @@ export const learnings = {
               "By building this portfolio with the help of AI, I was able to build something shippable within a day. Nonetheless, at the end of the day, without humans, AI will ship generic and replicable products. This made me realise that how I steered the conversations by adding my preferences and vision makes this page uniquely mine."]
     },
     {
+      slug: "ckad-kubernetes",
       kind: "Certificate · 2024",
       title: "CKAD · Kubernetes",
       reflection:

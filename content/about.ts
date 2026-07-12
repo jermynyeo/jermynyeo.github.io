@@ -12,6 +12,13 @@ export const about = {
   ],
   /** Closing pull-quote — the thesis of the whole page. */
   pullQuote: "Data should be **correct**, not just available.",
+  /** Headline proof, surfaced so a 30-second skim sees impact without a click. */
+  stats: [
+    { value: "10+ TB", label: "data processed in ETL pipelines" },
+    { value: "800+", label: "data feeds governed" },
+    { value: "225 hrs", label: "of manual effort saved / year" },
+    { value: "2×", label: "promoted in 3.5 years" },
+  ],
   currently: {
     title: "Currently",
     items: [
