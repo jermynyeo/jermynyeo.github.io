@@ -23,7 +23,7 @@ export const learnings = {
   id: "learnings",
   heading: "Learnings",
   intro:
-    "The honest bits behind the resume: what I got wrong, what finally clicked, and what I'd do differently. Short reads, no fluff.",
+    "The honest bits behind the scenes: what I got wrong, what finally clicked, and what I'd do differently. Short reads, no fluff.",
   items: [
     {
       kind: "Personal Site · 2026",

@@ -12,11 +12,16 @@ function prettifyName(name: string) {
   return name.replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
+// Fixed month table — locale-independent. `toLocaleDateString` disagrees
+// between Node (SSR) and modern browser ICU (e.g. "Sep" vs "Sept"), which
+// caused a hydration mismatch. UTC avoids timezone month-boundary drift.
+const MONTHS = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+]
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-GB", {
-    month: "short",
-    year: "numeric",
-  })
+  const d = new Date(iso)
+  return `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`
 }
 
 function RepoBody({ repo }: { repo: Repo }) {
@@ -75,7 +80,7 @@ function RepoBody({ repo }: { repo: Repo }) {
             onMouseDown={(e) => e.stopPropagation()}
             onTouchStart={(e) => e.stopPropagation()}
           >
-            live ↗
+            Article ↗
           </a>
         )}
       </div>
