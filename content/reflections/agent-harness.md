@@ -2,42 +2,13 @@
 title: Agent Harness · Consistency at Scale
 kind: Project · 2026
 question: If agents are stateless, how can we build projects at scale with consistency?
-tags: AI, Harness
+tags: AI, Agent Harness, Consistency, Reliability
 related: aad-time-to-market, agent-loops
 order: 30
 ---
 
-Continuing from the reflction about the time to market with agent assisted development, I want to dedicate this segment to talk about the challenges I faced building an agentic ecosystem for a team of 3 and how I overcame them. 
+Continuing from the reflection about time to market with agent-assisted development, I want to dedicate this segment to the challenges I faced building an agentic ecosystem for a **team of 3**, and how I overcame them. One might tell you the best way to collaborate on AI-assisted development is to just add an AGENT.md or CLAUDE.md file to the project root, and it will be replicable across the team. But not everyone tells you that these files alone are **insufficient**. What we thought was a good way to speed up time to market ended up as the **start of our development nightmare**. We started being upset at one another for not adhering to the standards in those files. But what we forgot was that everyone is different, from the way they prompt to the way they interact with the agent.
 
+For more context, we are a team of 3 developers working on 3 different workstreams. Ideally the features we work on don't overlap. But that doesn't mean the code we touch doesn't overlap. This resulted in huge merge conflicts that took us 5-6 hours to resolve (even with agent help), hindering our productivity. This adds to why the time savings weren't proportionate: at the start, when things were less intertwined, shipping and delivering was easy. But once everyone started committing and shipping their work, that is where the complications arose. Besides merge conflicts, there were other issues like duplicated tasks and poor agent performance.
 
-
-
-
-As part of this project, we split the workload into 3 main parts - code refactoring, feature development, deployment readiness. I took on the role to refactor this code base. When I took this responsibility, I thought - how difficult can this be? Little did I know, I was so wrong. We have 3 experienced developers, we can manage it.
-
-
-
- let's use agents to plan, iterate then deliver. Little did I know, this was the start of a nightmare. 
-
- But at some point, due to context degreation, it kept returning me poor results. I couldn't understand. Maybe my context is now lossy due to summarization and context compression. 
-
-
-I recently started working on a project with a group of developers, refactoring a monolithic code repository containing of 12,000 lines into modular pieces and clearly seggregated microservices. As part of this project, we split the workload into 3 main parts - code refactoring, feature development, deployment. I took on the role to refactor this code base, and thought - How difficult can this be? We have 3 experienced developers, we can manage it. We started breaking down tasks, creating JIRA boards and estimated a delivery of 
-
- let's use agents to plan, iterate then deliver. Little did I know, this was the start of a nightmare. 
-
-It was the first project where I 
-
-As my team leaned harder on AI-assisted development, I kept hitting the same wall: every session started from zero. An agent that nailed something one day forgot it the next, and three of us could run the same tool and get different results. Given that it was a huge project deliverable, it was causing major merge conflicts, duplicated work and inefficient agent use.
-
-So I built a harness around the agent: a shared working-style contract, persistent memory, and reusable skills that travel with it across sessions and machines. I created an agile team of 13 agents to manage new requirements and project timelines. I also added 10 skills to ensure key context prompts are not missed when a new session starts.
-
-The instinct turned out to be the same one I bring to data: a system is only as good as its consistency. Reliable AI isn't a smarter model, it's a harness that makes good output repeatable. Nonetheless, one thing that surprised me was the exponential growth of the context window. This is something I will definitely be looking at, to understand how to optimize the context window, compressing it without losing too much information
-
-
-
-As my team leaned harder on AI-assisted development, I kept hitting the same wall: every session started from zero. An agent that nailed something one day forgot it the next, and three of us could run the same tool and get different results. Given that it was a huge project deliverable, it was causing major merge conflicts, duplicated work and inefficient agent use.
-
-So I built a harness around the agent: a shared working-style contract, persistent memory, and reusable skills that travel with it across sessions and machines. I created an agile team of 13 agents to manage new requirements and project timelines. I also added 10 skills to ensure key context prompts are not missed when a new session starts.
-
-The instinct turned out to be the same one I bring to data: a system is only as good as its consistency. Reliable AI isn't a smarter model, it's a harness that makes good output repeatable. Nonetheless, one thing that surprised me was the exponential growth of the context window. This is something I will definitely be looking at, to understand how to optimize the context window, compressing it without losing too much information
+Setting up the agentic ecosystem was difficult at the start. We couldn't find the right harness or guardrail to make every session replicable. As we all know, agents are stateless: every time a new session starts, there is little to no guarantee that what I have today is what I will get tomorrow, and it only gets harder with multiple developers. Through a lot of research and iteration, I managed to build a shared working-style contract, persistent memory, and reusable skills that travel across sessions and machines. With this harness, we reduced serious merge conflicts, and the agents could understand why certain changes were made without conflicting with previous policies or guardrails. We could also start prompts consistently from shared skills, reducing the missing context the agents so often needed.
