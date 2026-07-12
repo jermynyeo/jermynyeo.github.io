@@ -45,22 +45,6 @@ function Bullets({
   )
 }
 
-/** "▲ promoted" chip shown above roles the person was promoted into. */
-function PromoChip() {
-  const reduce = useReducedMotion()
-  return (
-    <motion.span
-      className="role__promo"
-      initial={reduce ? false : { opacity: 0, x: -8 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, amount: 0.6 }}
-      transition={{ duration: 0.4, ease: [0.22, 0.61, 0.36, 1] }}
-    >
-      {experience.promotionLabel}
-    </motion.span>
-  )
-}
-
 function Role({ role }: { role: ExperienceRole }) {
   const [open, setOpen] = useState(false)
   const panelId = useId()
@@ -68,7 +52,6 @@ function Role({ role }: { role: ExperienceRole }) {
   if (!role.summary) {
     return (
       <div className="role">
-        {role.promoted && <PromoChip />}
         <RoleHead role={role} />
         <ul>
           {role.bullets.map((b, i) => (
@@ -81,7 +64,6 @@ function Role({ role }: { role: ExperienceRole }) {
 
   return (
     <div className="role">
-      {role.promoted && <PromoChip />}
       <RoleHead role={role} />
       <p className="role__summary">{richText(role.summary)}</p>
       <button
@@ -102,7 +84,19 @@ function RoleHead({ role }: { role: ExperienceRole }) {
   return (
     <>
       <div className="role__head">
-        <h4>{role.title}</h4>
+        <h4>
+          {role.title}
+          {role.promoted && (
+            <span
+              className="role__promoted-mark"
+              role="img"
+              title={experience.promotedHint}
+              aria-label={experience.promotedHint}
+            >
+              ▲
+            </span>
+          )}
+        </h4>
         <span className="role__date">{role.dates}</span>
       </div>
       {role.team && <p className="role__team">{role.team}</p>}

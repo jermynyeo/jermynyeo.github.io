@@ -337,22 +337,6 @@ code {
   box-shadow: 0 0 8px rgba(74, 222, 128, 0.45);
   transform-origin: top;
 }
-
-/* "▲ promoted" chip above roles reached via promotion */
-.role__promo {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--accent-mx);
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  padding: 2px 8px;
-  margin: 2px 0 8px;
-  background: var(--card-bg);
-}
 .timeline__dot { position: absolute; left: -6px; top: 6px; width: 11px; height: 11px; background: var(--accent-mx); border-radius: 50%; box-shadow: var(--glow); }
 .timeline__head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; }
 .timeline__head h3 { font-family: var(--mono); margin: 0; font-size: 1.05rem; color: #fff; font-weight: 600; }
@@ -365,6 +349,8 @@ code {
 .role:first-of-type { margin-top: 10px; }
 .role__head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px; }
 .role__head h4 { font-family: var(--mono); font-weight: 500; margin: 0; font-size: 0.96rem; color: #fff; }
+/* tiny promotion marker beside the role title (tooltip explains it) */
+.role__promoted-mark { color: var(--accent-mx); font-size: 0.55rem; margin-left: 7px; vertical-align: 2px; cursor: help; }
 .role__date { color: var(--text-dim); font-size: 0.76rem; font-variant-numeric: tabular-nums; }
 .role__team { color: var(--text-soft); font-size: 0.82rem; margin: 2px 0 8px; }
 .role ul { margin: 6px 0 4px; padding-left: 18px; color: var(--text-soft); }

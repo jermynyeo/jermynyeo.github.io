@@ -8,6 +8,10 @@ desktop.ini
 .idea/
 *.swp
 
+# AI
+.claude/
+.agents/
+
 # Node / Next.js
 node_modules
 .next

@@ -20,7 +20,7 @@ export interface ExperienceRole {
    */
   summary?: string
   bullets: string[]
-  /** Marks a role reached via promotion — renders the `promotionLabel` chip. */
+  /** Marks a role reached via internal promotion — renders a small ▲ beside the title. */
   promoted?: boolean
 }
 
@@ -37,8 +37,8 @@ export interface ExperienceItem {
 export const experience = {
   id: "experience",
   heading: "Experience",
-  /** Chip shown above roles marked `promoted: true`. */
-  promotionLabel: "▲ promoted",
+  /** Tooltip for the ▲ marker on roles with `promoted: true`. */
+  promotedHint: "Promoted into this role",
   items: [
     {
       title: "JPMorganChase",
@@ -51,7 +51,7 @@ export const experience = {
           dates: "Jan 2026 — Present",
           promoted: true,
           summary:
-            "Reconciliation automation, data-quality controls, a **Kafka**-fed metrics dashboard, and AI-assisted tooling.",
+            "Automating reconciliation & data-quality controls, a **Kafka**-fed metrics dashboard, and AI-assisted tooling that saves **~225 hrs/yr**.",
           bullets: [
             "Built automated **reconciliation jobs** across **60+ onboarded datasets**, surfacing discrepancies that were previously not caught and reducing audit risks.",
             "Designed **data-quality validations** for cloud-onboarded datasets that enforce business-quality standards across **10 downstream teams**, reducing data-quality incidents reported downstream.",
@@ -65,7 +65,7 @@ export const experience = {
           dates: "Feb 2024 — Jan 2026",
           promoted: true,
           summary:
-            "Self-service governance platform, terabyte-scale **Spark** ETL, and an **AWS** data-product migration.",
+            "Shipped a self-service governance platform for **800+ data feeds**, **10+ TB Spark** ETL, and an **AWS** data-product migration.",
           bullets: [
             "Designed and shipped a **Java Spring Boot** self-service platform adopted by **4 teams** to register and govern **800+ data feeds**, replacing manual spreadsheet tracking and eliminating hours of recurring manual effort per week.",
             "Engineered **Spark / Databricks** ETL pipelines processing **10+ TB** of data into enterprise reporting, with automated reconciliation enforcing data quality across **145+ data sources**.",
@@ -77,7 +77,7 @@ export const experience = {
           team: "Trade Surveillance · Software Engineer Program (SEP), Class of 2022",
           dates: "Aug 2022 — Jan 2024",
           summary:
-            "High-volume batch ETL for market surveillance, **Spring Boot** microservices, and **Spark** cloud re-engineering.",
+            "High-volume batch ETL over **500+ datasets/day** for market surveillance; **Spring Boot** services and a **Spark** re-engineering that cut runtime **25%**.",
           bullets: [
             "Owned high-volume **batch** ingestion and ETL processing **500+ datasets daily** for market surveillance.",
             "Built **Java Spring Boot** backend microservices powering mission-critical surveillance workflows relied on by compliance teams.",
@@ -107,8 +107,7 @@ export const experience = {
       dates: "Dec 2020 — Jul 2021",
       org: "GovTech Singapore",
       bullets: [
-        "Built in-house dashboards in Python, Power BI, and Tableau, giving management real-time visibility into key decision-making metrics.",
-        "Developed visualizations and Kanban tooling for manpower and task tracking, streamlining workflows and improving team productivity.",
+        "Built management dashboards (Python, Power BI, Tableau) and Kanban tooling giving real-time visibility into decision-making metrics.",
       ],
     },
     {
@@ -116,8 +115,7 @@ export const experience = {
       dates: "May — Aug 2020",
       org: "Singapore Management University · Game Analytics",
       bullets: [
-        "Led game-analytics research (Mobile Legends: Bang Bang) in a team of 3, building the data collection, cleaning, and analysis pipeline.",
-        "Designed and built a Vue + Laravel web application to surface the statistics and analysis to stakeholders.",
+        "Led game-analytics research (Mobile Legends) in a team of 3 — built the data pipeline and a Vue + Laravel app to surface insights to stakeholders.",
       ],
     },
   ] satisfies ExperienceItem[],
