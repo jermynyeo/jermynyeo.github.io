@@ -13,8 +13,10 @@ import { nav } from "@/content/nav"
 import { hero } from "@/content/hero"
 import { site } from "@/content/site"
 import { theme } from "@/content/theme"
+import { getReflections } from "@/lib/reflections"
 
 export default function Page() {
+  const reflections = getReflections()
   return (
     <>
       <nav aria-label="Primary" className="hero-nav">
@@ -69,7 +71,7 @@ export default function Page() {
       <main>
         <AboutSection />
         <ExperienceSection />
-        <LearningsSection />
+        <LearningsSection reflections={reflections} />
         <ProjectsSection />
         <SkillsSection />
         <EducationSection />

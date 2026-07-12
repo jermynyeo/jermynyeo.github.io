@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { richText } from "@/components/rich-text"
-import { learnings } from "@/content/learnings"
+import { getReflection, getReflections } from "@/lib/reflections"
 
 /** Pre-render one page per reflection (static export). */
 export function generateStaticParams() {
-  return learnings.items.map((item) => ({ slug: item.slug }))
+  return getReflections().map((item) => ({ slug: item.slug }))
 }
 
 export async function generateMetadata({
@@ -14,16 +14,18 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const item = learnings.items.find((i) => i.slug === slug)
+  const item = getReflection(slug)
   return {
     title: item?.title ?? "Reflection",
     description: item?.reflection,
   }
 }
 
-function toParagraphs(body: string | string[]): string[] {
-  const parts = Array.isArray(body) ? body : body.split(/\n+/)
-  return parts.map((p) => p.trim()).filter((p) => p !== "")
+function toParagraphs(body: string): string[] {
+  return body
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter((p) => p !== "")
 }
 
 export default async function ReflectionPage({
@@ -32,14 +34,15 @@ export default async function ReflectionPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const item = learnings.items.find((i) => i.slug === slug)
+  const item = getReflection(slug)
   if (!item) notFound()
 
   return (
     <main className="reflection-page">
       <nav className="reflection-page__bar" aria-label="Reflection">
-        <a href="/#reflections">← reflections</a>
-        <a href="/">home</a>
+        <a className="reflection-page__back" href="/#reflections">
+          ← back to portfolio
+        </a>
       </nav>
       <article>
         <span className="reflection-page__kind">{item.kind}</span>

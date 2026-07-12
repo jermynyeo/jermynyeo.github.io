@@ -11,17 +11,20 @@ import Reveal from "@/components/reveal"
 import { SectionTitle } from "@/components/section-title"
 import { richText } from "@/components/rich-text"
 import { learnings } from "@/content/learnings"
+import type { Reflection } from "@/lib/reflections"
 
 /** Reading time per reflection before it auto-advances. */
 const AUTO_MS = 90_000
 
-/** Normalize a body into paragraphs: split strings on newlines, keep arrays as-is. */
-function toParagraphs(body: string | string[]): string[] {
-  const parts = Array.isArray(body) ? body : body.split(/\n+/)
-  return parts.map((p) => p.trim()).filter((p) => p !== "")
+/** Split a body into paragraphs (blank line = new paragraph). */
+function toParagraphs(body: string): string[] {
+  return body
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter((p) => p !== "")
 }
 
-type Item = (typeof learnings.items)[number]
+type Item = Reflection
 
 /** The editorial lead | detail card body, shared by both layouts. */
 function SlideBody({ item }: { item: Item }) {
@@ -36,7 +39,12 @@ function SlideBody({ item }: { item: Item }) {
         <p className="learn-card__body">
           {richText(toParagraphs(item.body)[0] ?? "")}
         </p>
-        <a className="learn-card__more" href={`/reflections/${item.slug}`}>
+        <a
+          className="learn-card__more"
+          href={`/reflections/${item.slug}`}
+          target="_blank"
+          rel="noopener"
+        >
           read the full story →
         </a>
       </div>
@@ -44,8 +52,12 @@ function SlideBody({ item }: { item: Item }) {
   )
 }
 
-export default function LearningsSection() {
-  const items = learnings.items
+export default function LearningsSection({
+  reflections,
+}: {
+  reflections: Reflection[]
+}) {
+  const items = reflections
   const count = items.length
   const reduce = useReducedMotion()
   const wrapRef = useRef<HTMLDivElement>(null)
