@@ -1,7 +1,7 @@
 ---
-title: CKAD · Kubernetes
+title: Certified Kubernetes Application Developer (CKAD) · Linux Foundation
 kind: Certificate · 2024
-question: Do I truly understand how deployment with Kubernetes works? Why am I taking so long to investigate production issues?  
+question: Do I really understand Kubernetes, or am I just following the steps?
 tags: Kubernetes, DevOps
 order: 40
 ---
