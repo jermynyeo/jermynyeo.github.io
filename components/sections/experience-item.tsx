@@ -3,7 +3,11 @@
 import { useId, useState } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 import { richText } from "@/components/rich-text"
-import type { ExperienceItem, ExperienceRole } from "@/content/experience"
+import {
+  experience,
+  type ExperienceItem,
+  type ExperienceRole,
+} from "@/content/experience"
 
 /**
  * Bullets stay mounted (they ship in the exported HTML for crawlers) —
@@ -41,6 +45,22 @@ function Bullets({
   )
 }
 
+/** "▲ promoted" chip shown above roles the person was promoted into. */
+function PromoChip() {
+  const reduce = useReducedMotion()
+  return (
+    <motion.span
+      className="role__promo"
+      initial={reduce ? false : { opacity: 0, x: -8 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.6 }}
+      transition={{ duration: 0.4, ease: [0.22, 0.61, 0.36, 1] }}
+    >
+      {experience.promotionLabel}
+    </motion.span>
+  )
+}
+
 function Role({ role }: { role: ExperienceRole }) {
   const [open, setOpen] = useState(false)
   const panelId = useId()
@@ -48,6 +68,7 @@ function Role({ role }: { role: ExperienceRole }) {
   if (!role.summary) {
     return (
       <div className="role">
+        {role.promoted && <PromoChip />}
         <RoleHead role={role} />
         <ul>
           {role.bullets.map((b, i) => (
@@ -60,6 +81,7 @@ function Role({ role }: { role: ExperienceRole }) {
 
   return (
     <div className="role">
+      {role.promoted && <PromoChip />}
       <RoleHead role={role} />
       <p className="role__summary">{richText(role.summary)}</p>
       <button
@@ -88,10 +110,26 @@ function RoleHead({ role }: { role: ExperienceRole }) {
   )
 }
 
+/** Timeline dot that pulses once as it scrolls into view. */
+function TimelineDot() {
+  const reduce = useReducedMotion()
+  return (
+    <motion.div
+      className="timeline__dot"
+      initial={reduce ? false : { scale: 0.4, opacity: 0.4 }}
+      whileInView={
+        reduce ? { scale: 1, opacity: 1 } : { scale: [0.4, 1.3, 1], opacity: 1 }
+      }
+      viewport={{ once: true, amount: 0.6 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    />
+  )
+}
+
 export function ExperienceItemView({ item }: { item: ExperienceItem }) {
   return (
     <li className="timeline__item">
-      <div className="timeline__dot" />
+      <TimelineDot />
       <div className="timeline__body">
         <div className="timeline__head">
           <h3>{item.title}</h3>

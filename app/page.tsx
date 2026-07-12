@@ -6,7 +6,7 @@ import ExperienceSection from "@/components/sections/experience"
 import ProjectsSection from "@/components/sections/projects"
 import SkillsSection from "@/components/sections/skills"
 import EducationSection from "@/components/sections/education"
-// Hidden for now: import LearningsSection from "@/components/sections/learnings"
+import LearningsSection from "@/components/sections/learnings"
 import ContactSection from "@/components/sections/contact"
 import { nav } from "@/content/nav"
 import { hero } from "@/content/hero"
@@ -46,16 +46,19 @@ export default function Page() {
       <main>
         <AboutSection />
         <ExperienceSection />
+        <LearningsSection />
         <ProjectsSection />
         <SkillsSection />
         <EducationSection />
-        {/* Hidden for now: <LearningsSection /> */}
         <ContactSection />
       </main>
 
       <footer className="footer">
         <p>
           {site.footerByline} · {new Date().getFullYear()}
+          <span className="footer__cursor" aria-hidden>
+            ▌
+          </span>
         </p>
       </footer>
     </>

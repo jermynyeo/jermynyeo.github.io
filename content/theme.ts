@@ -18,6 +18,12 @@ export const theme = {
     activeColor: "#4ade80",
     idleColor: "rgba(148, 163, 184, 0.45)",
     activeGlow: "0 0 10px rgba(74, 222, 128, 0.5)",
+    /** Konami-code surge: brighter, faster rain for a few seconds. */
+    surge: {
+      durationMs: 4000,
+      activeCount: 24,
+      speedMultiplier: 2,
+    },
   },
 
   /**
@@ -78,5 +84,21 @@ export const theme = {
    */
   scrollProgress: {
     enabled: true,
+  },
+
+  /**
+   * Magnetic hover on contact buttons — how strongly they lean toward the
+   * cursor and the max pixels of travel.
+   */
+  magnetic: {
+    strength: 0.25,
+    maxPx: 6,
+  },
+
+  /**
+   * 3D tilt on certificate cards (max degrees of rotation).
+   */
+  tilt: {
+    maxDeg: 6,
   },
 } as const

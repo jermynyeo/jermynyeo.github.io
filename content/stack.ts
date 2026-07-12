@@ -35,35 +35,36 @@ export interface Certification {
   year: string
 }
 
+
 export const stack = {
   id: "stack",
   heading: "Stack",
-  note: "How I move data — sources, processing, lakehouse, serving. Hover any node to inspect.",
+  note: "How I move data — sources, processing, serving. Hover any node to inspect.",
   flow: {
     columns: [
       {
         title: "Sources",
         nodes: [
           {
-            id: "kafka",
-            name: "Kafka",
-            hint: "streams",
+            id: "database",
+            name: "Database",
+            hint: "Database",
             description:
-              "Async reconciliation-metrics feed into Spring Boot services at JPMC.",
-          },
-          {
-            id: "postgres",
-            name: "Postgres",
-            hint: "OLTP",
-            description:
-              "Relational backend for the self-service data-governance platform.",
+              "Database store.",
           },
           {
             id: "files",
-            name: "Files",
-            hint: "batch",
+            name: "File",
+            hint: "Raw Data",
             description:
-              "High-volume batch ingestion for trade-surveillance ETL.",
+              "Unix File System and Management.",
+          },
+          {
+            id: "s3",
+            name: "S3",
+            hint: "Object store",
+            description:
+              "Cloud storage for datasets.",
           },
         ],
       },
@@ -71,43 +72,25 @@ export const stack = {
         title: "Processing",
         nodes: [
           {
+            id: "kafka",
+            name: "Kafka",
+            hint: "streams",
+            description:
+              "Messaging-based data processing.",
+          },
+          {
             id: "spark",
             name: "Apache Spark",
             hint: "ETL",
             description:
-              "Terabyte-scale ETL pipelines feeding enterprise reporting at JPMC.",
+              "Spark processing for Terabyte-scale pipelines",
           },
           {
             id: "databricks",
             name: "Databricks",
             hint: "notebooks",
             description:
-              "Pipeline development & Lakehouse Fundamentals certified.",
-          },
-          {
-            id: "glue",
-            name: "AWS Glue",
-            hint: "managed ETL",
-            description:
-              "Managed ETL in the AWS data-product migration I led.",
-          },
-        ],
-      },
-      {
-        title: "Lakehouse",
-        nodes: [
-          {
-            id: "s3",
-            name: "S3",
-            hint: "object store",
-            description:
-              "Lake storage for cloud-onboarded datasets and data products.",
-          },
-          {
-            id: "delta",
-            name: "Delta Lake",
-            hint: "table format",
-            description: "Lakehouse table format on Databricks pipelines.",
+            "Data Lakehouse to manage Cloud datasets.",
           },
         ],
       },
@@ -116,39 +99,40 @@ export const stack = {
         nodes: [
           {
             id: "athena",
-            name: "Athena",
+            name: "AWS Athena",
             hint: "SQL",
             description:
-              "Serverless SQL over S3 for modernized legacy data products.",
+              "Serverless SQL offered by AWS.",
           },
           {
             id: "tableau",
             name: "Tableau",
             hint: "BI",
-            description: "Management dashboards built at GovTech Singapore.",
+            description: "Data Visualization Dashboarding Tool",
           },
           {
             id: "powerbi",
             name: "Power BI",
             hint: "dashboards",
             description:
-              "Real-time decision-making metrics dashboards at GovTech.",
+              "Data Visualization Dashboarding Tool",
           },
         ],
       },
     ] satisfies FlowColumn[],
     beams: [
-      { from: "kafka", to: "spark", curvature: -20, delay: 0 },
-      { from: "postgres", to: "databricks", delay: 0.4 },
-      { from: "postgres", to: "glue", curvature: 25, delay: 0.8 },
-      { from: "files", to: "glue", delay: 1.2 },
-      { from: "spark", to: "s3", curvature: -15, delay: 1.6 },
-      { from: "databricks", to: "delta", delay: 2.0 },
-      { from: "glue", to: "s3", curvature: 30, delay: 2.4 },
-      { from: "s3", to: "athena", delay: 2.8 },
-      { from: "delta", to: "athena", curvature: -20, delay: 3.2 },
-      { from: "athena", to: "tableau", curvature: 20, delay: 3.6 },
-      { from: "athena", to: "powerbi", curvature: 40, delay: 4.0 },
+      // All sources → Spark
+      { from: "database", to: "spark", curvature: -15, delay: 0 },
+      { from: "files", to: "spark", delay: 0.4 },
+      { from: "s3", to: "spark", curvature: 15, delay: 0.8 },
+      // S3 also fans out to Kafka + Databricks
+      { from: "s3", to: "kafka", curvature: -30, delay: 1.2 },
+      { from: "s3", to: "databricks", delay: 1.6 },
+      // Processing → Serving
+      { from: "spark", to: "athena", delay: 2.0 },
+      // Athena feeds the BI tools
+      { from: "athena", to: "tableau", curvature: 20, delay: 2.4 },
+      { from: "athena", to: "powerbi", curvature: 40, delay: 2.8 },
     ] satisfies FlowBeam[],
   },
   platformLabel: "// runs on",
@@ -157,7 +141,6 @@ export const stack = {
   alsoFluentIn: [
     "Java",
     "Python",
-    "Go",
     "Spring Boot",
     "Kubernetes (CKAD)",
     "Terraform",
@@ -168,7 +151,7 @@ export const stack = {
   certificationsTitle: "Certifications",
   certifications: [
     { name: "AI Tooling — Anthropic Claude 101 / Code 101", year: "2026" },
-    { name: "CKAD — Kubernetes App Developer", year: "2024" },
+    { name: "Certified Kubernetes Application Developer (CKAD)", year: "2024" },
     { name: "HashiCorp Terraform Associate", year: "2023" },
     { name: "Databricks Lakehouse Fundamentals", year: "2023" },
     { name: "AWS Certified Cloud Practitioner", year: "2020" },

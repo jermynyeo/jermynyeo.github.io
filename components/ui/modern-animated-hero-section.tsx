@@ -1,9 +1,10 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { theme } from "@/content/theme"
+import { eggs } from "@/content/eggs"
 
 interface Character {
   char: string
@@ -18,6 +19,18 @@ const ALL_CHARS =
 function useRainingCharacters(count: number) {
   const [characters, setCharacters] = useState<Character[]>([])
   const [activeIndices, setActiveIndices] = useState<Set<number>>(new Set())
+  // Konami-code surge: while `Date.now() < surgeUntil.current` the flicker
+  // lights more chars and the tick advances faster. Constants only — no new
+  // per-frame work or allocations.
+  const surgeUntil = useRef(0)
+
+  useEffect(() => {
+    const onSurge = () => {
+      surgeUntil.current = Date.now() + theme.rain.surge.durationMs
+    }
+    window.addEventListener(eggs.surgeEvent, onSurge)
+    return () => window.removeEventListener(eggs.surgeEvent, onSurge)
+  }, [])
 
   const createCharacters = useCallback(() => {
     const newCharacters: Character[] = []
@@ -39,8 +52,11 @@ function useRainingCharacters(count: number) {
   useEffect(() => {
     if (!characters.length) return
     const flicker = setInterval(() => {
+      const surging = Date.now() < surgeUntil.current
       const newActive = new Set<number>()
-      const numActive = Math.floor(Math.random() * 2) + 1
+      const numActive = surging
+        ? theme.rain.surge.activeCount
+        : Math.floor(Math.random() * 2) + 1
       for (let i = 0; i < numActive; i++) {
         newActive.add(Math.floor(Math.random() * characters.length))
       }
@@ -52,10 +68,12 @@ function useRainingCharacters(count: number) {
   useEffect(() => {
     let raf: number
     const tick = () => {
+      const speedFactor =
+        Date.now() < surgeUntil.current ? theme.rain.surge.speedMultiplier : 1
       setCharacters((prev) =>
         prev.map((c) => ({
           ...c,
-          y: c.y + c.speed,
+          y: c.y + c.speed * speedFactor,
           ...(c.y >= 100 && {
             y: -5,
             x: Math.random() * 100,

@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { CommandPalette } from "@/components/ui/command-palette"
+import { EasterEggs } from "@/components/easter-eggs"
 import { ScrollProgress } from "@/components/ui/scroll-progress"
 import { site } from "@/content/site"
 import { theme } from "@/content/theme"
@@ -83,6 +84,7 @@ export default function RootLayout({
         />
         {theme.scrollProgress.enabled && <ScrollProgress />}
         <CommandPalette />
+        <EasterEggs />
         {children}
       </body>
     </html>

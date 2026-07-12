@@ -12,7 +12,7 @@ export interface SkillGroup {
 
 export const resume = {
   summary:
-    "Software Engineer with 4+ years at JPMorganChase building data pipelines, governance tooling, and cloud-native backend services. Experienced in terabyte-scale Spark/Databricks ETL, AWS data platform migrations, and Java Spring Boot microservices, with hands-on proficiency in Claude and AI-assisted development.",
+    "Software Engineer with 4 years at JPMorganChase building data pipelines, governance tooling, and cloud-native backend services. Experienced in terabyte-scale Spark/Databricks ETL, AWS data platform migrations, and Java Spring Boot microservices, with hands-on proficiency in Claude and AI-assisted development.",
   skillGroups: [
     {
       title: "Languages",
@@ -26,7 +26,7 @@ export const resume = {
         "Kafka",
         "Delta Lake",
         "ETL / ELT pipelines",
-        "Data governance & reconciliation",
+        "Data Governance & Reconciliation",
       ],
     },
     {
@@ -40,7 +40,11 @@ export const resume = {
     },
     {
       title: "AI & ML",
-      items: ["Claude", "Copilot", "Context & Harness Engineering", "Tableau"],
+      items: ["Claude", "Copilot", "Context & Harness Engineering"],
+    },
+    {
+      title: "Data Visualization",
+      items: ["Tableau"],
     },
   ] satisfies SkillGroup[],
   labels: {

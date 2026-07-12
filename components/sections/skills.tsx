@@ -2,6 +2,7 @@ import Reveal from "@/components/reveal"
 import { SectionTitle } from "@/components/section-title"
 import { DataFlow } from "@/components/ui/data-flow"
 import { SectionBackdrop } from "@/components/ui/section-backdrop"
+import { Tilt } from "@/components/ui/tilt"
 import { stack } from "@/content/stack"
 
 export default function SkillsSection() {
@@ -28,11 +29,32 @@ export default function SkillsSection() {
 
         <div className="skills__cert-block">
           <h3 className="skills__cert-title">{stack.certificationsTitle}</h3>
-          <ul className="chips chips--cert">
-            {stack.certifications.map((cert) => (
-              <li key={cert.name}>
-                {cert.name} <span className="chips__yr">{cert.year}</span>
-              </li>
+          <ul className="cert-grid">
+            {stack.certifications.map((cert, i) => (
+              <Reveal as="li" key={cert.name} delay={i * 0.06} y={14}>
+                <Tilt className="cert-card">
+                  <span className="cert-card__seal" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="12" cy="8" r="6" />
+                      <path d="M8.21 13.89 7 22l5-3 5 3-1.21-8.11" />
+                    </svg>
+                  </span>
+                  <span className="cert-card__body">
+                    <span className="cert-card__name">{cert.name}</span>
+                    <span className="cert-card__meta">
+                      <span className="cert-card__issued">Issued</span>
+                      <span className="cert-card__yr">{cert.year}</span>
+                    </span>
+                  </span>
+                </Tilt>
+              </Reveal>
             ))}
           </ul>
         </div>

@@ -14,10 +14,10 @@ export interface NavEntry {
 export const nav: NavEntry[] = [
   { href: "#about", label: "about" },
   { href: "#experience", label: "experience" },
+  { href: "#learnings", label: "learnings" },
   { href: "#projects", label: "projects" },
   { href: "#stack", label: "stack" },
   { href: "#education", label: "education" },
-  // Hidden for now: { href: "#learnings", label: "learnings" },
   { href: "#contact", label: "contact" },
   { href: "/resume", label: "resume", kind: "cta" },
 ]

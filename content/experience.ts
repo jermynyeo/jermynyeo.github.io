@@ -20,6 +20,8 @@ export interface ExperienceRole {
    */
   summary?: string
   bullets: string[]
+  /** Marks a role reached via promotion — renders the `promotionLabel` chip. */
+  promoted?: boolean
 }
 
 export interface ExperienceItem {
@@ -35,16 +37,19 @@ export interface ExperienceItem {
 export const experience = {
   id: "experience",
   heading: "Experience",
+  /** Chip shown above roles marked `promoted: true`. */
+  promotionLabel: "▲ promoted",
   items: [
     {
       title: "JPMorganChase",
-      dates: "Aug 2022 — Present · 4+ yrs",
+      dates: "Aug 2022 — Present · 4 yrs",
       org: "Compliance Technology · Singapore · *Promoted twice in 3.5 years*",
       roles: [
         {
           title: "Senior Associate Software Engineer",
           team: "Data Governance & Controls",
           dates: "Jan 2026 — Present",
+          promoted: true,
           summary:
             "Reconciliation automation, data-quality controls, a **Kafka**-fed metrics dashboard, and AI-assisted tooling.",
           bullets: [
@@ -58,6 +63,7 @@ export const experience = {
           title: "Associate Software Engineer",
           team: "Data Governance & Controls",
           dates: "Feb 2024 — Jan 2026",
+          promoted: true,
           summary:
             "Self-service governance platform, terabyte-scale **Spark** ETL, and an **AWS** data-product migration.",
           bullets: [
