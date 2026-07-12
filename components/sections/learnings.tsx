@@ -16,6 +16,11 @@ import type { Reflection } from "@/lib/reflections"
 /** Reading time per reflection before it auto-advances. */
 const AUTO_MS = 90_000
 
+/** A reflection lives in the AI lane when it carries the "AI" tag. */
+function isAiReflection(r: Reflection): boolean {
+  return r.tags.some((t) => t.trim().toLowerCase() === "ai")
+}
+
 /** Split a body into paragraphs (blank line = new paragraph). */
 function toParagraphs(body: string): string[] {
   return body
@@ -62,12 +67,12 @@ function SlideBody({ item }: { item: Item }) {
   )
 }
 
-export default function LearningsSection({
-  reflections,
-}: {
-  reflections: Reflection[]
-}) {
-  const items = reflections
+/**
+ * One self-contained lane: a labelled carousel that auto-advances (~90s),
+ * pauses on hover/focus, and only ticks while on screen. Falls back to a
+ * static stack for reduced motion, small screens, or a single reflection.
+ */
+function ReflectionCarousel({ label, items }: { label: string; items: Item[] }) {
   const count = items.length
   const reduce = useReducedMotion()
   const wrapRef = useRef<HTMLDivElement>(null)
@@ -85,8 +90,8 @@ export default function LearningsSection({
     return () => mq.removeEventListener("change", sync)
   }, [])
 
-  // Auto-advance ~90s per reflection — only while it's on screen and not
-  // paused (hover/focus). Depends on `index`, so manual nav resets the timer.
+  // Auto-advance ~90s per reflection — only while on screen and not paused
+  // (hover/focus). Depends on `index`, so manual nav resets the timer.
   useEffect(() => {
     if (reduce || compact || count <= 1 || paused || !inView) return
     const id = window.setTimeout(() => {
@@ -101,12 +106,13 @@ export default function LearningsSection({
     setIndex(((next % count) + count) % count)
   }
 
+  const Label = <h3 className="reflection-lane__label">{label}</h3>
+
   // Static fallback: reduced motion, small screens, or a single reflection.
   if (reduce || compact || count <= 1) {
     return (
-      <Reveal as="section" x={-24} id={learnings.id} className="section">
-        <SectionTitle>{learnings.heading}</SectionTitle>
-        <p className="section__note">{richText(learnings.intro)}</p>
+      <div className="reflection-lane">
+        {Label}
         <div className="reflections reflections--static">
           {items.map((item, i) => (
             <article key={i} className="learn-card">
@@ -114,17 +120,15 @@ export default function LearningsSection({
             </article>
           ))}
         </div>
-      </Reveal>
+      </div>
     )
   }
 
   const slide = 28
 
   return (
-    <Reveal as="section" x={-24} id={learnings.id} className="section">
-      <SectionTitle>{learnings.heading}</SectionTitle>
-      <p className="section__note">{richText(learnings.intro)}</p>
-
+    <div className="reflection-lane">
+      {Label}
       <div
         ref={wrapRef}
         className="reflections"
@@ -160,11 +164,7 @@ export default function LearningsSection({
           >
             ‹
           </button>
-          <div
-            className="reflections__dots"
-            role="tablist"
-            aria-label="Reflections"
-          >
+          <div className="reflections__dots" role="tablist" aria-label={label}>
             {items.map((it, i) => (
               <button
                 key={i}
@@ -186,6 +186,31 @@ export default function LearningsSection({
             ›
           </button>
         </div>
+      </div>
+    </div>
+  )
+}
+
+export default function LearningsSection({
+  reflections,
+}: {
+  reflections: Reflection[]
+}) {
+  const aiLane = reflections.filter(isAiReflection)
+  const craftLane = reflections.filter((r) => !isAiReflection(r))
+
+  return (
+    <Reveal as="section" x={-24} id={learnings.id} className="section">
+      <SectionTitle>{learnings.heading}</SectionTitle>
+      <p className="section__note">{richText(learnings.intro)}</p>
+
+      <div className="reflections-split">
+        {aiLane.length > 0 && (
+          <ReflectionCarousel label={learnings.lanes.ai} items={aiLane} />
+        )}
+        {craftLane.length > 0 && (
+          <ReflectionCarousel label={learnings.lanes.craft} items={craftLane} />
+        )}
       </div>
     </Reveal>
   )

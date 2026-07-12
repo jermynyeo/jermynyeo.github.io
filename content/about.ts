@@ -7,8 +7,8 @@ export const about = {
   id: "about",
   heading: "About",
   paragraphs: [
-    "My work centers on one thing: data teams can trust. I'm a backend engineer who designs and builds **Java** and **Spring Boot** solutions that integrate with data platforms to enforce quality, reconciliation, and governance. At JPMorganChase I've spent 4 years on exactly that across Compliance Technology, working with teams to keep the bank's data reliable and trustworthy.",
-    "I work mostly in Java, with solid platform foundations across Kubernetes (CKAD), Terraform, and AWS, plus hands-on proficiency in **Claude** and AI-assisted development. My rule is simple: build systems that are reliable, not just clever.",
+    "I am a backend software engineer who spent the past 4 years working in the space of Compliance in a bank, where regulations are stronger, to build systems that ensures data is trustworthy. I work mostly in Java, with solid platform foundations across Kubernetes (CKAD), Terraform, and AWS.",
+    "Apart from software engineering, I am an avid learner in the field of AI, trying to keep up with the latest news. I have played with agentic development and more, and you can read more about them in the Learnings section"
   ],
   /** Closing pull-quote — the thesis of the whole page. */
   pullQuote: "Data should be **correct**, not just available.",

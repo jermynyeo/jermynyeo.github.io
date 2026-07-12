@@ -519,6 +519,31 @@ code {
 .card__links { display: flex; gap: 16px; font-size: 0.84rem; font-weight: 600; }
 .projects__more { margin-top: 28px; font-weight: 600; font-size: 0.9rem; }
 
+/* ============ AI & AGENTS ============ */
+.ai-caps {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+}
+.ai-cap {
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 20px 22px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.ai-cap:hover { border-color: var(--accent-mx); box-shadow: var(--glow); transform: translateY(-2px); }
+.ai-cap__name { font-family: var(--mono); font-size: 1rem; font-weight: 600; color: #fff; margin: 0 0 8px; }
+.ai-cap__name::before { content: "▸ "; color: var(--accent-mx); }
+.ai-cap__desc { color: var(--text-soft); font-size: 0.88rem; line-height: 1.6; margin: 0; }
+.ai-cap__more { display: inline-block; margin-top: 12px; font-family: var(--mono); font-size: 0.78rem; color: var(--accent-mx); }
+.ai-cap__more:hover { text-shadow: var(--glow); }
+.ai-cert { display: block; margin-top: 8px; }
+.ai-cert__year { color: var(--text-soft); }
+
 /* ============ EDUCATION detail ============ */
 .edu { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px; margin: 14px 0 10px; }
 .edu__block h4 { font-family: var(--mono); font-weight: 600; font-size: 0.8rem; margin: 0 0 8px; color: var(--accent-mx); text-transform: uppercase; letter-spacing: 0.08em; }
@@ -895,6 +920,37 @@ code {
 .reflections { position: relative; }
 .reflections--static { display: flex; flex-direction: column; gap: 20px; }
 .reflections__viewport { min-height: 240px; display: grid; }
+
+/* Two side-by-side lanes: AI reflections | engineering craft. */
+.reflections-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.reflection-lane__label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent-mx);
+  margin: 0 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.reflection-lane__label::before { content: "// "; color: var(--text-dim); }
+/* Inside a narrow lane, stack the card (lead over detail) instead of 2-col. */
+.reflections-split .reflections__viewport { min-height: 380px; }
+.reflections-split .learn-card {
+  grid-template-columns: 1fr;
+  gap: 18px;
+  padding: 24px 24px;
+}
+.reflections-split .learn-card__detail { align-self: start; }
+@media (max-width: 900px) {
+  .reflections-split { grid-template-columns: 1fr; gap: 34px; }
+  .reflections-split .reflections__viewport { min-height: 0; }
+}
 .reflections__progress {
   font-family: var(--mono);
   font-size: 0.72rem;

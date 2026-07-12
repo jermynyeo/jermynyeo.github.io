@@ -17,6 +17,7 @@ export const nav: NavEntry[] = [
   { href: "#reflections", label: "reflections" },
   { href: "#projects", label: "projects" },
   { href: "#stack", label: "stack" },
+  { href: "#ai", label: "ai" },
   { href: "#education", label: "education" },
   { href: "/resume", label: "resume", kind: "cta" },
 ]

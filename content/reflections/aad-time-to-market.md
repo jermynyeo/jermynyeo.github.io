@@ -7,7 +7,7 @@ related: agent-harness, agent-loops
 order: 10
 ---
 
-I recently started working on a project with a group of **3 developers** to convert a local minimum viable product (MVP) into a deliverable product in **5 months**. We started breaking down tasks, creating JIRA boards, and estimated a **4-month delivery** at **15 hours per week** each. It was high-commitment work with little buffer for all of our busy schedules, and we weren't certain we could deliver by then. Then something hit me: if I was using AI-assisted development at work, why couldn't I do the same here?
+I recently started working on a project with a group of **3 developers** to convert a local minimum viable product (MVP) into a deliverable product in **5 months**. We started breaking down tasks, creating JIRA boards, and estimated a **4-month delivery** at **15 hours per week** each. But we all knew how impossible this would be. Then it hit me: if I was using AI-assisted development at work, why couldn't I do the same here?
 
 To convince my peers that this was the way to go, I took a leap of faith and started developing with the help of AI. I began with prompt engineering, refining how I wanted the application to behave and giving "clear" instructions to the agent. But this was too slow. I was babysitting the agent and limiting its reasoning to what I wanted, which might not even be accurate. So I took a step back, changed the way I prompted, and the results started getting better.
 

@@ -8,6 +8,7 @@ import ExperienceSection from "@/components/sections/experience"
 import ProjectsSection from "@/components/sections/projects"
 import SkillsSection from "@/components/sections/skills"
 import EducationSection from "@/components/sections/education"
+import AiSection from "@/components/sections/ai"
 import LearningsSection from "@/components/sections/learnings"
 import { nav } from "@/content/nav"
 import { hero } from "@/content/hero"
@@ -74,6 +75,7 @@ export default function Page() {
         <LearningsSection reflections={reflections} />
         <ProjectsSection />
         <SkillsSection />
+        <AiSection />
         <EducationSection />
       </main>
 
