@@ -9,7 +9,7 @@ export default async function ProjectsSection() {
   const { repos } = await getRepos()
 
   return (
-    <Reveal as="section" id={projects.id} className="section">
+    <Reveal as="section" x={-24} id={projects.id} className="section">
       <SectionTitle>{projects.heading}</SectionTitle>
       <p className="section__note">{richText(projects.note)}</p>
       <ProjectsGrid repos={repos} />

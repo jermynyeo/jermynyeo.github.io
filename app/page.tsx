@@ -9,7 +9,6 @@ import ProjectsSection from "@/components/sections/projects"
 import SkillsSection from "@/components/sections/skills"
 import EducationSection from "@/components/sections/education"
 import LearningsSection from "@/components/sections/learnings"
-import ContactSection from "@/components/sections/contact"
 import { nav } from "@/content/nav"
 import { hero } from "@/content/hero"
 import { site } from "@/content/site"
@@ -42,7 +41,14 @@ export default function Page() {
           <p className="hero-intro__pov">{hero.intro.pov}</p>
           <div className="hero-intro__cta">
             {hero.intro.ctas.map((c) => (
-              <a key={c.href} href={c.href} className={`btn btn--${c.kind}`}>
+              <a
+                key={c.href}
+                href={c.href}
+                className={`btn btn--${c.kind}`}
+                {...("external" in c && c.external
+                  ? { target: "_blank", rel: "noopener" }
+                  : {})}
+              >
                 {c.label}
               </a>
             ))}
@@ -67,7 +73,6 @@ export default function Page() {
         <ProjectsSection />
         <SkillsSection />
         <EducationSection />
-        <ContactSection />
       </main>
 
       <footer className="footer">

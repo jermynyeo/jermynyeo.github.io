@@ -75,6 +75,8 @@ body {
 ::selection { background: var(--accent-mx); color: #0a0f0d; }
 
 main, .footer { position: relative; z-index: 1; }
+/* Clip the small left-drift of section reveals so it never shows a scrollbar */
+main { overflow-x: clip; }
 
 /* Hero scene — asymmetric split: identity billboard (left) + terminal (right) */
 .hero-scene {
@@ -395,36 +397,25 @@ code {
 
 /* ============ EXPERIENCE / TIMELINE ============ */
 .timeline { list-style: none; padding: 0; margin: 0; }
-.timeline__item { position: relative; padding: 0 0 40px 30px; border-left: 1px solid var(--line); }
-.timeline__item:last-child { border-left-color: transparent; }
 
-/* ----- Career-path spine (Experience only, `.timeline--path`) -----
-   The items' border-left becomes a faint base track; TimelineSpine overlays
-   a mint line that draws itself on scroll, anchored to the dot centers. */
-.timeline--path { position: relative; }
-.timeline--path .timeline__item { border-left-color: rgba(74, 222, 128, 0.06); }
-.timeline--path .timeline__item:last-child { border-left-color: transparent; }
-.timeline__spine {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* ----- Checkpoint nodes (Experience) -----
+   No connecting rail; each item is a discrete "stop" on the wire the global
+   bit travels. Dots read as ring checkpoints (dot + soft halo). */
+.timeline--nodes .timeline__item {
+  position: relative;
+  padding: 0 0 44px 30px;
 }
-.timeline__spine-fill {
+.timeline--nodes .timeline__item:last-child { padding-bottom: 0; }
+.timeline__dot {
   position: absolute;
-  left: 0;
-  width: 1px;
-  background: linear-gradient(
-    to bottom,
-    var(--accent-mx),
-    rgba(74, 222, 128, 0.35)
-  );
-  box-shadow: 0 0 8px rgba(74, 222, 128, 0.45);
-  transform-origin: top;
+  left: -5px;
+  top: 7px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-mx);
+  box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.12), var(--glow);
 }
-.timeline__dot { position: absolute; left: -6px; top: 6px; width: 11px; height: 11px; background: var(--accent-mx); border-radius: 50%; box-shadow: var(--glow); }
 .timeline__head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; }
 .timeline__head h3 { font-family: var(--mono); margin: 0; font-size: 1.05rem; color: #fff; font-weight: 600; }
 .timeline__date { color: var(--text-dim); font-size: 0.8rem; font-variant-numeric: tabular-nums; }
@@ -724,6 +715,17 @@ code {
   overflow: hidden;
 }
 .wire-world svg { display: block; position: absolute; top: 0; left: 0; }
+/* The bit rides above content (below nav/palette) so it stays visible while
+   threading through opaque cards. */
+.wire-world__bit-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 6;
+  pointer-events: none;
+  overflow: hidden;
+}
 
 /* energized dashed overlays — offset by exactly one dash period so the
    loop is seamless on a path of any length */
@@ -840,9 +842,16 @@ code {
 /* ============ LEARNINGS ============ */
 /* Editorial journal layout — full-width entries split lead | detail,
    deliberately distinct from the Projects card grid */
-/* Reflections carousel — one entry at a time, auto-advancing + manual */
+/* Reflections carousel — the bit turns the page as you scroll past. */
 .reflections { position: relative; }
+.reflections--static { display: flex; flex-direction: column; gap: 20px; }
 .reflections__viewport { min-height: 240px; display: grid; }
+.reflections__progress {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
 .reflections__controls {
   display: flex;
   align-items: center;

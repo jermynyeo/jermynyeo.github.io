@@ -5,7 +5,7 @@ import { education } from "@/content/education"
 
 export default function EducationSection() {
   return (
-    <Reveal as="section" id={education.id} className="section">
+    <Reveal as="section" x={-24} id={education.id} className="section">
       <SectionTitle>{education.heading}</SectionTitle>
       <ol className="timeline">
         {education.items.map((item, i) => (

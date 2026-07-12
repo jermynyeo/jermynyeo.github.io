@@ -14,6 +14,16 @@ export const wireWorld = {
     .filter((entry) => entry.href.startsWith("#"))
     .map((entry) => entry.href.slice(1)),
 
+  /**
+   * Elements the visitor bit threads through, per section id. The bit weaves
+   * from the gutter through each matched element (in top-to-bottom, then
+   * left-to-right order) before continuing its journey. Add a section id +
+   * selector to route the bit through that section's interactive elements.
+   */
+  waypoints: {
+    experience: ".timeline__dot",
+  } as Record<string, string>,
+
   /** Label rendered beside each junction port (desktop gutters only). */
   portLabel: (id: string) => `▸ node://${id}`,
 
@@ -22,7 +32,7 @@ export const wireWorld = {
     bitPrefix: "● bit",
     scanning: (id: string) => `scanning: ${id}`,
     resolved: "query resolved ✓",
-    /** The HUD flips to `resolved` when this section is active. */
-    resolvedAt: "contact",
+    /** The HUD flips to `resolved` when this section is active (last section). */
+    resolvedAt: "education",
   },
 }

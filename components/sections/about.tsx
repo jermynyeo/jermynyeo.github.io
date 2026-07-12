@@ -6,7 +6,7 @@ import { about } from "@/content/about"
 
 export default function AboutSection() {
   return (
-    <Reveal as="section" id={about.id} className="section">
+    <Reveal as="section" x={-24} id={about.id} className="section">
       <SectionTitle>{about.heading}</SectionTitle>
       <div className="about">
         <div className="about__text">

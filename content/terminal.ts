@@ -96,12 +96,11 @@ const eggCommands: TermCommand[] = [
     description: "with great power…",
     hidden: true,
     action: {
-      type: "scroll",
-      target: "#contact",
+      type: "print",
       lines: [
         "[sudo] password for visitor: ********",
         "ACCESS GRANTED: opening contact channel…",
-        "→ cd ./contact",
+        "→ jermyn1999@gmail.com",
       ],
     },
   },

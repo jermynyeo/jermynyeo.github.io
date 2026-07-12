@@ -13,7 +13,23 @@ export const hero = {
     pov: "I design and build the backend systems that keep data reliable and trustworthy.",
     ctas: [
       { label: "resume", href: "/resume", kind: "primary" as const },
-      { label: "get in touch", href: "#contact", kind: "ghost" as const },
+      {
+        label: "email",
+        href: "mailto:jermyn1999@gmail.com",
+        kind: "ghost" as const,
+      },
+      {
+        label: "linkedin",
+        href: "https://www.linkedin.com/in/jywh/",
+        kind: "ghost" as const,
+        external: true,
+      },
+      {
+        label: "github",
+        href: "https://github.com/jermynyeo",
+        kind: "ghost" as const,
+        external: true,
+      },
     ],
   },
   terminal: {

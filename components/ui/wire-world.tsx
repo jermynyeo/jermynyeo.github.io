@@ -43,6 +43,8 @@ interface Island {
   top: number
   bottom: number
   titleY: number
+  /** Checkpoint-dot centers (Experience) — the main trail threads through these. */
+  nodes?: Pt[]
 }
 
 interface Measured {
@@ -185,6 +187,19 @@ function measure(ids: readonly string[]): Measured | null {
     const top = docTop(el)
     const left = docLeft(el)
     const title = el.querySelector<HTMLElement>(".section__title")
+    // Waypoint elements the bit threads through (config per section).
+    // Offset-based coords ignore any pulse/entrance transform, staying accurate.
+    const selector = content.waypoints[id]
+    const wpEls = selector
+      ? el.querySelectorAll<HTMLElement>(selector)
+      : ([] as unknown as NodeListOf<HTMLElement>)
+    const nodes: Pt[] = Array.from(wpEls)
+      .map((d) => ({
+        x: docLeft(d) + d.offsetWidth / 2,
+        y: docTop(d) + d.offsetHeight / 2,
+      }))
+      // Thread top-to-bottom, then left-to-right (columns, rows, and grids).
+      .sort((a, b) => a.y - b.y || a.x - b.x)
     islands.push({
       id,
       left: left + padLeft,
@@ -194,6 +209,7 @@ function measure(ids: readonly string[]): Measured | null {
       titleY: title
         ? docTop(title) + title.offsetHeight / 2
         : top + padTop + 24,
+      nodes: nodes.length ? nodes : undefined,
     })
   }
   if (islands.length < 2) return null
@@ -316,16 +332,26 @@ function generateGeometry(m: Measured, seed: number): Geometry {
   const trailPts: Pt[] = [{ x: trailX, y: junctions[0].y }]
   for (let i = 0; i < islands.length - 1; i++) {
     const nextY = junctions[i + 1].y
-    // Flavor jog inside the band between these sections (desktop only).
-    const band = bands.find((b) => b.y0 > junctions[i].y && b.y1 < nextY)
-    if (band && hasGutters && rng() < 0.6) {
-      const jx = Math.max(trailX - (30 + rng() * 60), edge + 6)
-      const y1 = band.y0 + (band.y1 - band.y0) * 0.2
-      const y2 = band.y0 + (band.y1 - band.y0) * 0.8
-      trailPts.push({ x: trailX, y: y1 })
-      trailPts.push({ x: jx, y: y1 })
-      trailPts.push({ x: jx, y: y2 })
-      trailPts.push({ x: trailX, y: y2 })
+    const nodes = islands[i].nodes
+    if (nodes && nodes.length) {
+      // Thread the bit through this section's waypoints (each at its own
+      // position, so columns AND horizontal rows work), jogging in from and
+      // back to the gutter. Sorted by y, so the path stays y-monotonic.
+      trailPts.push({ x: trailX, y: nodes[0].y })
+      for (const n of nodes) trailPts.push({ x: n.x, y: n.y })
+      trailPts.push({ x: trailX, y: nodes[nodes.length - 1].y })
+    } else {
+      // Flavor jog inside the band between these sections (desktop only).
+      const band = bands.find((b) => b.y0 > junctions[i].y && b.y1 < nextY)
+      if (band && hasGutters && rng() < 0.6) {
+        const jx = Math.max(trailX - (30 + rng() * 60), edge + 6)
+        const y1 = band.y0 + (band.y1 - band.y0) * 0.2
+        const y2 = band.y0 + (band.y1 - band.y0) * 0.8
+        trailPts.push({ x: trailX, y: y1 })
+        trailPts.push({ x: jx, y: y1 })
+        trailPts.push({ x: jx, y: y2 })
+        trailPts.push({ x: trailX, y: y2 })
+      }
     }
     trailPts.push({ x: trailX, y: nextY })
   }
@@ -475,6 +501,7 @@ export function WireWorld() {
   const dashPeriod = knobs.dash.pattern[0] + knobs.dash.pattern[1]
 
   return (
+    <>
     <div
       ref={layerRef}
       className="wire-world"
@@ -607,9 +634,6 @@ export function WireWorld() {
           )
         })}
 
-      {/* the visitor's own bit */}
-      {showMotion && <VisitorBit key={`bit-${geoVersion}`} geo={geo} />}
-
       {/* debug overlay: measured islands + junctions */}
       {knobs.debug && (
         <svg
@@ -635,5 +659,19 @@ export function WireWorld() {
         </svg>
       )}
     </div>
+    {/* The bit rides a separate top layer so it stays visible while it
+        threads through opaque cards, not hidden behind them. */}
+    {showMotion && (
+      <div
+        className="wire-world__bit-layer"
+        aria-hidden
+        style={{ height: geo.H }}
+      >
+        {/* No geoVersion key: keep the bit mounted across re-measures so it
+            glides to the new position instead of re-dropping from the top. */}
+        <VisitorBit geo={geo} />
+      </div>
+    )}
+    </>
   )
 }

@@ -7,7 +7,7 @@ import { stack } from "@/content/stack"
 
 export default function SkillsSection() {
   return (
-    <Reveal as="section" id={stack.id} className="section section--data">
+    <Reveal as="section" x={-24} id={stack.id} className="section section--data">
       <SectionBackdrop />
       <div className="section__inner">
         <SectionTitle>{stack.heading}</SectionTitle>

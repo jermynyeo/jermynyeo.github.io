@@ -104,7 +104,7 @@ export default function ProjectsGrid({ repos }: { repos: Repo[] }) {
       </p>
       <div id="projects-grid" className="projects">
         {repos.map((repo) => (
-          <div key={repo.name} className="min-h-[18rem]">
+          <div key={repo.name} className="min-h-[18rem] project-cell">
             <BreakableCard
               title={prettifyName(repo.name)}
               description={<RepoBody repo={repo} />}
