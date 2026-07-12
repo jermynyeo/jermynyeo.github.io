@@ -5,7 +5,7 @@
  */
 export const site = {
   name: "Jermyn Yeo",
-  role: "Software Engineer  (Data, Platform)",
+  role: "Software Engineer (Data, Platform)",
   title: "Jermyn Yeo · Software Engineer (Data, Platform)",
   description:
     "Portfolio of Jermyn Yeo, Software Engineer (Data, Platform). Building data pipelines, ETL, Data Governance, and cloud-native backend services.",

@@ -50,21 +50,21 @@ export const stack = {
             name: "Database",
             hint: "Database",
             description:
-              "Database store.",
+              "Source systems feeding governance & surveillance pipelines.",
           },
           {
             id: "files",
             name: "File",
             hint: "Raw Data",
             description:
-              "Unix File System and Management.",
+              "Unix filesystem ingestion for high-volume batch ETL.",
           },
           {
             id: "s3",
             name: "S3",
             hint: "Object store",
             description:
-              "Cloud storage for datasets.",
+              "Object store for cloud-onboarded datasets.",
           },
         ],
       },
@@ -76,21 +76,21 @@ export const stack = {
             name: "Kafka",
             hint: "streams",
             description:
-              "Messaging-based data processing.",
+              "Streams reconciliation metrics into Spring Boot services.",
           },
           {
             id: "spark",
             name: "Apache Spark",
             hint: "ETL",
             description:
-              "Spark processing for Terabyte-scale pipelines",
+              "Terabyte-scale ETL across 145+ data sources.",
           },
           {
             id: "databricks",
             name: "Databricks",
             hint: "notebooks",
             description:
-            "Data Lakehouse to manage Cloud datasets.",
+              "Lakehouse for governing cloud datasets.",
           },
         ],
       },
@@ -102,20 +102,20 @@ export const stack = {
             name: "AWS Athena",
             hint: "SQL",
             description:
-              "Serverless SQL offered by AWS.",
+              "Serverless SQL over S3/Glue for enterprise reporting.",
           },
           {
             id: "tableau",
             name: "Tableau",
             hint: "BI",
-            description: "Data Visualization Dashboarding Tool",
+            description: "Dashboards for compliance & business stakeholders.",
           },
           {
             id: "powerbi",
             name: "Power BI",
             hint: "dashboards",
             description:
-              "Data Visualization Dashboarding Tool",
+              "Self-service reporting for downstream teams.",
           },
         ],
       },

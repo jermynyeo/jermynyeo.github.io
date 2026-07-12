@@ -9,7 +9,7 @@ export const hero = {
     lines: [
       { kind: "command", text: "whoami" },
       { kind: "heading", text: "Jermyn Yeo" },
-      { kind: "output", text: "Software Engineer  (Data, Platform)" },
+      { kind: "output", text: "Software Engineer (Data, Platform)" },
       { kind: "output", text: "Singapore · JPMorganChase" },
       { kind: "command", text: "ls ./portfolio" },
     ],
