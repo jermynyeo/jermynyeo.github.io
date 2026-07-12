@@ -358,6 +358,20 @@ code {
   margin: 0 0 32px;
 }
 
+/* Inline links inside prose rendered by richText ([label](href)). */
+.rich-link {
+  color: var(--accent-mx);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent-mx) 40%, transparent);
+  transition: border-color 0.18s ease, text-shadow 0.18s ease;
+}
+.rich-link:hover,
+.rich-link:focus-visible {
+  border-bottom-color: var(--accent-mx);
+  text-shadow: var(--glow);
+  outline: none;
+}
+
 .ul-draw {
   position: relative;
   display: inline-block;
