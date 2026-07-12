@@ -5,17 +5,17 @@
  */
 export const site = {
   name: "Jermyn Yeo",
-  role: "Software Engineer (Data, Platform)",
-  title: "Jermyn Yeo · Software Engineer (Data, Platform)",
+  role: "Backend Software Engineer",
+  title: "Jermyn Yeo · Backend Software Engineer",
   description:
-    "Portfolio of Jermyn Yeo, Software Engineer (Data, Platform). Building data pipelines, ETL, Data Governance, and cloud-native backend services.",
+    "Portfolio of Jermyn Yeo, a backend software engineer specializing in data quality: designing and building the Java and Spring Boot solutions that keep data platforms reliable and their data trustworthy. Kubernetes, Terraform, AWS.",
   lang: "en",
   footerByline: "Handmade by Jermyn Yeo",
 
   url: "https://jermynyeo.github.io",
   email: "jermyn1999@gmail.com",
   location: "Singapore",
-  jobTitle: "Software Engineer (Data, Platform)",
+  jobTitle: "Backend Software Engineer",
   employer: "JPMorganChase",
   alumniOf: "Singapore Management University",
   sameAs: [

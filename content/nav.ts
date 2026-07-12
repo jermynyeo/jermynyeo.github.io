@@ -14,7 +14,7 @@ export interface NavEntry {
 export const nav: NavEntry[] = [
   { href: "#about", label: "about" },
   { href: "#experience", label: "experience" },
-  { href: "#learnings", label: "learnings" },
+  { href: "#reflections", label: "reflections" },
   { href: "#projects", label: "projects" },
   { href: "#stack", label: "stack" },
   { href: "#education", label: "education" },

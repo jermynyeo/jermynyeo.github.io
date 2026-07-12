@@ -36,6 +36,18 @@ export default function Page() {
       {theme.wireWorld.enabled && theme.wireWorld.hudEnabled && <BitHud />}
 
       <section className="hero-scene">
+        <div className="hero-intro">
+          <p className="hero-intro__eyebrow">{hero.intro.eyebrow}</p>
+          <h1 className="hero-intro__name">{hero.intro.name}</h1>
+          <p className="hero-intro__pov">{hero.intro.pov}</p>
+          <div className="hero-intro__cta">
+            {hero.intro.ctas.map((c) => (
+              <a key={c.href} href={c.href} className={`btn btn--${c.kind}`}>
+                {c.label}
+              </a>
+            ))}
+          </div>
+        </div>
         <div className="hero-scene__title">
           <TerminalIntro />
         </div>

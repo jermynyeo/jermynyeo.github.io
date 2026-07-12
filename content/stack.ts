@@ -39,7 +39,7 @@ export interface Certification {
 export const stack = {
   id: "stack",
   heading: "Stack",
-  note: "How I move data: sources, processing, serving. Hover any node to inspect.",
+  note: "The data platform I work across, from sources through processing to serving. Hover any node to inspect.",
   flow: {
     columns: [
       {

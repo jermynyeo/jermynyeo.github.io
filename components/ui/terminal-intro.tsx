@@ -35,13 +35,6 @@ export function TerminalIntro() {
             "--ch": line.text.length,
           } as React.CSSProperties
 
-          if (line.kind === "heading") {
-            return (
-              <h1 key={i} className="term-line term-line--heading" style={style}>
-                {line.text}
-              </h1>
-            )
-          }
           if (line.kind === "command") {
             return (
               <p key={i} className="term-line term-line--cmd" style={style}>

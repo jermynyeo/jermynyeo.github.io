@@ -13,6 +13,7 @@ export default function AboutSection() {
           {about.paragraphs.map((p, i) => (
             <p key={i}>{richText(p)}</p>
           ))}
+          <p className="about__pullquote">{richText(about.pullQuote)}</p>
         </div>
         <MagicCard className="about__card-wrap">
           <aside className="about__card">
