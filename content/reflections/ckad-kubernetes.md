@@ -6,7 +6,7 @@ tags: Kubernetes, DevOps
 order: 40
 ---
 
-CKAD was the first certificate that I had studied for after entering the workforce. Since I was actively deploying applications on Kubernetes, I thought - why not?
+CKAD was the **first certificate** that I had studied for after entering the workforce. Since I was actively deploying applications on **Kubernetes**, I thought - why not?
 
 While I was working with Kubernetes on a daily basis, I faced challenges in understanding how to optimize a deployment configuration to reduce cost, but still ensure the application is stable. Even though I had knowledge in Docker and containerization, it wasn't sufficient for me to confidently make changes or debug the deployment configuration.
 
