@@ -42,27 +42,27 @@ export const experience = {
   items: [
     {
       title: "JPMorganChase",
-      dates: "Aug 2022 — Present · 4 yrs",
+      dates: "Aug 2022 – Present · 4 yrs",
       org: "Compliance Technology · Singapore · *Promoted twice in 3.5 years*",
       roles: [
         {
           title: "Senior Associate Software Engineer",
           team: "Data Governance & Controls",
-          dates: "Jan 2026 — Present",
+          dates: "Jan 2026 – Present",
           promoted: true,
           summary:
             "Automating reconciliation & data-quality controls, a **Kafka**-fed metrics dashboard, and AI-assisted tooling that saves **~225 hrs/yr**.",
           bullets: [
             "Built automated **reconciliation jobs** across **60+ onboarded datasets**, surfacing discrepancies that were previously not caught and reducing audit risks.",
             "Designed **data-quality validations** for cloud-onboarded datasets that enforce business-quality standards across **10 downstream teams**, reducing data-quality incidents reported downstream.",
-            "Led a team to deliver a real-time **reconciliation-metrics dashboard**, streaming metrics asynchronously via **Kafka** into **Java Spring Boot** services — giving **3 business teams** live monitoring and self-service resolution of recurring exceptions in a quarter.",
+            "Led a team to deliver a real-time **reconciliation-metrics dashboard**, streaming metrics asynchronously via **Kafka** into **Java Spring Boot** services, giving **3 business teams** live monitoring and self-service resolution of recurring exceptions in a quarter.",
             "Built **AI-assisted tools** to improve users' experience, reducing **225 hours (28 business days)** of effort a year.",
           ],
         },
         {
           title: "Associate Software Engineer",
           team: "Data Governance & Controls",
-          dates: "Feb 2024 — Jan 2026",
+          dates: "Feb 2024 – Jan 2026",
           promoted: true,
           summary:
             "Shipped a self-service governance platform for **800+ data feeds**, **10+ TB Spark** ETL, and an **AWS** data-product migration.",
@@ -75,7 +75,7 @@ export const experience = {
         {
           title: "Software Engineer",
           team: "Trade Surveillance · Software Engineer Program (SEP), Class of 2022",
-          dates: "Aug 2022 — Jan 2024",
+          dates: "Aug 2022 – Jan 2024",
           summary:
             "High-volume batch ETL over **500+ datasets/day** for market surveillance; **Spring Boot** services and a **Spark** re-engineering that cut runtime **25%**.",
           bullets: [
@@ -88,7 +88,7 @@ export const experience = {
     },
     {
       title: "Compliance Intern",
-      dates: "Jan — Apr 2022",
+      dates: "Jan – Apr 2022",
       org: "Ernst & Young · Singapore",
       bullets: [
         "Executed regulatory compliance testing for enterprise clients and co-authored project proposals in cross-functional teams of 3–4.",
@@ -104,7 +104,7 @@ export const experience = {
     },
     {
       title: "Software Engineer Intern",
-      dates: "Dec 2020 — Jul 2021",
+      dates: "Dec 2020 – Jul 2021",
       org: "GovTech Singapore",
       bullets: [
         "Built management dashboards (Python, Power BI, Tableau) and Kanban tooling giving real-time visibility into decision-making metrics.",
@@ -112,10 +112,10 @@ export const experience = {
     },
     {
       title: "Undergraduate Research Assistant",
-      dates: "May — Aug 2020",
+      dates: "May – Aug 2020",
       org: "Singapore Management University · Game Analytics",
       bullets: [
-        "Led game-analytics research (Mobile Legends) in a team of 3 — built the data pipeline and a Vue + Laravel app to surface insights to stakeholders.",
+        "Led game-analytics research (Mobile Legends) in a team of 3, building the data pipeline and a Vue + Laravel app to surface insights to stakeholders.",
       ],
     },
   ] satisfies ExperienceItem[],

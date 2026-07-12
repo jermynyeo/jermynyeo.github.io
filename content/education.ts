@@ -30,7 +30,7 @@ export const education = {
   items: [
     {
       degree: "Bachelor of Science, Information Systems",
-      dates: "Aug 2018 — Jul 2022",
+      dates: "Aug 2018 – Jul 2022",
       school: "Singapore Management University · **Summa Cum Laude**",
       blocks: [
         {
@@ -43,7 +43,7 @@ export const education = {
         },
         {
           title: "Final-Year Project",
-          body: "Research on online discussion forums — Natural Language Processing & learning analytics, with Dr. Swapna Gottipati.",
+          body: "Research on online discussion forums: Natural Language Processing and learning analytics, with Dr. Swapna Gottipati.",
         },
         {
           title: "Focus Modules",

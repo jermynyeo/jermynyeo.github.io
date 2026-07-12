@@ -39,7 +39,7 @@ export interface Certification {
 export const stack = {
   id: "stack",
   heading: "Stack",
-  note: "How I move data — sources, processing, serving. Hover any node to inspect.",
+  note: "How I move data: sources, processing, serving. Hover any node to inspect.",
   flow: {
     columns: [
       {
@@ -150,7 +150,7 @@ export const stack = {
   ],
   certificationsTitle: "Certifications",
   certifications: [
-    { name: "AI Tooling — Anthropic Claude 101 / Code 101", year: "2026" },
+    { name: "AI Tooling · Anthropic Claude 101 / Code 101", year: "2026" },
     { name: "Certified Kubernetes Application Developer (CKAD)", year: "2024" },
     { name: "HashiCorp Terraform Associate", year: "2023" },
     { name: "Databricks Lakehouse Fundamentals", year: "2023" },

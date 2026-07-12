@@ -12,7 +12,7 @@ export const projects = {
   id: "projects",
   heading: "Projects",
   note: "Synced from GitHub on every deploy. Tag a repo with the topic `portfolio` to feature it here.",
-  tip: "**tip:** grab a card and shake it — see what happens.",
+  tip: "**tip:** grab a card and shake it to see what happens.",
   moreLink: {
     label: "See all repositories on GitHub →",
     href: "https://github.com/jermynyeo?tab=repositories",
@@ -35,5 +35,5 @@ export const projects = {
     Shell: "#89e051",
     Java: "#b07219",
   } as Record<string, string>,
-  emptyText: "No public projects to show yet — check back soon.",
+  emptyText: "No public projects to show yet. Check back soon.",
 }

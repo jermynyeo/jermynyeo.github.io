@@ -10,7 +10,7 @@ import { stack } from "@/content/stack"
 
 export const metadata: Metadata = {
   title: "Resume",
-  description: `Resume of ${site.name} — ${site.role}. ${site.location}.`,
+  description: `Resume of ${site.name}, ${site.role}. ${site.location}.`,
   alternates: { canonical: "/resume" },
 }
 

@@ -6,7 +6,7 @@
 export const eggs = {
   /** Window event that makes the raining-letters background surge. */
   surgeEvent: "rain-surge",
-  konamiToast: "cheat code accepted — rain intensity 200%",
+  konamiToast: "cheat code accepted · rain intensity 200%",
   consoleBanner: `
      ██╗███████╗██████╗ ███╗   ███╗██╗   ██╗███╗   ██╗
      ██║██╔════╝██╔══██╗████╗ ████║╚██╗ ██╔╝████╗  ██║

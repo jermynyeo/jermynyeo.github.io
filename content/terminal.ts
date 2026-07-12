@@ -100,7 +100,7 @@ const eggCommands: TermCommand[] = [
       target: "#contact",
       lines: [
         "[sudo] password for visitor: ********",
-        "ACCESS GRANTED — opening contact channel…",
+        "ACCESS GRANTED: opening contact channel…",
         "→ cd ./contact",
       ],
     },
@@ -133,7 +133,7 @@ const helpCommand: TermCommand = {
             ? { text: line, href: c.action.target }
             : line
         }),
-      "— click a section to jump, or type its name —",
+      "(click a section to jump, or type its name)",
     ],
   },
 }
@@ -141,9 +141,9 @@ const helpCommand: TermCommand = {
 export const terminal = {
   prompt: "$",
   hint: "type `help` and hit enter",
-  inputAriaLabel: "Terminal input — type help for commands",
+  inputAriaLabel: "Terminal input: type help for commands",
   unknown: [
-    "zsh: command not found: {cmd} — try `help`",
+    "zsh: command not found: {cmd} (try `help`)",
     "'{cmd}' is not a thing here. this terminal only speaks portfolio.",
     "{cmd}: no such command. `help` lists what I can do.",
   ],
