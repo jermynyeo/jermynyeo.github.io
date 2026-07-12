@@ -1,7 +1,7 @@
 ---
 title: CKAD · Kubernetes
 kind: Certificate · 2024
-question: Do I truly understand how deployment works if I don't understand why and how it's built? 
+question: Do I truly understand how deployment with Kubernetes works? Why am I taking so long to investigate production issues?  
 tags: Kubernetes, DevOps
 order: 3
 ---
