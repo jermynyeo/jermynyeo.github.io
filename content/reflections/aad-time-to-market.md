@@ -3,7 +3,7 @@ title: Agent Assisted Development · Accelerated Time To Market
 kind: Project · 2026
 question: How much faster can I deliver with AI-assisted Development?
 tags: AI, CI/CD, Product Delivery, Python, Agent Loops
-related: agent-harness
+related: agent-harness, agent-loops
 order: 10
 ---
 
