@@ -429,6 +429,16 @@ export function WireWorld() {
   const reduce = useReducedMotion()
   const activeId = useActiveSection(content.sectionIds)
 
+  // Bit-docking accent: brighten the title of the section the bit has reached.
+  useEffect(() => {
+    for (const id of content.sectionIds) {
+      const title = document
+        .getElementById(id)
+        ?.querySelector(".section__title")
+      title?.toggleAttribute("data-bit-here", id === activeId)
+    }
+  }, [activeId])
+
   useEffect(() => {
     setCanOffset(
       typeof CSS !== "undefined" &&

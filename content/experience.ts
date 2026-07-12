@@ -91,33 +91,33 @@ export const experience = {
       ],
     },
     {
-      title: "Compliance Intern",
+      title: "Ernst & Young",
       dates: "Jan – Apr 2022",
-      org: "Ernst & Young · Singapore",
+      org: "Compliance Intern · Singapore",
       bullets: [
         "Executed regulatory compliance testing for enterprise clients and co-authored project proposals in cross-functional teams of 3–4.",
       ],
     },
     {
-      title: "Software Engineer Intern",
+      title: "YouTrip",
       dates: "Dec 2021",
-      org: "YouTrip · Singapore",
+      org: "Software Engineer Intern · Singapore",
       bullets: [
         "Built backend APIs in Go for core business functions and integrated third-party APIs, validating them with Postman collections.",
       ],
     },
     {
-      title: "Software Engineer Intern",
+      title: "GovTech Singapore",
       dates: "Dec 2020 – Jul 2021",
-      org: "GovTech Singapore",
+      org: "Software Engineer Intern · Singapore",
       bullets: [
         "Built management dashboards (Python, Power BI, Tableau) and Kanban tooling giving real-time visibility into decision-making metrics.",
       ],
     },
     {
-      title: "Undergraduate Research Assistant",
+      title: "Singapore Management University",
       dates: "May – Aug 2020",
-      org: "Singapore Management University · Game Analytics",
+      org: "Undergraduate Research Assistant · Game Analytics",
       bullets: [
         "Led game-analytics research (Mobile Legends) in a team of 3, building the data pipeline and a Vue + Laravel app to surface insights to stakeholders.",
       ],

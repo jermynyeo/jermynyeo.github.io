@@ -307,10 +307,24 @@ code {
   color: #fff;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  transition: text-shadow 0.45s ease;
 }
 .section__title::before {
   content: "> ";
   color: var(--accent-mx);
+  transition: text-shadow 0.45s ease;
+}
+/* Bit-docking accent: the section the visitor bit has reached lights up */
+.section__title[data-bit-here] { text-shadow: 0 0 20px rgba(74, 222, 128, 0.35); }
+.section__title[data-bit-here]::before { text-shadow: 0 0 12px rgba(74, 222, 128, 0.8); }
+.section__title[data-bit-here]::after {
+  background: linear-gradient(
+    to right,
+    var(--accent-mx),
+    var(--accent-dim) 30%,
+    transparent 82%
+  );
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.35);
 }
 /* Editorial accent rule beneath each section title (fades to the right) */
 .section__title::after {
@@ -326,6 +340,7 @@ code {
     var(--line) 32%,
     transparent 78%
   );
+  transition: background 0.45s ease, box-shadow 0.45s ease;
 }
 /* Contact is center-aligned, so keep its rule symmetric */
 .section--contact .section__title { display: inline-block; }
