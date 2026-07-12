@@ -12,9 +12,12 @@ import { stack } from "./stack"
  * whatever the visitor typed.
  */
 
+/** An output line — plain text, or a clickable link (renders as an anchor). */
+export type TermLine = string | { text: string; href: string }
+
 export type TermAction =
-  | { type: "print"; lines: string[] }
-  | { type: "scroll"; target: string; lines: string[] }
+  | { type: "print"; lines: TermLine[] }
+  | { type: "scroll"; target: string; lines: TermLine[] }
   | { type: "clear" }
 
 export interface TermCommand {
@@ -111,16 +114,27 @@ const baseCommands: TermCommand[] = [
   ...eggCommands,
 ]
 
-/** `help` lists every visible command; built last so it can read the registry. */
+/**
+ * `help` lists every visible command; built last so it can read the registry.
+ * Section-jump commands render as clickable links (their scroll target).
+ */
 const helpCommand: TermCommand = {
   name: "help",
   aliases: ["?", "ls commands"],
   description: "list available commands",
   action: {
     type: "print",
-    lines: baseCommands
-      .filter((c) => !c.hidden)
-      .map((c) => `${c.name.padEnd(12)} ${c.description}`),
+    lines: [
+      ...baseCommands
+        .filter((c) => !c.hidden)
+        .map((c): TermLine => {
+          const line = `${c.name.padEnd(12)} ${c.description}`
+          return c.action.type === "scroll"
+            ? { text: line, href: c.action.target }
+            : line
+        }),
+      "— click a section to jump, or type its name —",
+    ],
   },
 }
 

@@ -101,4 +101,49 @@ export const theme = {
   tilt: {
     maxDeg: 6,
   },
+
+  /**
+   * Wire world — the circuit-board layer below the hero. PCB-style traces
+   * route through side gutters, page-edge rails, and the bands between
+   * sections; ambient packets flow along them and one scroll-pinned
+   * "visitor bit" rides the main trail from About to Contact.
+   * `seed` keeps the generated network identical across re-measures.
+   * `debug: true` overlays the measured regions (islands/lanes/junctions).
+   */
+  wireWorld: {
+    enabled: true,
+    debug: false,
+    seed: 1337,
+    traceColor: "rgba(74, 222, 128, 0.10)",
+    viaColor: "rgba(74, 222, 128, 0.22)",
+    energizedColor: "rgba(74, 222, 128, 0.30)",
+    strokeWidth: 1.25,
+    /** 45° corner size in px. */
+    chamfer: 10,
+    /** Vertical lanes per side gutter (desktop). */
+    gutterLanes: 3,
+    /** Horizontal lanes per inter-section band. */
+    bandLanes: 2,
+    /** How many traces get the animated dashed overlay. */
+    energizedCount: 4,
+    dash: { pattern: [6, 90], periodSeconds: 1.6 },
+    packets: {
+      count: 8,
+      countMobile: 3,
+      size: 5,
+      pxPerSecond: 90,
+      color: "#4ade80",
+      glow: "0 0 8px rgba(74, 222, 128, 0.8)",
+    },
+    bit: {
+      size: 9,
+      color: "#d1fae5",
+      glow: "0 0 14px rgba(74, 222, 128, 0.9)",
+      spring: { stiffness: 90, damping: 22 },
+    },
+    hudEnabled: true,
+    ambientEnabled: true,
+    /** Konami rain-surge synergy: packet/dash speed multiplier. */
+    surge: { speedMultiplier: 2.5 },
+  },
 } as const

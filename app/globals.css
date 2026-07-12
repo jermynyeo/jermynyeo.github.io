@@ -191,6 +191,21 @@ main, .footer { position: relative; z-index: 1; }
   margin-right: 6px;
   animation: caret-blink 1.1s steps(1) infinite;
 }
+/* Clickable section links in command output (e.g. `help`) */
+.term-out-link {
+  color: var(--text-soft);
+  cursor: pointer;
+}
+.term-out-link:hover,
+.term-out-link:focus-visible {
+  color: var(--accent-mx);
+  text-shadow: none;
+}
+.term-out-link:hover::after,
+.term-out-link:focus-visible::after {
+  content: " ↗";
+  color: var(--accent-mx);
+}
 
 a { color: var(--accent-mx); text-decoration: none; transition: color 0.15s ease; }
 a:hover { color: #fff; text-shadow: var(--glow); }
@@ -623,6 +638,105 @@ code {
   .data-flow { grid-template-columns: repeat(2, 1fr); gap: 22px 18px; }
 }
 
+/* ============ WIRE WORLD ============ */
+/* Document-spanning circuit layer: above the fixed rain (later in DOM),
+   below main content (z-1). Never intercepts input. */
+.wire-world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.wire-world svg { display: block; position: absolute; top: 0; left: 0; }
+
+/* energized dashed overlays — offset by exactly one dash period so the
+   loop is seamless on a path of any length */
+.wire-world__dash {
+  animation: wire-dash var(--dash-dur, 1.6s) linear infinite;
+}
+@keyframes wire-dash {
+  to { stroke-dashoffset: var(--dash-offset, -96); }
+}
+
+/* ambient packets riding the traces (offset-path set inline per packet) */
+.wire-world__packet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  animation: wire-flow var(--dur, 30s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes wire-flow {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
+}
+
+/* the visitor's own bit (offset-distance driven by scroll) */
+.wire-world__bit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+}
+
+/* junction ports: stub + pad beside each section title */
+.wire-world__port line,
+.wire-world__port circle {
+  stroke: rgba(74, 222, 128, 0.3);
+  transition: stroke 0.3s ease, fill 0.3s ease, filter 0.3s ease;
+}
+.wire-world__port-core { fill: rgba(74, 222, 128, 0.35); }
+.wire-world__port[data-active] line,
+.wire-world__port[data-active] circle {
+  stroke: var(--accent-mx);
+  filter: drop-shadow(0 0 4px rgba(74, 222, 128, 0.7));
+}
+.wire-world__port[data-active] .wire-world__port-core {
+  fill: var(--accent-mx);
+}
+
+.wire-world__port-label {
+  position: absolute;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: var(--text-dim);
+  opacity: 0.5;
+  transition: opacity 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+}
+.wire-world__port-label[data-active] {
+  color: var(--accent-mx);
+  opacity: 1;
+  text-shadow: 0 0 8px rgba(74, 222, 128, 0.5);
+}
+
+/* surge (konami): brief brightness boost while packets run faster */
+.wire-world--surge svg { filter: brightness(1.6); }
+
+/* bottom-left journey HUD */
+.bit-hud {
+  position: fixed;
+  left: 16px;
+  bottom: 14px;
+  z-index: 40;
+  pointer-events: none;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--text-soft);
+  background: rgba(13, 20, 17, 0.75);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 5px 10px;
+  backdrop-filter: blur(4px);
+}
+.bit-hud__dot { color: var(--accent-mx); }
+
 /* ============ EASTER EGGS ============ */
 .egg-toast {
   position: fixed;
@@ -871,7 +985,9 @@ code {
 @media print {
   .hero-nav,
   .scroll-hint,
-  .scroll-progress { display: none !important; }
+  .scroll-progress,
+  .wire-world,
+  .bit-hud { display: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -885,4 +1001,7 @@ code {
   .term-idle-caret,
   .footer__cursor { animation: none; opacity: 1; }
   .cert-card:hover { transform: none; }
+  .wire-world__packet,
+  .wire-world__dash { animation: none !important; }
+  .wire-world__packet { display: none; }
 }

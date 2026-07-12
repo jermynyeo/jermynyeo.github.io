@@ -7,6 +7,8 @@ import { terminal, type TermCommand } from "@/content/terminal"
 interface Entry {
   kind: "cmd" | "out"
   text: string
+  /** Renders the output line as a clickable section link. */
+  href?: string
 }
 
 interface TerminalPlayProps {
@@ -78,7 +80,11 @@ export function TerminalPlay({ startDelay, children }: TerminalPlayProps) {
       next.push({ kind: "out", text: msg.replace("{cmd}", input) })
     } else {
       for (const line of cmd.action.lines) {
-        next.push({ kind: "out", text: line })
+        next.push(
+          typeof line === "string"
+            ? { kind: "out", text: line }
+            : { kind: "out", text: line.text, href: line.href }
+        )
       }
       if (cmd.action.type === "scroll") {
         document
@@ -123,11 +129,14 @@ export function TerminalPlay({ startDelay, children }: TerminalPlayProps) {
     }
   }
 
-  const focusInput = () => {
+  const focusInput = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Don't hijack link clicks — let the anchor jump to its section.
+    if ((e.target as HTMLElement).closest("a")) return
     // Don't steal focus while the user is selecting text to copy.
     const sel = window.getSelection()
     if (sel && !sel.isCollapsed) return
-    inputRef.current?.focus()
+    // preventScroll: focusing must never yank the viewport back to the hero.
+    inputRef.current?.focus({ preventScroll: true })
   }
 
   return (
@@ -145,6 +154,12 @@ export function TerminalPlay({ startDelay, children }: TerminalPlayProps) {
                 <p key={i} className="term-line term-line--cmd term-line--live">
                   <span className="term-line__prompt">{terminal.prompt}</span>
                   <span>{entry.text}</span>
+                </p>
+              ) : entry.href ? (
+                <p key={i} className="term-line term-line--live term-line--out">
+                  <a className="term-out-link" href={entry.href}>
+                    {entry.text}
+                  </a>
                 </p>
               ) : (
                 <p key={i} className="term-line term-line--live term-line--out">
