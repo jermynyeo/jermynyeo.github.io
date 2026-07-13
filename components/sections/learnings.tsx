@@ -80,26 +80,17 @@ function ReflectionCarousel({ label, items }: { label: string; items: Item[] }) 
   const [index, setIndex] = useState(0)
   const [dir, setDir] = useState(1)
   const [paused, setPaused] = useState(false)
-  const [compact, setCompact] = useState(false)
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 720px)")
-    const sync = () => setCompact(mq.matches)
-    sync()
-    mq.addEventListener("change", sync)
-    return () => mq.removeEventListener("change", sync)
-  }, [])
 
   // Auto-advance ~90s per reflection — only while on screen and not paused
   // (hover/focus). Depends on `index`, so manual nav resets the timer.
   useEffect(() => {
-    if (reduce || compact || count <= 1 || paused || !inView) return
+    if (reduce || count <= 1 || paused || !inView) return
     const id = window.setTimeout(() => {
       setDir(1)
       setIndex((i) => (i + 1) % count)
     }, AUTO_MS)
     return () => window.clearTimeout(id)
-  }, [reduce, compact, count, paused, inView, index])
+  }, [reduce, count, paused, inView, index])
 
   const go = (next: number, d: number) => {
     setDir(d)
@@ -108,8 +99,9 @@ function ReflectionCarousel({ label, items }: { label: string; items: Item[] }) 
 
   const Label = <h3 className="reflection-lane__label">{label}</h3>
 
-  // Static fallback: reduced motion, small screens, or a single reflection.
-  if (reduce || compact || count <= 1) {
+  // Static fallback for reduced motion or a single reflection. On phones the
+  // carousel stays active (one card at a time) instead of dumping every card.
+  if (reduce || count <= 1) {
     return (
       <div className="reflection-lane">
         {Label}

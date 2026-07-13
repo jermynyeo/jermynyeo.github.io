@@ -90,12 +90,27 @@ function useRainingCharacters(count: number) {
   return { characters, activeIndices }
 }
 
+/** True on small (coarse-pointer) screens, where the rain is too dense. */
+function useIsMobile() {
+  const [mobile, setMobile] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 720px)")
+    const sync = () => setMobile(mq.matches)
+    sync()
+    mq.addEventListener("change", sync)
+    return () => mq.removeEventListener("change", sync)
+  }, [])
+  return mobile
+}
+
 function RainingChars({
   characters,
   activeIndices,
+  fontSize,
 }: {
   characters: Character[]
   activeIndices: Set<number>
+  fontSize: string
 }) {
   return (
     <>
@@ -117,7 +132,7 @@ function RainingChars({
               opacity: isActive ? 1 : 0.4,
               transition: "color 0.1s, transform 0.1s, text-shadow 0.1s",
               willChange: "transform, top",
-              fontSize: "1.8rem",
+              fontSize,
             }}
           >
             {char.char}
@@ -133,14 +148,20 @@ function RainingChars({
  * scrolls down. Mount once near the top of the page.
  */
 export const RainingLettersBg: React.FC = () => {
-  const { characters, activeIndices } = useRainingCharacters(
-    theme.rain.charCount
-  )
+  const mobile = useIsMobile()
+  // On phones the rain is too dense and distracting: fewer, smaller, dimmer.
+  const count = mobile
+    ? Math.round(theme.rain.charCount * 0.4)
+    : theme.rain.charCount
+  const fontSize = mobile ? "1.05rem" : "1.8rem"
+  const dim = mobile ? 0.5 : 1
+
+  const { characters, activeIndices } = useRainingCharacters(count)
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(
     scrollYProgress,
     [...theme.rain.opacityCurve.progress],
-    [...theme.rain.opacityCurve.opacity]
+    theme.rain.opacityCurve.opacity.map((o) => o * dim)
   )
 
   return (
@@ -149,7 +170,11 @@ export const RainingLettersBg: React.FC = () => {
       className="fixed inset-0 z-0 pointer-events-none overflow-hidden"
       style={{ opacity }}
     >
-      <RainingChars characters={characters} activeIndices={activeIndices} />
+      <RainingChars
+        characters={characters}
+        activeIndices={activeIndices}
+        fontSize={fontSize}
+      />
     </motion.div>
   )
 }
