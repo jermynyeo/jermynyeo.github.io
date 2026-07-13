@@ -3,7 +3,7 @@ title: Data Quality · Rubbish In, Rubbish Out
 kind: Thoughts · 2026
 question: Is it true that the model is only as good as the data it's fed?
 tags: Data Quality, Data Pipeline, Data Reconciliation
-related: intro-swe, intro-ai
+related: data-reconciliation, intro-swe, intro-ai
 order: 2
 ---
 
@@ -13,4 +13,4 @@ I recall the first thing we always did was exploratory data analysis (EDA), and 
 
 In my current role, I see the risks involved when data is not received on time, has even 1 percent or less of its data missing, or has fields that don't fulfil agreed enumerations. Given the volume of data that gets ingested, the reruns for these poor-quality data batches are very costly. Hence, my team has been actively finding preventive measures to reduce the risks and cost involved, catching breaks before data gets ingested into the systems and many more. 
 
-All in all, my background and experience made me a data enthusiast, and I am a firm believer that a model will only ever be as good as its bottleneck. In this case, that bottleneck is always poor quality data.
+All in all, my background and experience made me a data enthusiast, and I am a firm believer that **a model will only ever be as good as its bottleneck**. In this case, that bottleneck is always poor quality data.
