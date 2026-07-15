@@ -970,6 +970,13 @@ code {
   .reflections-split { grid-template-columns: 1fr; gap: 34px; }
   .reflections-split .reflections__viewport { min-height: 0; }
 }
+/* On large monitors the reflections band breaks out wider than the 1040px
+   text column so the two carousel lanes get room to breathe instead of
+   stranding huge empty margins. Fluid, capped for readable line length.
+   Layout only — the carousel stays a carousel at every width. */
+@media (min-width: 1400px) {
+  .section.section--reflections { max-width: min(1440px, 92vw); }
+}
 .reflections__progress {
   font-family: var(--mono);
   font-size: 0.72rem;

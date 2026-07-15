@@ -192,7 +192,12 @@ export default function LearningsSection({
   const craftLane = reflections.filter((r) => !isAiReflection(r))
 
   return (
-    <Reveal as="section" x={-24} id={learnings.id} className="section">
+    <Reveal
+      as="section"
+      x={-24}
+      id={learnings.id}
+      className="section section--reflections"
+    >
       <SectionTitle>{learnings.heading}</SectionTitle>
       <p className="section__note">{richText(learnings.intro)}</p>
 
