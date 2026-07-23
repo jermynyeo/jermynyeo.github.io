@@ -3,7 +3,7 @@ title: Data Quality · Rubbish In, Rubbish Out
 kind: Thoughts · 2026
 question: Is it true that the model is only as good as the data it's fed?
 tags: Data Quality, Data Pipeline, Data Reconciliation
-related: data-reconciliation, intro-swe, intro-ai
+related: data-validation, data-reconciliation, intro-swe, intro-ai
 order: 2
 ---
 

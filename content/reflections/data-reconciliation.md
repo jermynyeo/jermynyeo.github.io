@@ -3,7 +3,7 @@ title: Data Reconciliation · Data Consistency
 kind: Thoughts · 2026
 question: How can we ensure data consistency between two datasets?
 tags: Data Quality, Data Pipeline, Data Reconciliation, Consistency
-related: data-quality
+related: data-quality, data-validation
 order: 4
 ---
 
