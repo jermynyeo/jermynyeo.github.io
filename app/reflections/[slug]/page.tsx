@@ -16,9 +16,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const item = getReflection(slug)
+  const title = item?.title ?? "Reflection"
+  const description = item?.question
   return {
-    title: item?.title ?? "Reflection",
-    description: item?.question,
+    title,
+    description,
+    // Image is auto-attached from opengraph-image.tsx; set title/description so
+    // the shared card's text matches it instead of falling back to the site default.
+    openGraph: { title, description, url: `/reflections/${slug}` },
+    twitter: { card: "summary_large_image", title, description },
   }
 }
 
